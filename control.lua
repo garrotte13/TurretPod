@@ -75,6 +75,14 @@ script.on_event(defines.events.on_tick, function(event)
 
 end)
 
+script.on_event(defines.events.on_player_selected_area, function (event)
+  local player = game.get_player(event.player_index)
+  if event.item == "zd-ammo-unload" then
+    reloadPods.UnloadPods(event.entities, player)
+  end
+end)
+
+
 script.on_event(defines.events.on_player_placed_equipment, function (event)
   reloadPods.NewEquipment(event.equipment, event.grid)
 end)

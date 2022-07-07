@@ -40,4 +40,47 @@ data:extend(
 		stack_size = 10
   },
 ]]
+
+{
+	type = "selection-tool",
+	name = "zd-ammo-unload",
+	icon = "__TurretPod__/graphics/icons/minus-machine-gun-magazine-white-64.png",
+	icon_size = 64,
+	mipmaps = 1,
+	subgroup = "military-equipment",
+	order = "b[active-defense]-u[unload]",
+	stack_size = 1,
+	flags = { "not-stackable", "spawnable", "only-in-cursor" },
+	show_in_library = false,
+
+--mouse_cursor = "selection-tool-cursor",
+selection_color = {r=0.75, g=0.75},
+alt_selection_color = {g=1},
+selection_cursor_box_type = "entity",
+alt_selection_cursor_box_type = "entity",
+selection_mode = "any-entity",
+alt_selection_mode = "any-entity",
+entity_type_filters = {"tank","car"},
+alt_entity_type_filters = {"tank","car"},
+},
+
+  {
+type = "custom-input",
+name = "zd-ammo-unload",
+key_sequence = "ALT + M",
+action = "spawn-item",
+item_to_spawn = "zd-ammo-unload",
+},
+
+{
+type = "shortcut",
+name = "zd-ammo-unload",
+icon = { filename = "__TurretPod__/graphics/icons/minus-machine-gun-magazine-black-64.png", size = 64, mipmap_count = 1 },
+-- https://game-icons.net/1x1/delapouite/machine-gun-magazine.html
+-- CC BY 3.0 license
+action = "spawn-item",
+item_to_spawn = "zd-ammo-unload",
+associated_control_input = "zd-ammo-unload"
+}
+
 })
