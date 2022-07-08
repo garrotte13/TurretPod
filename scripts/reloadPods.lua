@@ -333,10 +333,12 @@ function reloadPods.GridIsDead(grid_id, grid) -- one of two parameters is always
     local i
     if global.reloadPods.grids[grid_id].weapons then
         for _, weapon_id in pairs(global.reloadPods.grids[grid_id].weapons) do
-            i = global.reloadPods.grids[grid_id].weapons[weapon_id]
-            game.print("Removed: turret-pod-" .. global.reloadPods.weapons_equipment[i].type .. "-t" .. global.reloadPods.weapons_equipment[i].tier .. "-" .. global.reloadPods.weapons_equipment[i].ammo .. "-equipment. Pod's index: " .. i)
-            global.reloadPods.weapons_equipment[i] = nil
-            global.reloadPods.equipped_weapons_count = global.reloadPods.equipped_weapons_count - 1
+            if global.reloadPods.weapons_equipment[weapon_id] then
+                game.print("Removed: turret-pod-" .. global.reloadPods.weapons_equipment[weapon_id].type .. "-t" .. global.reloadPods.weapons_equipment[weapon_id].tier .. "-" .. global.reloadPods.weapons_equipment[weapon_id].ammo .. "-equipment. Pod's index: " .. weapon_id)
+                global.reloadPods.weapons_equipment[weapon_id] = nil
+                global.reloadPods.equipped_weapons_count = global.reloadPods.equipped_weapons_count - 1
+            else game.print("That grid had a not-existing index of contained pod: ".. weapon_id)
+            end
         end
     end
     global.reloadPods.grids[grid_id] = nil
