@@ -222,6 +222,7 @@ function reloadPods.NewEquipment(weapon, grid)
                 grid = grid,
                 weapons = {},
                 owner = nil,
+                unit = 0,
                 inv_type = nil,
             }
             if r == global.reloadPods.last_grid then global.reloadPods.last_grid = global.reloadPods.last_grid + 1 end
@@ -303,6 +304,7 @@ function reloadPods.GridGetsOwner(entity)
             grid = grid,
             weapons = {},
             owner = nil,
+            unit = 0,
             inv_type = defines.inventory.car_trunk,
         }
         if r == global.reloadPods.last_grid then global.reloadPods.last_grid = global.reloadPods.last_grid + 1 end
@@ -316,6 +318,11 @@ function reloadPods.GridGetsOwner(entity)
     global.reloadPods.grids[grid_id].owner = entity
     global.reloadPods.grids[grid_id].inv_type = defines.inventory.car_trunk
     game.print("A grid got an inventory connected. Grid's index: " .. grid_id)
+    r = entity.unit_number -- https://lua-api.factorio.com/latest/LuaEntity.html#LuaEntity.unit_number
+    if r then
+        game.print("Owner has a unit number: " .. r)
+        global.reloadPods.grids[grid_id].unit = r
+    end
 end
 
 function reloadPods.GridIsDead(grid_id, grid) -- one of two parameters is always nil
@@ -355,6 +362,7 @@ function reloadPods.GridLosesOwnerEntity(grid)
     if grid_id > 0 then
         if grid.equipment[1] then
             global.reloadPods.grids[grid_id].owner = nil
+            global.reloadPods.grids[grid_id].unit = 0
             game.print("A grid lost its inventory connection, because it's owner was put in the box or dropped on the ground. Grid's index: " .. grid_id)
         else
             if global.reloadPods.grids[grid_id].weapons and global.reloadPods.grids[grid_id].weapons[1] then
@@ -370,7 +378,7 @@ end
 function reloadPods.DrivingState(player)
 end
 
-function reloadPods.UnloadPods(entities, player)
+function reloadPods.UnloadPods(entities, player, area)
     
 end
 

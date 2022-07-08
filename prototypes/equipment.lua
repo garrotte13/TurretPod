@@ -61,6 +61,7 @@ local function generate_turret(tier, magazine)
     action = table.deepcopy(magazine_item.ammo_type.action)
   else
     table.insert(layers, {filename = '__core__/graphics/icons/alerts/ammo-icon-red.png', size = 64}) -- no ammo graphic
+    magazine_localised_name = "item-name.no-ammo"
   end
   layers[2].scale = 0.5 * 64 / layers[2].size
 
@@ -218,7 +219,7 @@ local function generate_turret(tier, magazine)
     categories = util.table.deepcopy( PodEqupment_Grids )
   }
   if not data.raw.ammo[magazine] then
---    turret.localised_name = {"item-name.turret-pod-gun-t" .. tier .. "-empty-equipment", { "description.no-ammo" } }
+    turret.localised_name = {"item-name.turret-pod-gun-t" .. tier .. "-empty-equipment", { "description.no-ammo" } }
   end
   -- log (serpent.block( turret ))
   data:extend{ turret }
