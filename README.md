@@ -1,4 +1,5 @@
-This mod gives vehicles an advantage they miss to make them an interesting alternative to combat shotgun / rocket launcher exoskeleton-muscled assaults. Can be even more useful together with tank's ability to quickly move over creep.
+# Turret Pod
+This mod gives vehicles an advantage they miss to make them an interesting alternative to combat shotgun / rocket launcher exoskeleton-muscled assaults. Can be even more useful together with tank's ability to quickly move over [creep](https://mods.factorio.com/mod/Warmonger).
 
 Idea and entities architecture were taken from nice Gun Equipment mod by Zdenek (DeznekCZ) and Qon.
 I was shocked by the enormous advantage in core of the mod comparing to Rampant Arsenal and Schall GunPod overpowered features, so I had to take it and turn its weak spot (high UPS impact) into its advantage:
