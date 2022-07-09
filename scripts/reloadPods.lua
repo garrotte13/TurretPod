@@ -378,8 +378,110 @@ end
 function reloadPods.DrivingState(player)
 end
 
-function reloadPods.UnloadPods(entities, player, area)
-    
+function reloadPods.UnloadPods(entities, player, box)
+    local grids_processed = 0
+    local pods_unloaded = 0
+    local grid
+    local grid_id
+    local tempInv = game.create_inventory(36)
+    local tempStack
+    local stack_unloaded
+    local r = 0
+    local d
+    local vehInv
+    for _, vehicle in pairs(entities) do
+        if vehicle and vehicle.valid and vehicle.grid and vehicle.get_inventory(defines.inventory.car_trunk) and vehicle.get_inventory(defines.inventory.car_trunk).valid then
+            grid = vehicle.grid
+            vehInv = vehicle.get_inventory(defines.inventory.car_trunk)
+            grid_id = 0
+            for ids = 1 , global.reloadPods.last_grid do
+                if global.reloadPods.grids[ids] and global.reloadPods.grids[ids].grid == grid then
+                    grid_id = ids
+                    break
+                end
+            end
+            if grid_id > 0 then
+                grids_processed = grids_processed + 1
+                if global.reloadPods.grids[grid_id].weapons and global.reloadPods.grids[grid_id].weapons[1] then
+                    for _, weapon_id in pairs(global.reloadPods.grids[grid_id].weapons) do
+                        if global.reloadPods.weapons_equipment[weapon_id] and global.reloadPods.weapons_equipment[weapon_id].weapon
+                        then
+                            this_pod = global.reloadPods.weapons_equipment[weapon_id]
+                            this_pod.sleepUntil = game.ticks_played + 18000 -- 5 minutes sleep
+                            if this_pod.ammo == "empty" then
+                                -- it's already empty
+                            else
+                                if this_pod.ammo_count > 0 then             -- were we in reloading process?
+                                    r = this_pod.ammo_count
+                                    this_pod.ammo_count = 0
+                                elseif this_pod.weapon.energy > 0 then      -- were we in a ready to shoot state with some ammo left?
+                                    r = this_pod.weapon.energy
+                                    this_pod.weapon.energy = 0
+                                else r = 0
+                                end
+                                pods_unloaded = pods_unloaded + 1
+                                pos = this_pod.weapon.position
+                                this_grid.grid.take{ equipment = this_pod.weapon }
+                                this_pod.weapon = this_grid.grid.put{
+                                    name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-empty-equipment",
+                                    position = pos
+                                }
+                                if r > 0 then
+                                    game.print("Unloaded " .. r .. " bullets from pod with index " .. weapon_id)
+                                    stack_unloaded = tempInv.find_empty_stack()
+                                    d = math.fmod(r, magazines[this_pod.ammo])
+                                    if d == 0 then d = magazines[this_pod.ammo] end
+                                    stack_unloaded.set_stack({
+                                        name = this_pod.ammo,
+                                        count = math.ceil(r / magazines[this_pod.ammo] ),
+                                        ammo = d
+                                    })
+                                end
+                                this_pod.ammo = "empty"
+                            end
+                        else
+                            game.print("Not existing pod detected index : ".. weapon_id .. " in grid of index: " .. grid_id)
+                            -- global.reloadPods.weapons_equipment[weapon_id] = nil
+                        end
+                    end
+                    tempInv.sort_and_merge()
+                    for i=1, #tempInv do
+                        stack_unloaded = tempInv[i]
+                        if stack_unloaded and stack_unloaded.valid_for_read then
+                            r = 0
+                            tempStack, r = vehInv.find_item_stack(stack_unloaded.name)
+                            if r and r > 0 then
+                                for x=r,#vehInv do
+                                    if vehInv[x].name == stack_unloaded.name and vehInv[x].transfer_stack(stack_unloaded) then break end
+                                end
+                            end
+                            if stack_unloaded.valid_for_read and stack_unloaded.count > 0 then
+                                r = 0
+                                tempStack, r = vehInv.find_empty_stack()
+                                if r and r > 0 then
+                                    tempStack.transfer_stack(stack_unloaded)
+                                else
+                                    vehicle.surface.spill_item_stack(vehicle.position, stack_unloaded)
+                                end
+                            end
+                        else break
+                        end
+                    end
+
+                    tempInv.clear()
+                end
+            end
+
+        end
+    end
+    tempInv.destroy()
+    local x = box.left_top.x + (box.right_bottom.x - box.left_top.x) / 2
+    local y = box.left_top.y + (box.right_bottom.y - box.left_top.y) / 2
+    player.create_local_flying_text({
+--        color = options.color,
+        position = {x,y},
+        text = {"message.zd-unloadedPods", pods_unloaded, grids_processed},
+      })
 end
 
 return reloadPods
