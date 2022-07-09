@@ -402,12 +402,13 @@ function reloadPods.UnloadPods(entities, player, box)
             end
             if grid_id > 0 then
                 grids_processed = grids_processed + 1
-                if global.reloadPods.grids[grid_id].weapons and global.reloadPods.grids[grid_id].weapons[1] then
-                    for _, weapon_id in pairs(global.reloadPods.grids[grid_id].weapons) do
+                this_grid = global.reloadPods.grids[grid_id]
+                if this_grid.weapons and this_grid.weapons[1] then
+                    for _, weapon_id in pairs(this_grid.weapons) do
                         if global.reloadPods.weapons_equipment[weapon_id] and global.reloadPods.weapons_equipment[weapon_id].weapon
                         then
                             this_pod = global.reloadPods.weapons_equipment[weapon_id]
-                            this_pod.sleepUntil = game.ticks_played + 18000 -- 5 minutes sleep
+                            this_pod.sleepUntil = game.ticks_played + 7200
                             if this_pod.ammo == "empty" then
                                 -- it's already empty
                             else
