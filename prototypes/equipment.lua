@@ -19,7 +19,7 @@ end
 
 
 local gunpods = {
-  cap = {360*energy_coeff .. "kJ", 2400*energy_coeff .. "kJ", 11500*energy_coeff .. "kJ"},
+  cap = {360*energy_coeff .. "kJ", 2400*energy_coeff .. "kJ", 12000*energy_coeff .. "kJ"},
   width = {2, 3, 4},
   mag = {1, 2, 5},
   cooldown = {8, 6, 4},
@@ -27,6 +27,26 @@ local gunpods = {
   min_range = {0, 0 , 3},
   dmg = {1, 1, 1.25},
   grids = { util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodFinal_Grids ) }
+}
+local shotgunpods = {
+  cap = {720*energy_coeff .. "kJ", 14400*energy_coeff .. "kJ"},
+  width = {3, 4},
+  mag = {1, 5},
+  cooldown = {60, 60},
+  range = {11, 16},
+  min_range = {0, 3},
+  dmg = {1, 1.25},
+  grids = { util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodFinal_Grids ) }
+}
+local flamepods = {
+  cap = {360*energy_coeff .. "kJ", 7200*energy_coeff .. "kJ"},
+  width = {3, 4},
+  mag = {1, 5},
+  cooldown = {2, 1.5},
+  range = {8, 12},
+  min_range = {3, 3},
+  dmg = {1, 1.25},
+  grids = { util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodFinal_Grids ) }
 }
 
 
