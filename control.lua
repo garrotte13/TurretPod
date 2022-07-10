@@ -65,6 +65,14 @@ script.on_load(function()
   add_hooks()
 end)
 
+script.on_configuration_changed(function()
+  
+  reloadPods.AddMagazines()
+  
+end)
+
+
+
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(e)
   if e.setting == "zd-AllowChangeAmmo" then global.reloadPods.AllowChangeAmmo = settings.global["zd-AllowChangeAmmo"].value end
   game.print("Auto ammunition reset setting was changed!")

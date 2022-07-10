@@ -2,21 +2,20 @@
 Version: 0.1.0
 Date: 2022-07-?
   Features:
-    - Every reload consumes electrical power. Game balance! Tier-1 goes ok with solar+battery, Tier-2 needs reactor+battery mk2.
+    - Every reload consumes electrical power. Game balance! Tier-1 goes ok with solar+battery, Tier-2 needs reactor+battery mk2, Tier-3 demands nuclear energy.
+      Like energy shield and nightvision it's a primary-class energy consumer.
     - Once selected ammo is persistent until out of stock and only if change is allowed. Ammo is taken ONLY from vehicle inventory.
       Both features are done intentionally to allow certain ammo to be used by certain pods.
     - No substrings analysis every tick. All scripts are based on stored mod data.
     - Unload turret pods function to take ammo out. Shortcut (Alt+M by default) or item click.
-    - Turret pods have a few tiers support. Higher tier gives more range, fire rate and more.
+    - Turret pods have a few tiers support. Higher tier pods load more ammo at once, give more range, fire rate and more.
     - -30% range for gunturret pods vs corresponding turrets mk1/mk2 is done to keep it as a defense weapon vs biters, not worms.
   Info:
-    - Gun turret pod only 2 tiers now. 3rd tier to be added - for games with high tier enemies (Rampant NE or maybe other mods).
     - Tier-1 limitations will be added soon (to load only early game ammo, and to stop working after some tech progress).
     - Flamethrower and shotgun types of turrets to be added too. Technically any type is possible with small efforts, but...
       Turret pods are for vehicle passive self-defense only. Vehicles (e.g. in Rampant Arsenal) do have all the weapons for assault tactics.
     - Support for player armor is to be added later as a cheat option.
     - Vehicle Wagon2 mod support is to be added with highest priority in this entire list.
     - Locomotives support under question (take ammo from cargo wagons?).
-    - Mods configuration changes support code to be added very soon (now requires new game).    
 
 

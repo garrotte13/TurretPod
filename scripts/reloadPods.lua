@@ -1,4 +1,6 @@
-
+local PodsTiers = {
+    mag = {1, 2, 5},
+}
 local reloadPods = {}
 local weapons_equipment
 local equipped_weapons_count
@@ -126,7 +128,7 @@ end
 
 function reloadPods.TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
     local ammo_stack = inventory.find_item_stack(ammo_wanted)
-    local stacks_needed = PodMember.tier    --TO-DO- replace with constants table value
+    local stacks_needed = PodsTiers.mag[PodMember.tier]    --TO-DO- replace with constants table value
     if ammo_stack and ammo_stack.count > 0 then
         pos = PodMember.weapon.position
         GridEntity.take{ equipment = PodMember.weapon }
@@ -273,11 +275,13 @@ function reloadPods.RemoveEquipment(weapon_name, grid, removed_count, player) --
 end
 
 function reloadPods.AddMagazines()
+    global.reloadPods.magazines = {}
     for item_name, item_prototype in pairs(game.get_filtered_item_prototypes{{filter = 'type', type = 'ammo'}}) do
         if game.equipment_prototypes["turret-pod-gun-t2-" .. item_name .. "-equipment"] then
             global.reloadPods.magazines[item_name] = item_prototype.magazine_size
         end
     end
+    magazines = global.reloadPods.magazines
 end
 
 function reloadPods.GridGetsOwner(entity)

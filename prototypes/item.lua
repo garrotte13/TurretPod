@@ -25,6 +25,17 @@ data:extend(
 		stack_size = 10
 	},
 
+	{
+		type = "item",
+		name = "turret-pod-gun-t3-empty-equipment",
+		localised_name = { "item-name.turret-pod-gun-t3-equipment" },
+		icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png",
+		icon_size = 32,
+		placed_as_equipment_result = "turret-pod-gun-t3-empty-equipment",
+		subgroup = "military-equipment",
+		order = "b[active-defense]-b[turret-pod]",
+		stack_size = 10
+	},
 -- "hidden", "hide-from-bonus-gui"
 
 --[[

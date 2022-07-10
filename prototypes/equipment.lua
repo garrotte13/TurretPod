@@ -1,9 +1,7 @@
 local energy_coeff = 1
 if ( mods.Krastorio2 ) then energy_coeff = 1.8 end
-local gunpod_t1_cap = 360*energy_coeff .. "KJ"
-local gunpod_t2_cap = 2400*energy_coeff .. "KJ"
 
-PodEqupment_Grids = {}
+local PodEqupment_Grids = {}
 table.insert(PodEqupment_Grids, "armor") --TO-REPLACE-
 
 if ( mods.Krastorio2 ) then
@@ -13,6 +11,25 @@ if ( mods.bobvehicleequipment ) then
   table.insert(PodEqupment_Grids, "car")
   table.insert(PodEqupment_Grids, "tank")
 end
+
+local PodFinal_Grids = {}
+if ( mods.RampantArsenal ) then
+table.insert(PodFinal_Grids, "adv-generator")
+end
+
+
+local gunpods = {
+  cap = {360*energy_coeff .. "kJ", 2400*energy_coeff .. "kJ", 11500*energy_coeff .. "kJ"},
+  width = {2, 3, 4},
+  mag = {1, 2, 5},
+  cooldown = {8, 6, 4},
+  range = {12, 16, 19},
+  min_range = {0, 0 , 3},
+  dmg = {1, 1, 1.25},
+  grids = { util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodFinal_Grids ) }
+}
+
+
 local function generate_turret(tier, magazine)
   local gunshoot = require("__base__.prototypes.entity.sounds").gun_turret_gunshot
   local action
@@ -108,8 +125,8 @@ local function generate_turret(tier, magazine)
         },
         shape =
         {
-          width = 2,
-          height = 2,
+          width = gunpods.width[tier],
+          height = gunpods.width[tier],
           type = "full"
         },
         energy_source =
@@ -117,14 +134,15 @@ local function generate_turret(tier, magazine)
           type = "electric",
           usage_priority = "primary-input",
           --buffer_capacity = magazine_item.reload_time .. "J",
-          buffer_capacity = tier == 1 and gunpod_t1_cap or tier == 2 and gunpod_t2_cap,
+          -- buffer_capacity = tier == 1 and gunpod_t1_cap or tier == 2 and gunpod_t2_cap,
+          buffer_capacity = gunpods.cap[tier]
           --input_flow_limit = "900000KW",
         },
         attack_parameters =
         {
           type = "projectile",
           ammo_category = "bullet",
-          cooldown = 6,
+          cooldown = 60,
           movement_slow_down_factor = 0.1,
           projectile_creation_distance = 1.39375,
           projectile_center = {0, -0.0875}, -- same as gun_turret_attack shift
@@ -146,7 +164,7 @@ local function generate_turret(tier, magazine)
             energy_consumption = "1000000KJ",
             action = action
           },
-          range = 12,
+          range = 2,
           sound = gunshoot
         },
     
@@ -175,22 +193,23 @@ local function generate_turret(tier, magazine)
     },
     shape =
     {
-      width = 2,
-      height = 2,
+      width = gunpods.width[tier],
+      height = gunpods.width[tier],
       type = "full"
     },
     energy_source =
     {
       type = "electric",
       usage_priority = "secondary-input",
-      buffer_capacity = magazine_size * tier .. "J",
+      buffer_capacity = magazine_size * gunpods.mag[tier] .. "J",
       input_flow_limit = "0W",
     },
     attack_parameters =
     {
       type = "projectile",
       ammo_category = "bullet",
-      cooldown = tier == 1 and 8 or tier == 2 and 6,
+      --cooldown = tier == 1 and 8 or tier == 2 and 6,
+      cooldown = gunpods.cooldown[tier],
       movement_slow_down_factor = 0.1,
       projectile_creation_distance = 1.39375,
       projectile_center = {0, -0.0875}, -- same as gun_turret_attack shift
@@ -211,12 +230,16 @@ local function generate_turret(tier, magazine)
         energy_consumption = "1J",
         action = action
       },
-      range = tier == 1 and 12 or tier == 2 and 16,
+      --range = tier == 1 and 12 or tier == 2 and 16,
+      range = gunpods.range[tier],
+      min_range = gunpods.min_range[tier],
+      damage_modifier = gunpods.dmg[tier],
       sound = gunshoot
     },
 
     automatic = true,
-    categories = util.table.deepcopy( PodEqupment_Grids )
+    --categories = util.table.deepcopy( PodEqupment_Grids )
+    categories = gunpods.grids[tier]
   }
   if not data.raw.ammo[magazine] then
     turret.localised_name = {"item-name.turret-pod-gun-t" .. tier .. "-empty-equipment", { "description.no-ammo" } }
@@ -225,20 +248,21 @@ local function generate_turret(tier, magazine)
   data:extend{ turret }
 end
 
---data.raw.ammo["uranium-rounds-magazine"].reload_time = 2 * 60 -- 2 seconds
-
 generate_turret(1, "empty")
 generate_turret(2, "empty")
+if ( mods.RampantArsenal ) then generate_turret(3, "empty") end
 for ammo_name, ammo in pairs(data.raw.ammo) do
   -- log("[" .. ammo_name .. "].ammo_type.category" .. ammo.ammo_type.category)
   if ammo.ammo_type.category == "bullet" then
     generate_turret(1, ammo_name)
     generate_turret(2, ammo_name)
+    if ( mods.RampantArsenal ) then generate_turret(3, ammo_name) end
   elseif ammo.ammo_type.category == nil then
     for _,ammo_type in pairs( ammo.ammo_type ) do
       if ammo.ammo_type.category == "bullet" then
         generate_turret(1, ammo_name)
         generate_turret(2, ammo_name)
+        if ( mods.RampantArsenal ) then generate_turret(3, ammo_name) end
       end
     end
   end
