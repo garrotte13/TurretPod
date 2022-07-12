@@ -9,6 +9,7 @@
         "log",
         "script",
         "global",
-        "settings"
+        "settings",
+        "remote"
     ]
 }

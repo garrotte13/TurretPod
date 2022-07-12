@@ -1,5 +1,6 @@
 local PodsTiers = {
-    mag = {1, 2, 5},
+    gun = {1, 2, 5},
+    flame = {1, 5},
 }
 local reloadPods = {}
 local weapons_equipment
@@ -97,7 +98,8 @@ function reloadPods.EveryTick()
                     inv = this_grid.owner.get_inventory(this_grid.inv_type)
                     if inv and inv.valid then
                         if this_pod.ammo == "empty" then
-                            for magazine, size in pairs(magazines) do
+                            for magazine, size in pairs(magazines[this_pod.type]) do
+                                --game.print("Ammo type we try: " .. magazine)
                                 if reloadPods.TryLoadAmmo(magazine, inv, this_grid.grid, this_pod) then break end
                             end
                             if this_pod.ammo_count == 0 then this_pod.sleepUntil = game.ticks_played + 360 end -- no ammo found of any type in inventory. Pls someone kill this looser.
@@ -120,7 +122,7 @@ function reloadPods.EveryTick()
                 end
 
             end         -- we are in excellent state, ready to shoot
-        else reloadPods.GridIsDead(this_pod.grid_id, nil) end
+        else this_pod.sleepUntil = game.ticks_played + 720 end -- reloadPods.GridIsDead(this_pod.grid_id, nil) end
     end
     if global.reloadPods.equipped_weapon_id >= global.reloadPods.equipped_weapon_last then global.reloadPods.equipped_weapon_id = 1
      else global.reloadPods.equipped_weapon_id = global.reloadPods.equipped_weapon_id + 1 end
@@ -128,7 +130,7 @@ end
 
 function reloadPods.TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
     local ammo_stack = inventory.find_item_stack(ammo_wanted)
-    local stacks_needed = PodsTiers.mag[PodMember.tier]    --TO-DO- replace with constants table value
+    local stacks_needed = PodsTiers[PodMember.type][PodMember.tier]
     if ammo_stack and ammo_stack.count > 0 then
         pos = PodMember.weapon.position
         GridEntity.take{ equipment = PodMember.weapon }
@@ -143,21 +145,21 @@ function reloadPods.TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
 
         if ammo_stack.count > stacks_needed then
             ammo_stack.count = ammo_stack.count - stacks_needed
-            PodMember.ammo_count = PodMember.ammo_count + (stacks_needed - 1) * magazines[ammo_wanted]
+            PodMember.ammo_count = PodMember.ammo_count + (stacks_needed - 1) * magazines[PodMember.type][ammo_wanted]
         else
             stacks_needed = stacks_needed - ammo_stack.count
-            PodMember.ammo_count = PodMember.ammo_count + (ammo_stack.count - 1) * magazines[ammo_wanted]
+            PodMember.ammo_count = PodMember.ammo_count + (ammo_stack.count - 1) * magazines[PodMember.type][ammo_wanted]
             inventory.remove(ammo_stack)
             if stacks_needed > 0 then   -- if we still can take more ammo in one reload of high-tier turret pod
                 local ammo_stack2 = inventory.find_item_stack(ammo_wanted)  -- and inventory has another stack of that ammo
                 if ammo_stack2 and ammo_stack2.count > 0 then
                     if ammo_stack2.count > stacks_needed then
-                        PodMember.ammo_count = PodMember.ammo_count + stacks_needed * magazines[ammo_wanted]
+                        PodMember.ammo_count = PodMember.ammo_count + stacks_needed * magazines[PodMember.type][ammo_wanted]
                         ammo_stack2.count = ammo_stack2.count - stacks_needed
                     else
-                        PodMember.ammo_count = PodMember.ammo_count + ammo_stack2.count * magazines[ammo_wanted]
+                        PodMember.ammo_count = PodMember.ammo_count + ammo_stack2.count * magazines[PodMember.type][ammo_wanted]
                         inventory.remove(ammo_stack2)
-                    end
+                    end -- we don't look for third stack. If player put 3 stacks with 1 count, then we can't help a looser.
                 end
             end
         end
@@ -166,7 +168,7 @@ function reloadPods.TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
     return true
 end
 
-function reloadPods.AddWeapon(weapon, grid_id)
+function reloadPods.AddWeapon(weapon, grid_id, untilTick)
     local weapon_type
     local weapon_tier
     local weapon_ammo
@@ -181,13 +183,13 @@ function reloadPods.AddWeapon(weapon, grid_id)
         global.reloadPods.equipped_weapon_last = global.reloadPods.equipped_weapon_last + 1
         r = global.reloadPods.equipped_weapon_last
     end
-
+    weapon.energy = 0
     global.reloadPods.weapons_equipment[r] = {
         weapon = weapon,
         type = weapon_type,
         ammo = weapon_ammo,
         ammo_count = 0,
-        sleepUntil = 0,
+        sleepUntil = untilTick,
         capacity = 0,
         tier = tonumber(weapon_tier),
         grid_id = grid_id
@@ -232,7 +234,7 @@ function reloadPods.NewEquipment(weapon, grid)
             game.print("A new grid added. Its index: " .. grid_id)
             game.print("Total amount of active grids: " .. global.reloadPods.grids_count .. ". Last index in array: " .. global.reloadPods.last_grid)
         end
-        reloadPods.AddWeapon(weapon, grid_id)
+        reloadPods.AddWeapon(weapon, grid_id, 0)
     end
 end
 
@@ -275,10 +277,16 @@ function reloadPods.RemoveEquipment(weapon_name, grid, removed_count, player) --
 end
 
 function reloadPods.AddMagazines()
-    global.reloadPods.magazines = {}
-    for item_name, item_prototype in pairs(game.get_filtered_item_prototypes{{filter = 'type', type = 'ammo'}}) do
-        if game.equipment_prototypes["turret-pod-gun-t2-" .. item_name .. "-equipment"] then
-            global.reloadPods.magazines[item_name] = item_prototype.magazine_size
+    global.reloadPods.magazines = {
+        gun = {},
+        flame = {}
+    }
+    local typesOfPods = {"gun", "flame"}
+    for _, podType in pairs(typesOfPods) do
+        for item_name, item_prototype in pairs(game.get_filtered_item_prototypes{{filter = 'type', type = 'ammo'}}) do
+            if game.equipment_prototypes["turret-pod-".. podType .. "-t2-" .. item_name .. "-equipment"] then
+                global.reloadPods.magazines[podType][item_name] = item_prototype.magazine_size
+            end
         end
     end
     magazines = global.reloadPods.magazines
@@ -286,7 +294,7 @@ end
 
 function reloadPods.GridGetsOwner(entity)
     local grid
-    if entity and entity.valid and entity.grid and entity.get_inventory(defines.inventory.car_trunk) then grid = entity.grid else return end
+    if entity and entity.valid and entity.grid and entity.get_inventory(defines.inventory.car_trunk) then grid = entity.grid else return nil end
     local grid_id = 0
     local r = 0
     for ids = 1 , global.reloadPods.last_grid do
@@ -327,6 +335,7 @@ function reloadPods.GridGetsOwner(entity)
         game.print("Owner has a unit number: " .. r)
         global.reloadPods.grids[grid_id].unit = r
     end
+    return grid_id
 end
 
 function reloadPods.GridIsDead(grid_id, grid) -- one of two parameters is always nil
@@ -419,26 +428,26 @@ function reloadPods.UnloadPods(entities, player, box)
                                 if this_pod.ammo_count > 0 then             -- were we in reloading process?
                                     r = this_pod.ammo_count
                                     this_pod.ammo_count = 0
+                                    pos = this_pod.weapon.position
+                                    this_grid.grid.take{ equipment = this_pod.weapon }
+                                    this_pod.weapon = this_grid.grid.put{
+                                        name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-" .. this_pod.ammo .. "-equipment",
+                                        position = pos
+                                    }
                                 elseif this_pod.weapon.energy > 0 then      -- were we in a ready to shoot state with some ammo left?
                                     r = this_pod.weapon.energy
                                     this_pod.weapon.energy = 0
                                 else r = 0
                                 end
                                 pods_unloaded = pods_unloaded + 1
-                                pos = this_pod.weapon.position
-                                this_grid.grid.take{ equipment = this_pod.weapon }
-                                this_pod.weapon = this_grid.grid.put{
-                                    name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-empty-equipment",
-                                    position = pos
-                                }
                                 if r > 0 then
                                     game.print("Unloaded " .. r .. " bullets from pod with index " .. weapon_id)
                                     stack_unloaded = tempInv.find_empty_stack()
-                                    d = math.fmod(r, magazines[this_pod.ammo])
-                                    if d == 0 then d = magazines[this_pod.ammo] end
+                                    d = math.fmod(r, magazines[this_pod.type][this_pod.ammo])
+                                    if d == 0 then d = magazines[this_pod.type][this_pod.ammo] end
                                     stack_unloaded.set_stack({
                                         name = this_pod.ammo,
-                                        count = math.ceil(r / magazines[this_pod.ammo] ),
+                                        count = math.ceil(r / magazines[this_pod.type][this_pod.ammo] ),
                                         ammo = d
                                     })
                                 end
@@ -480,6 +489,7 @@ function reloadPods.UnloadPods(entities, player, box)
         end
     end
     tempInv.destroy()
+    if player and box then
     local x = box.left_top.x + (box.right_bottom.x - box.left_top.x) / 2
     local y = box.left_top.y + (box.right_bottom.y - box.left_top.y) / 2
     player.create_local_flying_text({
@@ -487,6 +497,42 @@ function reloadPods.UnloadPods(entities, player, box)
         position = {x,y},
         text = {"message.zd-unloadedPods", pods_unloaded, grids_processed},
       })
+    end
+-- debug loaded magazines types list section
+--[[
+ local typesOfPods = {"gun", "flame"}
+ for _, podType in pairs(typesOfPods) do
+    for magazine, size in pairs(magazines[podType]) do
+        game.print(podType .. " class ammo type: " .. magazine)
+    end
+ end
+]]
 end
+
+reloadPods.remote_interface = {
+
+    unload_vehicle = function (vehicle, kill_grid)      -- unload all turret pods and optionally remove gamedata if vehicle to be destroyed
+        reloadPods.UnloadPods({vehicle}, nil, nil)
+        if kill_grid then
+            reloadPods.GridIsDead(nil, vehicle.grid)
+        end
+    end,
+
+    reload_vehicle = function (vehicle)                 -- Fulfill gamedata for vehicle and its turret pods with 3-seconds pods pause
+        local grid_id = reloadPods.GridGetsOwner(vehicle)
+        if grid_id and grid_id > 0 then
+            local equipment_array = vehicle.grid.equipment
+            if equipment_array and equipment_array[1] then
+                local untilTick = game.ticks_played + 180
+                for i = 1, #equipment_array do
+                    if equipment_array[i].type == "active-defense-equipment" and equipment_array[i].name:match("turret%-pod%-(.+)%-t%d") then
+                        reloadPods.AddWeapon(equipment_array[i], grid_id, untilTick)
+                    end
+                end
+            end
+        end
+    end,
+
+}
 
 return reloadPods

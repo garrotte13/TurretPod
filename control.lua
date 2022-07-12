@@ -1,5 +1,7 @@
 local reloadPods = require("scripts.reloadPods")
 
+remote.add_interface("zd-turretpod", reloadPods.remote_interface)
+
 local Unlink = function(event)
   if event.entity then
     if event.entity.grid then reloadPods.GridLosesOwnerEntity(event.entity.grid)

@@ -17,25 +17,14 @@ if ( mods.RampantArsenal ) then
 table.insert(PodFinal_Grids, "adv-generator")
 end
 
-
-local gunpods = {
-  cap = {360*energy_coeff .. "kJ", 2400*energy_coeff .. "kJ", 12000*energy_coeff .. "kJ"},
-  width = {3, 3, 4},
-  mag = {1, 2, 5},
-  cooldown = {8, 6, 4},
-  range = {12, 16, 19},
-  min_range = {0, 0 , 3},
-  dmg = {1, 1, 1.25},
-  grids = { util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodFinal_Grids ) }
-}
-local shotgunpods = {
+local flamepods = {
   cap = {720*energy_coeff .. "kJ", 14400*energy_coeff .. "kJ"},
   width = {3, 4},
   mag = {1, 5},
-  cooldown = {60, 60},
-  range = {11, 16},
-  min_range = {0, 3},
-  dmg = {1, 1.25},
+  cooldown = {1.5, 1},
+  range = {8, 12},
+  min_range = {2, 3},
+  dmg = {1.1, 1.4},
   grids = { util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodFinal_Grids ) }
 }
 
@@ -45,12 +34,12 @@ local function generate_turret(tier, magazine)
   local action
   local magazine_size = 1
 
-  local gun_turret = data.raw['ammo-turret']['gun-turret']
-  local prep_layer_1 = gun_turret.preparing_animation.layers[1]
+  --local flame_turret = data.raw['fluid-turret']['flamethrower-turret']
+  --local prep_layer_1 = flame_turret.preparing_animation.layers[1]
 
   local function use_layer(layer) return
     {
-      filename = layer.filename,
+      filename = "__base__/graphics/entity/flamethrower-turret/hr-flamethrower-turret-gun-extension.png",
       width = layer.width,
       height = layer.height,
       priority = layer.priority,
@@ -61,9 +50,27 @@ local function generate_turret(tier, magazine)
   end
 
   local layers = {
-    use_layer(prep_layer_1)
+    --use_layer(prep_layer_1)
+    {
+      filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-gun-extension.png",
+      width = 80,
+      height = 64,
+      priority = "medium",
+      scale = 1,
+      x = 2 * (80),
+      y = 10 * (64),
+      hr_version = {
+        filename = "__base__/graphics/entity/flamethrower-turret/hr-flamethrower-turret-gun-extension.png",
+      width = 152,
+      height = 128,
+      priority = "medium",
+      scale = 1,
+      x = 2 * (152),
+      y = 10 * (128),
+      }
+    }
   }
-  layers[1].hr_version = use_layer(prep_layer_1.hr_version)
+  --layers[1].hr_version = use_layer(prep_layer_1.hr_version)
 
   local magazine_localised_name
   local magazine_item = data.raw.ammo[magazine]
@@ -122,21 +129,21 @@ local function generate_turret(tier, magazine)
     local function load_turret()
       return {
         type = "active-defense-equipment",
-        name = "turret-pod-gun-t" .. tier .."-" .. magazine .. "-equipment-reload",
+        name = "turret-pod-flame-t" .. tier .."-" .. magazine .. "-equipment-reload",
         localised_name = {
-          "item-name.turret-pod-gun-t" .. tier .. "-equipment-info",
+          "item-name.turret-pod-flame-t" .. tier .. "-equipment-info",
           magazine_localised_name or { "item-name." .. magazine }
         },
-        localised_description = {"item-description.turret-pod-gun-t" .. tier .. "-equipment"},
-        take_result = "turret-pod-gun-t" .. tier .."-empty-equipment",  --HERE IS THE POINT TO INSERT MULTIPLE magazine items
+        localised_description = {"item-description.turret-pod-flame-t" .. tier .. "-equipment"},
+        take_result = "turret-pod-flame-t" .. tier .."-empty-equipment",  --HERE IS THE POINT TO INSERT MULTIPLE magazine items
         sprite =
         {
           layers = load_layers
         },
         shape =
         {
-          width = gunpods.width[tier],
-          height = gunpods.width[tier],
+          width = flamepods.width[tier],
+          height = flamepods.width[tier],
           type = "full"
         },
         energy_source =
@@ -145,7 +152,7 @@ local function generate_turret(tier, magazine)
           usage_priority = "primary-input",
           --buffer_capacity = magazine_item.reload_time .. "J",
           -- buffer_capacity = tier == 1 and gunpod_t1_cap or tier == 2 and gunpod_t2_cap,
-          buffer_capacity = gunpods.cap[tier]
+          buffer_capacity = flamepods.cap[tier]
           --input_flow_limit = "900000KW",
         },
         attack_parameters =
@@ -172,7 +179,7 @@ local function generate_turret(tier, magazine)
             category = "bullet",
             --energy_consumption = ( 1 + magazine_item.reload_time ) .. "J",
             energy_consumption = "1000000KJ",
-            action = action
+            --action = action
           },
           range = 2,
           sound = gunshoot
@@ -190,69 +197,87 @@ local function generate_turret(tier, magazine)
   local turret =
   {
     type = "active-defense-equipment",
-    name = "turret-pod-gun-t" .. tier .."-" .. magazine .. "-equipment",
+    name = "turret-pod-flame-t" .. tier .."-" .. magazine .. "-equipment",
     localised_name = {
-    	"item-name.turret-pod-gun-t" .. tier .. "-equipment-info",
+    	"item-name.turret-pod-flame-t" .. tier .. "-equipment-info",
       magazine_localised_name or { "item-name." .. magazine }
     },
-    localised_description = {"item-description.turret-pod-gun-t" .. tier .. "-equipment"},
-    take_result = "turret-pod-gun-t" .. tier .."-empty-equipment",  --HERE IS THE POINT TO INSERT MULTIPLE magazine items
+    localised_description = {"item-description.turret-pod-flame-t" .. tier .. "-equipment"},
+    take_result = "turret-pod-flame-t" .. tier .."-empty-equipment",  --HERE IS THE POINT TO INSERT MULTIPLE magazine items
     sprite =
     {
       layers = layers
     },
     shape =
     {
-      width = gunpods.width[tier],
-      height = gunpods.width[tier],
+      width = flamepods.width[tier],
+      height = flamepods.width[tier],
       type = "full"
     },
     energy_source =
     {
       type = "electric",
       usage_priority = "secondary-input",
-      buffer_capacity = magazine_size * gunpods.mag[tier] .. "J",
+      buffer_capacity = magazine_size * flamepods.mag[tier] .. "J",
       input_flow_limit = "0W",
     },
     attack_parameters =
     {
-      type = "projectile",
-      ammo_category = "bullet",
-      --cooldown = tier == 1 and 8 or tier == 2 and 6,
-      cooldown = gunpods.cooldown[tier],
-      movement_slow_down_factor = 0.1,
-      projectile_creation_distance = 1.39375,
-      projectile_center = {0, -0.0875}, -- same as gun_turret_attack shift
-      shell_particle =
-      {
-        name = "shell-particle",
-        direction_deviation = 0.1,
-        speed = 0.1,
-        speed_deviation = 0.03,
-        center = {-0.0625, 0},
-        creation_distance = -1.925,
-        starting_frame_speed = 0.2,
-        starting_frame_speed_deviation = 0.1
-      },
+      type = "stream",
+      ammo_category = "flamethrower",
+      cooldown = flamepods.cooldown[tier],
+      projectile_creation_distance = 1,
+      gun_barrel_length = 2.75,
+      damage_modifier = flamepods.dmg[tier],
+      gun_center_shift = { -0.17, -1.15 },
+      range = flamepods.range[tier],
+      min_range = flamepods.min_range[tier],
       ammo_type =
       {
-        category = "bullet",
+        category = "flamethrower",
         energy_consumption = "1J",
-        action = action
+        action =
+        {
+          type = "direct",
+          action_delivery =
+          {
+            type = "stream",
+            stream = "tank-flamethrower-fire-stream"
+          }
+        }
       },
-      --range = tier == 1 and 12 or tier == 2 and 16,
-      range = gunpods.range[tier],
-      min_range = gunpods.min_range[tier],
-      damage_modifier = gunpods.dmg[tier],
-      sound = gunshoot
+      cyclic_sound =
+          {
+              begin_sound =
+                  {
+                      {
+                          filename = "__base__/sound/fight/flamethrower-start.ogg",
+                          volume = 1
+                      }
+                  },
+              middle_sound =
+                  {
+                      {
+                          filename = "__base__/sound/fight/flamethrower-mid.ogg",
+                          volume = 1
+                      }
+                  },
+              end_sound =
+                  {
+                      {
+                          filename = "__base__/sound/fight/flamethrower-end.ogg",
+                          volume = 1
+                      }
+                  }
+          }
     },
 
     automatic = true,
-    --categories = util.table.deepcopy( PodEqupment_Grids )
-    categories = gunpods.grids[tier]
+
+    categories = flamepods.grids[tier]
   }
   if not data.raw.ammo[magazine] then
-    turret.localised_name = {"item-name.turret-pod-gun-t" .. tier .. "-empty-equipment", { "description.no-ammo" } }
+    turret.localised_name = {"item-name.turret-pod-flame-t" .. tier .. "-empty-equipment", { "description.no-ammo" } }
   end
   -- log (serpent.block( turret ))
   data:extend{ turret }
@@ -260,20 +285,18 @@ end
 
 generate_turret(1, "empty")
 generate_turret(2, "empty")
-if ( mods.RampantArsenal ) then generate_turret(3, "empty") end
+
 for ammo_name, ammo in pairs(data.raw.ammo) do
   -- log("[" .. ammo_name .. "].ammo_type.category" .. ammo.ammo_type.category)
-  if ammo.ammo_type.category == "bullet" then
+  if ammo.ammo_type.category == "flamethrower" then
     generate_turret(1, ammo_name)
     generate_turret(2, ammo_name)
-    if ( mods.RampantArsenal ) then generate_turret(3, ammo_name) end
   elseif ammo.ammo_type.category == nil then
-    for _,ammo_type in pairs( ammo.ammo_type ) do
-      if ammo.ammo_type.category == "bullet" then -- mistake in Zdenek's code here
+--  for _,ammo_type2 in pairs( ammo.ammo_type ) do
+      if ammo.ammo_type[1].category == "flamethrower" then
         generate_turret(1, ammo_name)
         generate_turret(2, ammo_name)
-        if ( mods.RampantArsenal ) then generate_turret(3, ammo_name) end
       end
-    end
+--  end
   end
 end
