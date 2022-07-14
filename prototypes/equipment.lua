@@ -19,26 +19,15 @@ end
 
 
 local gunpods = {
-  cap = {360*energy_coeff .. "kJ", 2400*energy_coeff .. "kJ", 12000*energy_coeff .. "kJ"},
+  cap = {360*energy_coeff .. "kJ", 2400*energy_coeff .. "kJ", 14400*energy_coeff .. "kJ"},
   width = {3, 3, 4},
   mag = {1, 2, 5},
   cooldown = {8, 6, 4},
-  range = {12, 16, 19},
+  range = {12, 16, 20},
   min_range = {0, 0 , 3},
   dmg = {1, 1, 1.25},
   grids = { util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodFinal_Grids ) }
 }
-local shotgunpods = {
-  cap = {720*energy_coeff .. "kJ", 14400*energy_coeff .. "kJ"},
-  width = {3, 4},
-  mag = {1, 5},
-  cooldown = {60, 60},
-  range = {11, 16},
-  min_range = {0, 3},
-  dmg = {1, 1.25},
-  grids = { util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodFinal_Grids ) }
-}
-
 
 local function generate_turret(tier, magazine)
   local gunshoot = require("__base__.prototypes.entity.sounds").gun_turret_gunshot
