@@ -108,7 +108,47 @@ data:extend(
     },
     order = "a-b-c"
   },
-
+  {
+    type = "technology",
+    name = "turret-pod-flame2",
+    icons =
+    {
+      {
+        icon_size = 256, icon_mipmaps = 4,
+        icon = "__base__/graphics/technology/flamethrower.png",
+      },
+      { icon = "__TurretPod__/graphics/icons/tiers/2.png", icon_size = 64, scale = 1, shift = {30, -40} },
+      {
+        icon = "__core__/graphics/icons/technology/constants/constant-equipment.png",
+        icon_size = 128,
+        icon_mipmaps = 3,
+        shift = {-70, 80},
+        --scale = 0.25
+      }
+    },
+    prerequisites = { "power-armor", "turret-pod-flame1", "military-4" },
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = "turret-pod-flame-t2-empty-equipment"
+      }
+    },
+    unit = {
+      count = 700,
+      ingredients =
+      {
+        {"automation-science-pack", 1},
+        {"logistic-science-pack", 1},
+        {"military-science-pack", 1},
+        {"chemical-science-pack", 1},
+        --{"production-science-pack", 1},
+        {"utility-science-pack", 1}
+      },
+      time = 30
+    },
+    order = "a-b-c"
+  },
 })
 
 if ( mods.RampantArsenal ) then
@@ -151,46 +191,6 @@ if ( mods.RampantArsenal ) then
       order = "a-b-c"
     },
 
-    {
-      type = "technology",
-      name = "turret-pod-flame2",
-      icons =
-      {
-        {
-          icon_size = 256, icon_mipmaps = 4,
-          icon = "__base__/graphics/technology/flamethrower.png",
-        },
-        {
-          icon = "__core__/graphics/icons/technology/constants/constant-equipment.png",
-          icon_size = 128,
-          icon_mipmaps = 3,
-          shift = {-70, 80},
-          --scale = 0.25
-        }
-      },
-      prerequisites = { "power-armor", "turret-pod-flame1", "military-4" },
-      effects =
-      {
-        {
-          type = "unlock-recipe",
-          recipe = "turret-pod-flame-t2-empty-equipment"
-        }
-      },
-      unit = {
-        count = 500,
-        ingredients =
-        {
-          {"automation-science-pack", 1},
-          {"logistic-science-pack", 1},
-          {"military-science-pack", 1},
-          {"chemical-science-pack", 1},
-          --{"production-science-pack", 1},
-          {"utility-science-pack", 1}
-        },
-        time = 30
-      },
-      order = "a-b-c"
-    },
 
   })
 end

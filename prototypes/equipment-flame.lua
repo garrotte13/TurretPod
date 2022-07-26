@@ -1,14 +1,14 @@
 local InitGrids = require("prototypes.init-grids")
 
 local flamepods = {
-  cap = {900*InitGrids.energy_coeff .. "kJ", 18000*InitGrids.energy_coeff .. "kJ"},
-  width = {3, 5},
-  mag = {1, 5},
-  cooldown = {2, 1},
+  cap = {950*InitGrids.energy_coeff .. "kJ", 7500*InitGrids.energy_coeff .. "kJ"},
+  width = {3, 4},
+  mag = {1, 2},
+  cooldown = {1.5, 1.2},
   range = {8, 12},
   min_range = {2, 3},
-  dmg = {1.1, 1.4},
-  grids = { util.table.deepcopy( InitGrids.PodEqupment_Grids ), util.table.deepcopy( InitGrids.PodFinal_Grids ) }
+  dmg = {1.0, 1.2}, --reduced to compensate consumption_modifier = 1
+  grids = { util.table.deepcopy( InitGrids.PodEqupment_Grids ), util.table.deepcopy( InitGrids.PodEqupment_Grids ) }
 }
 
 
@@ -249,18 +249,18 @@ local function generate_turret(tier, magazine)
 end
 
 generate_turret(1, "empty")
-if ( mods.RampantArsenal ) then generate_turret(2, "empty") end
+generate_turret(2, "empty")
 
 for ammo_name, ammo in pairs(data.raw.ammo) do
   -- log("[" .. ammo_name .. "].ammo_type.category" .. ammo.ammo_type.category)
   if ammo.ammo_type.category == "flamethrower" then
     generate_turret(1, ammo_name)
-    if ( mods.RampantArsenal ) then generate_turret(2, ammo_name) end
+    generate_turret(2, ammo_name)
   elseif ammo.ammo_type.category == nil then
     -- we don't need all attack type variations, we need only ammo of required category, and we hope that ammo keeps category for all attack subtypes.
       if ammo.ammo_type[1].category == "flamethrower" then
         generate_turret(1, ammo_name)
-        if ( mods.RampantArsenal ) then generate_turret(2, ammo_name) end
+        generate_turret(2, ammo_name)
       end
 
   end

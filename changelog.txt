@@ -2,7 +2,7 @@
 Version: 0.1.1
 Date: 2022-07-?
   Features:
-    - Every reload consumes electrical power. Tier-1 goes ok with solar+battery, Tier-2 needs reactor+battery mk2, Tier-3 demands nuclear/fusion energy.
+    - Every reload consumes electrical power. Tier-1 goes ok with solar+battery, Tier-2 needs reactor+batteries mk2, Tier-3 demands nuclear/fusion energy.
       Like energy shield and nightvision turret pods are a primary-class energy consumer.
       Acid stickers applied with multiple shields can completely stop reloading if batteries ran out, drive away!
     - Once selected ammo is persistent until out of stock and only if change is allowed by mod options.
@@ -16,12 +16,12 @@ Date: 2022-07-?
     - Tier-1 limitations will be probably added (to load only early game ammo, and to stop reloading after some damage technologies progress).
     - Technically any weapon type turret pod is possible with small efforts, but...
       Turret pods are for vehicle passive self-defense only. Vehicles (e.g. in Rampant Arsenal) do have all the weapons for assault tactics.
-    - Support for player armor is to be added later as an option (low priority) and it still doesn't help player before sulphuric acid production.
+    - Support for player armor is to be added later as an option (low priority) and it still doesn't help player before sulphuric acid production setup.
     - Pods may still be inserted in character's grid and spidertron grid, but they shouldn't work or will work incorrectly.
       For Bob's vehicle equipment and Krastorio2 players it's fixed ;-)
       For Rampant Arsenal a patch is required.
     - Locomotives support is under question (there are a few ways to do it. Medium priority, but should give some fun in result).
-    - VehicleWagon2 mod support requires an patched version of VehicleWagon2 to make TurretPod's interface calls when.
+    - VehicleWagon2 mod support is implemented, but requires a patched version of VehicleWagon2 to make TurretPod's interface calls.
     - Testing balance now. Help will be highly appreciated.
 
 

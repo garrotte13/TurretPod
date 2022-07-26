@@ -1,6 +1,6 @@
 local PodsTiers = {
     gun = {1, 2, 5},
-    flame = {1, 5},
+    flame = {1, 2},
     shotgun = {1, 2, 5},
 }
 local reloadPods = {}

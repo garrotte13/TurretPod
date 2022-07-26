@@ -44,6 +44,17 @@ data:extend(
 		order = "b[active-defense]-b[turret-pod]",
 		stack_size = 10
 	},
+	{
+		type = "item",
+		name = "turret-pod-flame-t2-empty-equipment",
+		localised_name = { "item-name.turret-pod-flame-t2-equipment" },
+		icon = "__TurretPod__/graphics/icons/flamepod2_64.png",
+		icon_size = 64,
+		placed_as_equipment_result = "turret-pod-flame-t2-empty-equipment",
+		subgroup = "military-equipment",
+		order = "b[active-defense]-b[turret-pod]",
+		stack_size = 10
+	},
 
 	{
 		type = "item",
@@ -90,18 +101,6 @@ if ( mods.RampantArsenal ) then
 			},
 			icon_size = 32,
 			placed_as_equipment_result = "turret-pod-gun-t3-empty-equipment",
-			subgroup = "military-equipment",
-			order = "b[active-defense]-b[turret-pod]",
-			stack_size = 10
-		},
-		{
-			type = "item",
-			name = "turret-pod-flame-t2-empty-equipment",
-			localised_name = { "item-name.turret-pod-flame-t2-equipment" },
-			icon = "__TurretPod__/graphics/icons/flamepod2_64.png",
-			icon_size = 64,
-			tint = { r=0.97, g = 0.77, b = 0.77, a = 1 },
-			placed_as_equipment_result = "turret-pod-flame-t2-empty-equipment",
 			subgroup = "military-equipment",
 			order = "b[active-defense]-b[turret-pod]",
 			stack_size = 10
