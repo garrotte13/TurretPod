@@ -23,7 +23,7 @@ data:extend ({
     {
       {"electric-engine-unit", 3},
       {"turret-pod-gun-t1-empty-equipment", 1},
-      {"advanced-circuit", 5}
+      {"effectivity-module-2", 3}
     },
     result = "turret-pod-gun-t2-empty-equipment"
   },
@@ -52,7 +52,7 @@ data:extend ({
       {"electric-engine-unit", 2},
       {"turret-pod-flame-t1-empty-equipment", 1},
       {"low-density-structure", 5},
-      {"advanced-circuit", 7}
+      {"effectivity-module-2", 3}
     },
     result = "turret-pod-flame-t2-empty-equipment"
   },
@@ -81,8 +81,8 @@ data:extend ({
     ingredients =
     {
       {"electric-engine-unit", 3},
-      {"turret-pod-gun-t1-empty-equipment", 1},
-      {"advanced-circuit", 5}
+      {"turret-pod-shotgun-t1-empty-equipment", 1},
+      {"effectivity-module-2", 3}
     },
     result = "turret-pod-shotgun-t2-empty-equipment"
   },
@@ -104,7 +104,7 @@ if ( mods.RampantArsenal ) then
         {"low-density-structure", 5},
         {"turret-pod-gun-t2-empty-equipment", 1},
         {"gun-item-rampant-arsenal", 1},
-        {"advanced-circuit", 7}
+        {"effectivity-module-2", 12}
       },
       result = "turret-pod-gun-t3-empty-equipment"
     },
@@ -118,9 +118,9 @@ if ( mods.RampantArsenal ) then
       {
         {"electric-engine-unit", 2},
         {"low-density-structure", 5},
-        {"turret-pod-gun-t2-empty-equipment", 1},
+        {"turret-pod-shotgun-t2-empty-equipment", 1},
         {"shotgun-item-rampant-arsenal", 2},
-        {"advanced-circuit", 7}
+        {"effectivity-module-2", 12}
       },
       result = "turret-pod-shotgun-t3-empty-equipment"
     },

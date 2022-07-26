@@ -59,7 +59,7 @@ local function generate_turret(tier, magazine)
     table.insert(layers, {filename = '__core__/graphics/icons/alerts/ammo-icon-red.png', size = 64}) -- no ammo graphic
     magazine_localised_name = "item-name.no-ammo"
   end
-  --layers[2].scale = 0.5 * 64 / layers[2].size
+  layers[2].scale = 1 * 64 / layers[2].size
 
   for i = 3, #layers do
     layers[i].scale = (layers[i].scale or 1) * 0.5 * 64 / layers[2].size -- YES, it's supposed to be layer[2].size and not layer[i].size
@@ -84,7 +84,7 @@ local function generate_turret(tier, magazine)
       frame_count = 2,
       --animation_speed = 30,
       --repeat_count = magazine_item.reload_time / 30
-      animation_speed = 0.5,
+      animation_speed = 2,
       --repeat_count = magazine_item.reload_time / 30
     })
     
