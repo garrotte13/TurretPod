@@ -1,10 +1,9 @@
 {                                                                            
   "name":             "TurretPod",                                          
-  "version":          "0.1.0",                                      
+  "version":          "0.1.1",                                      
   "title":            "Turret Pod Equipment",                                         
   "author":           "garrotte",
-  "homepage":         "https://mods.factorio.com/mod/Warmonger",                                     
-  "description":      "Automated turrets in equipment. They consume both ammo and electricity.",
+  "description":      "Automated turrets pods in equipment. They consume both ammo and electricity.",
   "factorio_version": "1.1",                                  
   "dependencies":     ["base >= 1.1.0", "? RampantArsenal >= 1.0.3", "? bobvehicleequipment", "? Krastorio2"] 
 }                                                                            

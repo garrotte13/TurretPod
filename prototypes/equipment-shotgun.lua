@@ -1,40 +1,38 @@
 local InitGrids = require("prototypes.init-grids")
 
 local gunpods = {
-  cap = {360*InitGrids.energy_coeff .. "kJ", 2400*InitGrids.energy_coeff .. "kJ", 14400*InitGrids.energy_coeff .. "kJ"},
+  cap = {3600*InitGrids.energy_coeff .. "kJ", 18000*InitGrids.energy_coeff .. "kJ", 144000*InitGrids.energy_coeff .. "kJ"},
   width = {3, 4, 5},
   mag = {1, 2, 5},
-  cooldown = {8, 6, 4},
-  range = {12, 16, 20},
-  min_range = {0, 0 , 2},
-  dmg = {1, 1, 1.25},
+  cooldown = {70, 60, 60},
+  range = {11, 14, 16},
+  min_range = {0, 0, 2},
+  dmg = {1.1, 1.3, 1.5},
   grids = { util.table.deepcopy( InitGrids.PodEqupment_Grids ), util.table.deepcopy( InitGrids.PodEqupment_Grids ), util.table.deepcopy( InitGrids.PodFinal_Grids ) }
 }
+
 
 local function generate_turret(tier, magazine)
   local gunshoot = require("__base__.prototypes.entity.sounds").gun_turret_gunshot
   local action
   local magazine_size = 1
 
-  local gun_turret = data.raw['ammo-turret']['gun-turret']
-  local prep_layer_1 = gun_turret.preparing_animation.layers[1]
-
-  local function use_layer(layer) return
-    {
-      filename = layer.filename,
-      width = layer.width,
-      height = layer.height,
-      priority = layer.priority,
-      scale = (layer.scale or 1) * 1.2,
-      x = 0 * (layer.width),
-      y = 3 * (layer.height),
-    }
-  end
-
   local layers = {
-    use_layer(prep_layer_1)
+    {
+      filename = "__TurretPod__/graphics/icons/SPAS-12_M9_160.png",
+      width = 160,
+      height = 120,
+      priority = "medium",
+      scale = 1,
+      hr_version = {
+        filename = "__TurretPod__/graphics/icons/SPAS-12_M9_320.png",
+      width = 320,
+      height = 240,
+      priority = "medium",
+      scale = 1,
+      }
+    }
   }
-  layers[1].hr_version = use_layer(prep_layer_1.hr_version)
 
   local magazine_localised_name
   local magazine_item = data.raw.ammo[magazine]
@@ -61,7 +59,7 @@ local function generate_turret(tier, magazine)
     table.insert(layers, {filename = '__core__/graphics/icons/alerts/ammo-icon-red.png', size = 64}) -- no ammo graphic
     magazine_localised_name = "item-name.no-ammo"
   end
-  layers[2].scale = 0.5 * 64 / layers[2].size
+  --layers[2].scale = 0.5 * 64 / layers[2].size
 
   for i = 3, #layers do
     layers[i].scale = (layers[i].scale or 1) * 0.5 * 64 / layers[2].size -- YES, it's supposed to be layer[2].size and not layer[i].size
@@ -93,13 +91,13 @@ local function generate_turret(tier, magazine)
     local function load_turret()
       return {
         type = "active-defense-equipment",
-        name = "turret-pod-gun-t" .. tier .."-" .. magazine .. "-equipment-reload",
+        name = "turret-pod-shotgun-t" .. tier .."-" .. magazine .. "-equipment-reload",
         localised_name = {
-          "item-name.turret-pod-gun-t" .. tier .. "-equipment-info",
+          "item-name.turret-pod-shotgun-t" .. tier .. "-equipment-info",
           magazine_localised_name or { "item-name." .. magazine }
         },
-        localised_description = {"item-description.turret-pod-gun-t" .. tier .. "-equipment"},
-        take_result = "turret-pod-gun-t" .. tier .."-empty-equipment",  --HERE IS THE POINT TO INSERT MULTIPLE magazine items
+        localised_description = {"item-description.turret-pod-shotgun-t" .. tier .. "-equipment"},
+        take_result = "turret-pod-shotgun-t" .. tier .."-empty-equipment",  --HERE IS THE POINT TO INSERT MULTIPLE magazine items
         sprite =
         {
           layers = load_layers
@@ -114,38 +112,24 @@ local function generate_turret(tier, magazine)
         {
           type = "electric",
           usage_priority = "primary-input",
-          --buffer_capacity = magazine_item.reload_time .. "J",
-          -- buffer_capacity = tier == 1 and gunpod_t1_cap or tier == 2 and gunpod_t2_cap,
           buffer_capacity = gunpods.cap[tier]
           --input_flow_limit = "900000KW",
         },
         attack_parameters =
         {
           type = "projectile",
-          ammo_category = "bullet",
-          cooldown = 60,
-          movement_slow_down_factor = 0.1,
-          projectile_creation_distance = 1.39375,
-          projectile_center = {0, -0.0875}, -- same as gun_turret_attack shift
-          shell_particle =
+          ammo_category = "shotgun-shell",
+          cooldown = gunpods.cooldown[tier],
+          movement_slow_down_factor = 0.5,
+          projectile_creation_distance = 0.75,
+           ammo_type =
           {
-            name = "shell-particle",
-            direction_deviation = 0.1,
-            speed = 0.1,
-            speed_deviation = 0.03,
-            center = {-0.0625, 0},
-            creation_distance = -1.925,
-            starting_frame_speed = 0.2,
-            starting_frame_speed_deviation = 0.1
-          },
-          ammo_type =
-          {
-            category = "bullet",
+            category = "shotgun-shell",
             --energy_consumption = ( 1 + magazine_item.reload_time ) .. "J",
             energy_consumption = "1000000KJ",
             action = action
           },
-          range = 2,
+          range = 1,
           sound = gunshoot
         },
     
@@ -161,13 +145,13 @@ local function generate_turret(tier, magazine)
   local turret =
   {
     type = "active-defense-equipment",
-    name = "turret-pod-gun-t" .. tier .."-" .. magazine .. "-equipment",
+    name = "turret-pod-shotgun-t" .. tier .."-" .. magazine .. "-equipment",
     localised_name = {
-    	"item-name.turret-pod-gun-t" .. tier .. "-equipment-info",
+    	"item-name.turret-pod-shotgun-t" .. tier .. "-equipment-info",
       magazine_localised_name or { "item-name." .. magazine }
     },
-    localised_description = {"item-description.turret-pod-gun-t" .. tier .. "-equipment"},
-    take_result = "turret-pod-gun-t" .. tier .."-empty-equipment",  --HERE IS THE POINT TO INSERT MULTIPLE magazine items
+    localised_description = {"item-description.turret-pod-shotgun-t" .. tier .. "-equipment"},
+    take_result = "turret-pod-shotgun-t" .. tier .."-empty-equipment",  --HERE IS THE POINT TO INSERT MULTIPLE magazine items
     sprite =
     {
       layers = layers
@@ -188,12 +172,12 @@ local function generate_turret(tier, magazine)
     attack_parameters =
     {
       type = "projectile",
-      ammo_category = "bullet",
-      --cooldown = tier == 1 and 8 or tier == 2 and 6,
+      ammo_category = "shotgun-shell",
       cooldown = gunpods.cooldown[tier],
-      movement_slow_down_factor = 0.1,
-      projectile_creation_distance = 1.39375,
-      projectile_center = {0, -0.0875}, -- same as gun_turret_attack shift
+      movement_slow_down_factor = 0.5,
+      projectile_creation_distance = 0.95,
+      gun_barrel_length = 0.75,
+      --[[projectile_center = {0, -0.0875}, -- same as gun_turret_attack shift
       shell_particle =
       {
         name = "shell-particle",
@@ -204,44 +188,54 @@ local function generate_turret(tier, magazine)
         creation_distance = -1.925,
         starting_frame_speed = 0.2,
         starting_frame_speed_deviation = 0.1
-      },
+      }, ]]
       ammo_type =
       {
-        category = "bullet",
+        category = "shotgun-shell",
         energy_consumption = "1J",
         action = action
       },
-      --range = tier == 1 and 12 or tier == 2 and 16,
       range = gunpods.range[tier],
       min_range = gunpods.min_range[tier],
       damage_modifier = gunpods.dmg[tier],
-      --sound = gunshoot
       sound =
+      --[[{
+        {
+            filename = "__base__/sound/pump-shotgun.ogg",
+            volume = 0.5
+        }
+      }]]
+-- if we want changing sounds in cycle
       {
         {
-          filename = "__base__/sound/fight/heavy-gunshot-1.ogg",
-          volume = 0.4
+          filename = "__base__/sound/fight/pump-shotgun-1.ogg",
+          volume = 0.37
         },
         {
-          filename = "__base__/sound/fight/heavy-gunshot-2.ogg",
-          volume = 0.4
+          filename = "__base__/sound/fight/pump-shotgun-2.ogg",
+          volume = 0.37
         },
         {
-          filename = "__base__/sound/fight/heavy-gunshot-3.ogg",
-          volume = 0.4
+          filename = "__base__/sound/fight/pump-shotgun-3.ogg",
+          volume = 0.37
         },
         {
-          filename = "__base__/sound/fight/heavy-gunshot-4.ogg",
-          volume = 0.4
+          filename = "__base__/sound/fight/pump-shotgun-4.ogg",
+          volume = 0.37
+        },
+        {
+          filename = "__base__/sound/fight/pump-shotgun-5.ogg",
+          volume = 0.37
         }
       }
+
     },
 
     automatic = true,
     categories = gunpods.grids[tier]
   }
   if not data.raw.ammo[magazine] then
-    turret.localised_name = {"item-name.turret-pod-gun-t" .. tier .. "-empty-equipment", { "description.no-ammo" } }
+    turret.localised_name = {"item-name.turret-pod-shotgun-t" .. tier .. "-empty-equipment", { "description.no-ammo" } }
   end
   -- log (serpent.block( turret ))
   data:extend{ turret }
@@ -252,13 +246,13 @@ generate_turret(2, "empty")
 if ( mods.RampantArsenal ) then generate_turret(3, "empty") end
 for ammo_name, ammo in pairs(data.raw.ammo) do
   -- log("[" .. ammo_name .. "].ammo_type.category" .. ammo.ammo_type.category)
-  if ammo.ammo_type.category == "bullet" then
+  if ammo.ammo_type.category == "shotgun-shell" then
     generate_turret(1, ammo_name)
     generate_turret(2, ammo_name)
     if ( mods.RampantArsenal ) then generate_turret(3, ammo_name) end
   elseif ammo.ammo_type.category == nil then
     for _,ammo_type in pairs( ammo.ammo_type ) do
-      if ammo.ammo_type.category == "bullet" then -- mistake in Zdenek's code here
+      if ammo.ammo_type.category == "shotgun-shell" then -- mistake in Zdenek's code here, it won't find anything. Check equipment-flame for correct code.
         generate_turret(1, ammo_name)
         generate_turret(2, ammo_name)
         if ( mods.RampantArsenal ) then generate_turret(3, ammo_name) end

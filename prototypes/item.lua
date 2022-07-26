@@ -5,7 +5,10 @@ data:extend(
 		type = "item",
 		name = "turret-pod-gun-t1-empty-equipment",
 		localised_name = { "item-name.turret-pod-gun-t1-equipment" },
-		icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png",
+		icons = {
+			{ icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png", icon_size = 32 },
+			{ icon = "__TurretPod__/graphics/icons/tiers/1.png", icon_size = 64, scale = 0.5 },
+		},
 		icon_size = 32,
 		placed_as_equipment_result = "turret-pod-gun-t1-empty-equipment",
 		subgroup = "military-equipment",
@@ -17,7 +20,10 @@ data:extend(
 		type = "item",
 		name = "turret-pod-gun-t2-empty-equipment",
 		localised_name = { "item-name.turret-pod-gun-t2-equipment" },
-		icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png",
+		icons = {
+			{ icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png", icon_size = 32 },
+			{ icon = "__TurretPod__/graphics/icons/tiers/2.png", icon_size = 64, scale = 0.5 },
+		},
 		icon_size = 32,
 		tint = { r=0.97, g = 0.77, b = 0.77, a = 1 },
 		placed_as_equipment_result = "turret-pod-gun-t2-empty-equipment",
@@ -26,17 +32,6 @@ data:extend(
 		stack_size = 10
 	},
 
-	{
-		type = "item",
-		name = "turret-pod-gun-t3-empty-equipment",
-		localised_name = { "item-name.turret-pod-gun-t3-equipment" },
-		icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png",
-		icon_size = 32,
-		placed_as_equipment_result = "turret-pod-gun-t3-empty-equipment",
-		subgroup = "military-equipment",
-		order = "b[active-defense]-b[turret-pod]",
-		stack_size = 10
-	},
 -- "hidden", "hide-from-bonus-gui"
 	{
 		type = "item",
@@ -49,21 +44,86 @@ data:extend(
 		order = "b[active-defense]-b[turret-pod]",
 		stack_size = 10
 	},
+
 	{
 		type = "item",
-		name = "turret-pod-flame-t2-empty-equipment",
-		localised_name = { "item-name.turret-pod-flame-t2-equipment" },
-		icon = "__TurretPod__/graphics/icons/flamepod2_64.png",
+		name = "turret-pod-shotgun-t1-empty-equipment",
+		localised_name = { "item-name.turret-pod-shotgun-t1-equipment" },
+		icons = {
+			{ icon = "__TurretPod__/graphics/icons/shotgun-64.png", icon_size = 64 },
+			{ icon = "__TurretPod__/graphics/icons/tiers/1.png", icon_size = 64, scale = 0.5 },
+		},
 		icon_size = 64,
-		tint = { r=0.97, g = 0.77, b = 0.77, a = 1 },
-		placed_as_equipment_result = "turret-pod-flame-t2-empty-equipment",
+		placed_as_equipment_result = "turret-pod-shotgun-t1-empty-equipment",
+		subgroup = "military-equipment",
+		order = "b[active-defense]-b[turret-pod]",
+		stack_size = 10
+	},
+
+	{
+		type = "item",
+		name = "turret-pod-shotgun-t2-empty-equipment",
+		localised_name = { "item-name.turret-pod-shotgun-t2-equipment" },
+		icons = {
+			{ icon = "__TurretPod__/graphics/icons/shotgun-64.png", icon_size = 64 },
+			{ icon = "__TurretPod__/graphics/icons/tiers/2.png", icon_size = 64, scale = 0.5 },
+		},
+		icon_size = 64,
+		placed_as_equipment_result = "turret-pod-shotgun-t2-empty-equipment",
 		subgroup = "military-equipment",
 		order = "b[active-defense]-b[turret-pod]",
 		stack_size = 10
 	},
 
 
+})
 
+if ( mods.RampantArsenal ) then
+	data:extend ({
+		{
+			type = "item",
+			name = "turret-pod-gun-t3-empty-equipment",
+			localised_name = { "item-name.turret-pod-gun-t3-equipment" },
+			icons = {
+				{ icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png", icon_size = 32 },
+				{ icon = "__TurretPod__/graphics/icons/tiers/3.png", icon_size = 64, scale = 0.5 },
+			},
+			icon_size = 32,
+			placed_as_equipment_result = "turret-pod-gun-t3-empty-equipment",
+			subgroup = "military-equipment",
+			order = "b[active-defense]-b[turret-pod]",
+			stack_size = 10
+		},
+		{
+			type = "item",
+			name = "turret-pod-flame-t2-empty-equipment",
+			localised_name = { "item-name.turret-pod-flame-t2-equipment" },
+			icon = "__TurretPod__/graphics/icons/flamepod2_64.png",
+			icon_size = 64,
+			tint = { r=0.97, g = 0.77, b = 0.77, a = 1 },
+			placed_as_equipment_result = "turret-pod-flame-t2-empty-equipment",
+			subgroup = "military-equipment",
+			order = "b[active-defense]-b[turret-pod]",
+			stack_size = 10
+		},
+		{
+			type = "item",
+			name = "turret-pod-shotgun-t3-empty-equipment",
+			localised_name = { "item-name.turret-pod-shotgun-t3-equipment" },
+			icons = {
+				{ icon = "__TurretPod__/graphics/icons/shotgun-64.png", icon_size = 64 },
+				{ icon = "__TurretPod__/graphics/icons/tiers/3.png", icon_size = 64, scale = 0.5 },
+			},
+			icon_size = 64,
+			placed_as_equipment_result = "turret-pod-shotgun-t3-empty-equipment",
+			subgroup = "military-equipment",
+			order = "b[active-defense]-b[turret-pod]",
+			stack_size = 10
+		},
+	})
+end
+
+data:extend ({
  {
 	type = "selection-tool",
 	name = "zd-ammo-unload",

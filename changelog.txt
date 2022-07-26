@@ -1,21 +1,27 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.1.0
+Version: 0.1.1
 Date: 2022-07-?
   Features:
-    - Every reload consumes electrical power. Tier-1 goes ok with solar+battery, Tier-2 needs reactor+battery mk2, Tier-3 demands nuclear energy.
-      Like energy shield and nightvision it's a primary-class energy consumer. Acid stickers on multiple shield can prevent reloading, run away!
-    - Once selected ammo is persistent until out of stock and only if change is allowed. Ammo is taken ONLY from vehicle inventory.
-      Both features are done intentionally to allow certain ammo to be used by certain pods.
-    - No substrings analysis every tick. All scripts are based on stored mod data.
-    - Unload turret pods function to take ammo out. Shortcut (Alt+M by default) or item click.
+    - Every reload consumes electrical power. Tier-1 goes ok with solar+battery, Tier-2 needs reactor+battery mk2, Tier-3 demands nuclear/fusion energy.
+      Like energy shield and nightvision turret pods are a primary-class energy consumer.
+      Acid stickers applied with multiple shields can completely stop reloading if batteries ran out, drive away!
+    - Once selected ammo is persistent until out of stock and only if change is allowed by mod options.
+      Ammo is taken only from vehicle inventory, not from character inventory.
+      Both features are done intentionally to allow certain ammo to be used by certain pods without adding ammo type pod items into game.
+    - Unload turret pods function to take ammo out. Shortcut (Alt+M by default) or item click and selecting area with all vehicles to disarm
+      (it pauses reload for 20 seconds or till equipment is re-inserted).
     - Turret pods have a few tiers support. Higher tier pods load more ammo at once, give more range, fire rate and more.
     - -30% range for gunturret pods vs corresponding turrets mk1/mk2 is done to keep it as a defense weapon vs biters, not worms.
   Info:
-    - Tier-1 limitations will be probably added (to load only early game ammo, and to stop working after some tech progress).
-    - Shotgun type of turrets is to be added too. Technically any type is possible with small efforts, but...
+    - Tier-1 limitations will be probably added (to load only early game ammo, and to stop reloading after some damage technologies progress).
+    - Technically any weapon type turret pod is possible with small efforts, but...
       Turret pods are for vehicle passive self-defense only. Vehicles (e.g. in Rampant Arsenal) do have all the weapons for assault tactics.
-    - Support for player armor is to be added later as a cheat option.
-    - Locomotives support under question (add small inventory with pre-set filters to be changed by player).
-    - VehicleWagon2 mod support requires an updated version of VehicleWagon2.
+    - Support for player armor is to be added later as an option (low priority) and it still doesn't help player before sulphuric acid production.
+    - Pods may still be inserted in character's grid and spidertron grid, but they shouldn't work or will work incorrectly.
+      For Bob's vehicle equipment and Krastorio2 players it's fixed ;-)
+      For Rampant Arsenal a patch is required.
+    - Locomotives support is under question (there are a few ways to do it. Medium priority, but should give some fun in result).
+    - VehicleWagon2 mod support requires an patched version of VehicleWagon2 to make TurretPod's interface calls when.
+    - Testing balance now. Help will be highly appreciated.
 
 

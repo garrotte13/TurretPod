@@ -1,31 +1,14 @@
-local energy_coeff = 1
-if ( mods.Krastorio2 ) then energy_coeff = 1.8 end
-
-local PodEqupment_Grids = {}
-table.insert(PodEqupment_Grids, "armor") --TO-REPLACE-
-
-if ( mods.Krastorio2 ) then
-  table.insert(PodEqupment_Grids, "vehicle-motor")
-end
-if ( mods.bobvehicleequipment ) then
-  table.insert(PodEqupment_Grids, "car")
-  table.insert(PodEqupment_Grids, "tank")
-end
-
-local PodFinal_Grids = {}
-if ( mods.RampantArsenal ) then
-table.insert(PodFinal_Grids, "adv-generator")
-end
+local InitGrids = require("prototypes.init-grids")
 
 local flamepods = {
-  cap = {720*energy_coeff .. "kJ", 14400*energy_coeff .. "kJ"},
-  width = {3, 4},
+  cap = {900*InitGrids.energy_coeff .. "kJ", 18000*InitGrids.energy_coeff .. "kJ"},
+  width = {3, 5},
   mag = {1, 5},
-  cooldown = {1.5, 1},
+  cooldown = {2, 1},
   range = {8, 12},
   min_range = {2, 3},
   dmg = {1.1, 1.4},
-  grids = { util.table.deepcopy( PodEqupment_Grids ), util.table.deepcopy( PodFinal_Grids ) }
+  grids = { util.table.deepcopy( InitGrids.PodEqupment_Grids ), util.table.deepcopy( InitGrids.PodFinal_Grids ) }
 }
 
 
@@ -34,23 +17,7 @@ local function generate_turret(tier, magazine)
   local action
   local magazine_size = 1
 
-  --local flame_turret = data.raw['fluid-turret']['flamethrower-turret']
-  --local prep_layer_1 = flame_turret.preparing_animation.layers[1]
-
-  local function use_layer(layer) return
-    {
-      filename = "__base__/graphics/entity/flamethrower-turret/hr-flamethrower-turret-gun-extension.png",
-      width = layer.width,
-      height = layer.height,
-      priority = layer.priority,
-      scale = (layer.scale or 1) * 1.2,
-      x = 0 * (layer.width),
-      y = 3 * (layer.height),
-    }
-  end
-
   local layers = {
-    --use_layer(prep_layer_1)
     {
       filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-gun-extension.png",
       width = 80,
@@ -70,8 +37,7 @@ local function generate_turret(tier, magazine)
       }
     }
   }
-  --layers[1].hr_version = use_layer(prep_layer_1.hr_version)
-
+  
   local magazine_localised_name
   local magazine_item = data.raw.ammo[magazine]
   if magazine_item then
@@ -186,7 +152,7 @@ local function generate_turret(tier, magazine)
         },
     
         automatic = false,
-        categories = util.table.deepcopy( PodEqupment_Grids )
+        categories = flamepods.grids[tier]
       }
     end
     
@@ -273,7 +239,6 @@ local function generate_turret(tier, magazine)
     },
 
     automatic = true,
-
     categories = flamepods.grids[tier]
   }
   if not data.raw.ammo[magazine] then
@@ -284,19 +249,19 @@ local function generate_turret(tier, magazine)
 end
 
 generate_turret(1, "empty")
-generate_turret(2, "empty")
+if ( mods.RampantArsenal ) then generate_turret(2, "empty") end
 
 for ammo_name, ammo in pairs(data.raw.ammo) do
   -- log("[" .. ammo_name .. "].ammo_type.category" .. ammo.ammo_type.category)
   if ammo.ammo_type.category == "flamethrower" then
     generate_turret(1, ammo_name)
-    generate_turret(2, ammo_name)
+    if ( mods.RampantArsenal ) then generate_turret(2, ammo_name) end
   elseif ammo.ammo_type.category == nil then
---  for _,ammo_type2 in pairs( ammo.ammo_type ) do
+    -- we don't need all attack type variations, we need only ammo of required category, and we hope that ammo keeps category for all attack subtypes.
       if ammo.ammo_type[1].category == "flamethrower" then
         generate_turret(1, ammo_name)
-        generate_turret(2, ammo_name)
+        if ( mods.RampantArsenal ) then generate_turret(2, ammo_name) end
       end
---  end
+
   end
 end

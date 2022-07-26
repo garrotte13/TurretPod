@@ -1,6 +1,7 @@
 local PodsTiers = {
     gun = {1, 2, 5},
     flame = {1, 5},
+    shotgun = {1, 2, 5},
 }
 local reloadPods = {}
 local weapons_equipment
@@ -279,9 +280,10 @@ end
 function reloadPods.AddMagazines()
     global.reloadPods.magazines = {
         gun = {},
-        flame = {}
+        flame = {},
+        shotgun = {}
     }
-    local typesOfPods = {"gun", "flame"}
+    local typesOfPods = {"gun", "flame", "shotgun"}
     for _, podType in pairs(typesOfPods) do
         for item_name, item_prototype in pairs(game.get_filtered_item_prototypes{{filter = 'type', type = 'ammo'}}) do
             if game.equipment_prototypes["turret-pod-".. podType .. "-t2-" .. item_name .. "-equipment"] then
@@ -500,7 +502,7 @@ function reloadPods.UnloadPods(entities, player, box)
     end
 -- debug loaded magazines types list section
 --[[
- local typesOfPods = {"gun", "flame"}
+ local typesOfPods = {"gun", "flame", "shotgun"}
  for _, podType in pairs(typesOfPods) do
     for magazine, size in pairs(magazines[podType]) do
         game.print(podType .. " class ammo type: " .. magazine)
