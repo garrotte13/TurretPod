@@ -164,7 +164,7 @@ function reloadPods.TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
                 end
             end
         end
-        game.print("Loading bullets count: " .. PodMember.ammo_count .. "  While capacity buffer is: " .. PodMember.capacity .. "Pod index: ".. global.reloadPods.equipped_weapon_id)
+        --game.print("Loading bullets count: " .. PodMember.ammo_count .. "  While capacity buffer is: " .. PodMember.capacity .. "Pod index: ".. global.reloadPods.equipped_weapon_id)
     else return false end
     return true
 end
@@ -180,7 +180,7 @@ function reloadPods.AddWeapon(weapon, grid_id, untilTick)
         if not global.reloadPods.weapons_equipment[ids_num] then r = ids_num break end
     end
     if r == 0 then
-        game.print ("Last member of equipped pods was removed incorrectly! Total pods count: " .. equipped_weapons_count .. ". First free pod index: " .. equipped_weapon_last)
+        --game.print ("Last member of equipped pods was removed incorrectly! Total pods count: " .. equipped_weapons_count .. ". First free pod index: " .. equipped_weapon_last)
         global.reloadPods.equipped_weapon_last = global.reloadPods.equipped_weapon_last + 1
         r = global.reloadPods.equipped_weapon_last
     end
@@ -198,9 +198,9 @@ function reloadPods.AddWeapon(weapon, grid_id, untilTick)
     table.insert(global.reloadPods.grids[grid_id].weapons, r)
     if r == global.reloadPods.equipped_weapon_last then global.reloadPods.equipped_weapon_last = global.reloadPods.equipped_weapon_last + 1 end
     global.reloadPods.equipped_weapons_count = global.reloadPods.equipped_weapons_count + 1
-    game.print("Installed pod: " .. weapon.name .. " Pod's index: " .. r .. " Grid index: " .. grid_id)
-    game.print("First free index is ".. global.reloadPods.equipped_weapon_last)
-    game.print("Total amount of installed turret pods in all active grids: " .. global.reloadPods.equipped_weapons_count)
+    --game.print("Installed pod: " .. weapon.name .. " Pod's index: " .. r .. " Grid index: " .. grid_id)
+    --game.print("First free index is ".. global.reloadPods.equipped_weapon_last)
+    --game.print("Total amount of installed turret pods in all active grids: " .. global.reloadPods.equipped_weapons_count)
 
 end
 
@@ -218,7 +218,7 @@ function reloadPods.NewEquipment(weapon, grid)
         end
         if grid_id == 0 then
             if r == 0 then
-                game.print ("Last member of grids was removed incorrectly! Total grids count: " .. global.reloadPods.grids_count .. ". First free grid order number: " .. global.reloadPods.last_grid)
+                --game.print ("Last member of grids was removed incorrectly! Total grids count: " .. global.reloadPods.grids_count .. ". First free grid order number: " .. global.reloadPods.last_grid)
                 global.reloadPods.last_grid = global.reloadPods.last_grid + 1
                 r = global.reloadPods.last_grid
             end
@@ -232,8 +232,8 @@ function reloadPods.NewEquipment(weapon, grid)
             }
             if r == global.reloadPods.last_grid then global.reloadPods.last_grid = global.reloadPods.last_grid + 1 end
             global.reloadPods.grids_count = global.reloadPods.grids_count + 1
-            game.print("A new grid added. Its index: " .. grid_id)
-            game.print("Total amount of active grids: " .. global.reloadPods.grids_count .. ". Last index in array: " .. global.reloadPods.last_grid)
+            --game.print("A new grid added. Its index: " .. grid_id)
+            --game.print("Total amount of active grids: " .. global.reloadPods.grids_count .. ". Last index in array: " .. global.reloadPods.last_grid)
         end
         reloadPods.AddWeapon(weapon, grid_id, 0)
     end
@@ -246,7 +246,7 @@ function reloadPods.RemoveEquipment(weapon_name, grid, removed_count, player) --
             if global.reloadPods.grids[ids] and global.reloadPods.grids[ids].grid == grid then grid_id = ids break end
         end
         if grid_id > 0 then
-            game.print("Player removed pods from Grid with index ".. grid_id)
+            --game.print("Player removed pods from Grid with index ".. grid_id)
             local to_remove = {}
             local to_keep = {}
             local i = 0
@@ -264,16 +264,16 @@ function reloadPods.RemoveEquipment(weapon_name, grid, removed_count, player) --
             if i > 0 then
                 global.reloadPods.grids[grid_id].weapons = to_keep
                 for ids = 1, i do
-                    game.print("Removed " .. weapon_name .. " Pod index:" .. to_remove[ids])
+                    --game.print("Removed " .. weapon_name .. " Pod index:" .. to_remove[ids])
                     global.reloadPods.weapons_equipment[to_remove[ids]] = nil
                 end
                 global.reloadPods.equipped_weapons_count = global.reloadPods.equipped_weapons_count - i
-            else game.print("No turret pods at all were found to remove!")
+            else --game.print("No turret pods at all were found to remove!")
             end
         else
-            game.print("Grid was not found! Can't remove turret pods from it.")
+            --game.print("Grid was not found! Can't remove turret pods from it.")
         end
-        game.print("Total amount of remaining pods in all active grids: " .. global.reloadPods.equipped_weapons_count)
+        --game.print("Total amount of remaining pods in all active grids: " .. global.reloadPods.equipped_weapons_count)
     end
 end
 
@@ -309,7 +309,7 @@ function reloadPods.GridGetsOwner(entity)
     end
     if grid_id == 0 then
         if r == 0 then
-            game.print ("Last member of grids was removed incorrectly! Total grids count: " .. global.reloadPods.grids_count .. ". First free (but it's not free!) grid order number: " .. global.reloadPods.last_grid)
+            --game.print ("Last member of grids was removed incorrectly! Total grids count: " .. global.reloadPods.grids_count .. ". First free (but it's not free!) grid order number: " .. global.reloadPods.last_grid)
             global.reloadPods.last_grid = global.reloadPods.last_grid + 1
             r = global.reloadPods.last_grid
         end
@@ -323,18 +323,18 @@ function reloadPods.GridGetsOwner(entity)
         }
         if r == global.reloadPods.last_grid then global.reloadPods.last_grid = global.reloadPods.last_grid + 1 end
         global.reloadPods.grids_count = global.reloadPods.grids_count + 1
-        game.print("A new grid added. Its index: " .. grid_id)
-        game.print("Total amount of active grids: " .. global.reloadPods.grids_count .. ". Last index in array: " .. global.reloadPods.last_grid)
+        --game.print("A new grid added. Its index: " .. grid_id)
+        --game.print("Total amount of active grids: " .. global.reloadPods.grids_count .. ". Last index in array: " .. global.reloadPods.last_grid)
 
 -- TO DO -- Find and Insert missing turret pods IF ANY are missing! Why can it happen?? Who inserted them? Expecting grid is to have no turret pods.
 
     end
     global.reloadPods.grids[grid_id].owner = entity
     global.reloadPods.grids[grid_id].inv_type = defines.inventory.car_trunk
-    game.print("A grid got an inventory connected. Grid's index: " .. grid_id)
+    --game.print("A grid got an inventory connected. Grid's index: " .. grid_id)
     r = entity.unit_number -- https://lua-api.factorio.com/latest/LuaEntity.html#LuaEntity.unit_number
     if r then
-        game.print("Owner has a unit number: " .. r)
+        --game.print("Owner has a unit number: " .. r)
         global.reloadPods.grids[grid_id].unit = r
     end
     return grid_id
@@ -349,23 +349,24 @@ function reloadPods.GridIsDead(grid_id, grid) -- one of two parameters is always
         if grid_id == 0 then
             return
         else
-            game.print("A grid was removed due to death of its owner. It's index: ".. grid_id)
+            --game.print("A grid was removed due to death of its owner. It's index: ".. grid_id)
         end
-    else game.print("A grid with index " .. grid_id .. " was removed, because it was destroyed with/without its owner some time ago.") end
+    else --game.print("A grid with index " .. grid_id .. " was removed, because it was destroyed with/without its owner some time ago.")
+    end
     local i
     if global.reloadPods.grids[grid_id].weapons then
         for _, weapon_id in pairs(global.reloadPods.grids[grid_id].weapons) do
             if global.reloadPods.weapons_equipment[weapon_id] then
-                game.print("Removed: turret-pod-" .. global.reloadPods.weapons_equipment[weapon_id].type .. "-t" .. global.reloadPods.weapons_equipment[weapon_id].tier .. "-" .. global.reloadPods.weapons_equipment[weapon_id].ammo .. "-equipment. Pod's index: " .. weapon_id)
+                --game.print("Removed: turret-pod-" .. global.reloadPods.weapons_equipment[weapon_id].type .. "-t" .. global.reloadPods.weapons_equipment[weapon_id].tier .. "-" .. global.reloadPods.weapons_equipment[weapon_id].ammo .. "-equipment. Pod's index: " .. weapon_id)
                 global.reloadPods.weapons_equipment[weapon_id] = nil
                 global.reloadPods.equipped_weapons_count = global.reloadPods.equipped_weapons_count - 1
-            else game.print("That grid had a not-existing index of contained pod: ".. weapon_id)
+            else --game.print("That grid had a not-existing index of contained pod: ".. weapon_id)
             end
         end
     end
     global.reloadPods.grids[grid_id] = nil
     global.reloadPods.grids_count = global.reloadPods.grids_count - 1
-    game.print("Grid index was: " .. grid_id .. " Grids remaining amount is: " .. global.reloadPods.grids_count)
+    --game.print("Grid index was: " .. grid_id .. " Grids remaining amount is: " .. global.reloadPods.grids_count)
 
 end
 
@@ -378,14 +379,14 @@ function reloadPods.GridLosesOwnerEntity(grid)
         if grid.equipment[1] then
             global.reloadPods.grids[grid_id].owner = nil
             global.reloadPods.grids[grid_id].unit = 0
-            game.print("A grid lost its inventory connection, because it's owner was put in the box or dropped on the ground. Grid's index: " .. grid_id)
+           -- game.print("A grid lost its inventory connection, because it's owner was put in the box or dropped on the ground. Grid's index: " .. grid_id)
         else
             if global.reloadPods.grids[grid_id].weapons and global.reloadPods.grids[grid_id].weapons[1] then
-                game.print("We've got a problem - lost pods in array")
+                --game.print("We've got a problem - lost pods in array")
             end
             global.reloadPods.grids[grid_id] = nil
             global.reloadPods.grids_count = global.reloadPods.grids_count - 1
-            game.print("Grid is empty and lost inventory link - will be destroyed. It's index was: " .. grid_id .. " Grid count now is: " .. global.reloadPods.grids_count)
+            --game.print("Grid is empty and lost inventory link - will be destroyed. It's index was: " .. grid_id .. " Grid count now is: " .. global.reloadPods.grids_count)
         end
     end
 end
@@ -443,7 +444,7 @@ function reloadPods.UnloadPods(entities, player, box)
                                 end
                                 pods_unloaded = pods_unloaded + 1
                                 if r > 0 then
-                                    game.print("Unloaded " .. r .. " bullets from pod with index " .. weapon_id)
+                                    --game.print("Unloaded " .. r .. " bullets from pod with index " .. weapon_id)
                                     stack_unloaded = tempInv.find_empty_stack()
                                     d = math.fmod(r, magazines[this_pod.type][this_pod.ammo])
                                     if d == 0 then d = magazines[this_pod.type][this_pod.ammo] end
@@ -456,7 +457,7 @@ function reloadPods.UnloadPods(entities, player, box)
                                 this_pod.ammo = "empty"
                             end
                         else
-                            game.print("Not existing pod detected index : ".. weapon_id .. " in grid of index: " .. grid_id)
+                            --game.print("Not existing pod detected index : ".. weapon_id .. " in grid of index: " .. grid_id)
                             -- global.reloadPods.weapons_equipment[weapon_id] = nil
                         end
                     end
