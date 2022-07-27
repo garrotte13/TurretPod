@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.1.1
-Date: 2022-07-?
+Version: 1.0.1
+Date: 2022-07-27
   Features:
     - Every reload consumes electrical power. Tier-1 goes ok with solar+battery, Tier-2 needs reactor+batteries mk2, Tier-3 demands nuclear/fusion energy.
       Like energy shield and nightvision turret pods are a primary-class energy consumer.
@@ -11,7 +11,7 @@ Date: 2022-07-?
     - Unload turret pods function to take ammo out. Shortcut (Alt+U by default) or item click and selecting area with all vehicles to disarm
       (it pauses equipment reload in vehicle for 2 minutes or till equipment is re-inserted).
     - Turret pods have a few tiers support. Higher tier pods load more ammo at once, give more range, fire rate and more.
-    - -30% range for gunturret pods vs corresponding turrets mk1/mk2 is done to keep it as a defense weapon vs biters, not worms.
+    - -30% range for turret pods vs corresponding turrets mk1/mk2 is done to keep it as a defense weapon vs biters, not worms.
   Info:
     - Tier-1 limitations will be probably added (to load only early game ammo, and to stop reloading after some bonus damage technologies progress).
     - Technically any weapon type turret pod can be added (cannons, sniper/anti-material rifles) with small efforts, but...
