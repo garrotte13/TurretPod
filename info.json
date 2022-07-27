@@ -1,6 +1,6 @@
 {                                                                            
   "name":             "TurretPod",                                          
-  "version":          "1.0.1",                                      
+  "version":          "1.0.2",                                      
   "title":            "Turret Pod Equipment",                                         
   "author":           "garrotte",
   "description":      "Automated turrets pods in equipment. They consume both ammo and electricity.",

@@ -1,5 +1,5 @@
 local energy_coeff = 1
-if ( mods.Krastorio2 ) then energy_coeff = 1.5 end
+if ( mods.Krastorio2 ) or ( mods.bobvehicleequipment ) then energy_coeff = 1.5 end
 
 local flamepods = {
   cap = {950*energy_coeff .. "kJ", 5500*energy_coeff .. "kJ"},
@@ -110,7 +110,7 @@ local function generate_turret(tier, magazine)
         shape =
         {
           width = flamepods.width[tier],
-          height = flamepods.width[tier],
+          height = mods.bobvehicleequipment and (tier + 1) or flamepods.width[tier],
           type = "full"
         },
         energy_source =
@@ -178,7 +178,8 @@ local function generate_turret(tier, magazine)
     shape =
     {
       width = flamepods.width[tier],
-      height = flamepods.width[tier],
+      height = tier + 1,
+      --height = mods.bobvehicleequipment and (tier + 1) or flamepods.width[tier],
       type = "full"
     },
     energy_source =

@@ -1,5 +1,5 @@
 local energy_coeff = 1
-if ( mods.Krastorio2 ) then energy_coeff = 1.5 end
+if ( mods.Krastorio2 ) or ( mods.bobvehicleequipment ) then energy_coeff = 1.5 end
 
 local gunpods = {
   cap = {360*energy_coeff .. "kJ", 1800*energy_coeff .. "kJ", 9000*energy_coeff .. "kJ"},
@@ -108,7 +108,8 @@ local function generate_turret(tier, magazine)
         shape =
         {
           width = gunpods.width[tier],
-          height = gunpods.width[tier],
+          --height = gunpods.width[tier],
+          height = tier + 1,
           type = "full"
         },
         energy_source =
@@ -176,7 +177,8 @@ local function generate_turret(tier, magazine)
     shape =
     {
       width = gunpods.width[tier],
-      height = gunpods.width[tier],
+      --height = gunpods.width[tier],
+      height = tier + 1,
       type = "full"
     },
     energy_source =
