@@ -8,15 +8,14 @@ table.insert(InitGrids.PodEqupment_Grids, "armor") --TO-REPLACE-
 
 if ( mods.Krastorio2 ) then
   table.insert(InitGrids.PodEqupment_Grids, "vehicle-motor")
-end
-if ( mods.bobvehicleequipment ) then
+elseif ( mods.bobvehicleequipment ) then
   table.insert(InitGrids.PodEqupment_Grids, "car")
   table.insert(InitGrids.PodEqupment_Grids, "tank")
 end
 
 InitGrids.PodFinal_Grids = {}
 if ( mods.RampantArsenal ) then
-table.insert(InitGrids.PodFinal_Grids, "adv-generator")
+table.insert(InitGrids.PodFinal_Grids, "adv-generator")  --TO-REPLACE-
 end
 
 return InitGrids

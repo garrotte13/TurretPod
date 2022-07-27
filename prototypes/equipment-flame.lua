@@ -1,14 +1,15 @@
-local InitGrids = require("prototypes.init-grids")
+local energy_coeff = 1
+if ( mods.Krastorio2 ) then energy_coeff = 1.8 end
 
 local flamepods = {
-  cap = {950*InitGrids.energy_coeff .. "kJ", 7500*InitGrids.energy_coeff .. "kJ"},
+  cap = {950*energy_coeff .. "kJ", 7500*energy_coeff .. "kJ"},
   width = {3, 4},
   mag = {1, 2},
   cooldown = {1.5, 1.2},
   range = {8, 12},
   min_range = {2, 3},
   dmg = {1.0, 1.2}, --reduced to compensate consumption_modifier = 1
-  grids = { util.table.deepcopy( InitGrids.PodEqupment_Grids ), util.table.deepcopy( InitGrids.PodEqupment_Grids ) }
+  grids = { {"zd-turret-pod-equipment-basic-category"}, {"zd-turret-pod-equipment-basic-category"} }
 }
 
 

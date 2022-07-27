@@ -1,14 +1,15 @@
-local InitGrids = require("prototypes.init-grids")
+local energy_coeff = 1
+if ( mods.Krastorio2 ) then energy_coeff = 1.8 end
 
 local gunpods = {
-  cap = {360*InitGrids.energy_coeff .. "kJ", 2400*InitGrids.energy_coeff .. "kJ", 14400*InitGrids.energy_coeff .. "kJ"},
+  cap = {360*energy_coeff .. "kJ", 2400*energy_coeff .. "kJ", 14400*energy_coeff .. "kJ"},
   width = {3, 4, 5},
   mag = {1, 2, 5},
   cooldown = {8, 6, 4},
   range = {12, 16, 20},
   min_range = {0, 0 , 2},
   dmg = {1, 1, 1.25},
-  grids = { util.table.deepcopy( InitGrids.PodEqupment_Grids ), util.table.deepcopy( InitGrids.PodEqupment_Grids ), util.table.deepcopy( InitGrids.PodFinal_Grids ) }
+  grids = { {"zd-turret-pod-equipment-basic-category"}, {"zd-turret-pod-equipment-basic-category"}, {"zd-turret-pod-equipment-advanced-category"} }
 }
 
 local function generate_turret(tier, magazine)
