@@ -1,8 +1,8 @@
 local energy_coeff = 1
-if ( mods.Krastorio2 ) then energy_coeff = 1.8 end
+if ( mods.Krastorio2 ) then energy_coeff = 1.5 end
 
 local flamepods = {
-  cap = {950*energy_coeff .. "kJ", 7500*energy_coeff .. "kJ"},
+  cap = {950*energy_coeff .. "kJ", 5500*energy_coeff .. "kJ"},
   width = {3, 4},
   mag = {1, 2},
   cooldown = {1.5, 1.2},

@@ -1,8 +1,8 @@
 local energy_coeff = 1
-if ( mods.Krastorio2 ) then energy_coeff = 1.8 end
+if ( mods.Krastorio2 ) then energy_coeff = 1.5 end
 
 local gunpods = {
-  cap = {360*energy_coeff .. "kJ", 2400*energy_coeff .. "kJ", 14400*energy_coeff .. "kJ"},
+  cap = {360*energy_coeff .. "kJ", 1800*energy_coeff .. "kJ", 9000*energy_coeff .. "kJ"},
   width = {3, 4, 5},
   mag = {1, 2, 5},
   cooldown = {8, 6, 4},

@@ -8,20 +8,20 @@ Date: 2022-07-?
     - Once selected ammo is persistent until out of stock and only if change is allowed by mod options.
       Ammo is taken only from vehicle inventory, not from character inventory.
       Both features are done intentionally to allow certain ammo to be used by certain pods without adding ammo type pod items into game.
-    - Unload turret pods function to take ammo out. Shortcut (Alt+M by default) or item click and selecting area with all vehicles to disarm
-      (it pauses reload for 20 seconds or till equipment is re-inserted).
+    - Unload turret pods function to take ammo out. Shortcut (Alt+U by default) or item click and selecting area with all vehicles to disarm
+      (it pauses equipment reload in vehicle for 2 minutes or till equipment is re-inserted).
     - Turret pods have a few tiers support. Higher tier pods load more ammo at once, give more range, fire rate and more.
     - -30% range for gunturret pods vs corresponding turrets mk1/mk2 is done to keep it as a defense weapon vs biters, not worms.
   Info:
-    - Tier-1 limitations will be probably added (to load only early game ammo, and to stop reloading after some damage technologies progress).
-    - Technically any weapon type turret pod is possible with small efforts, but...
-      Turret pods are for vehicle passive self-defense only. Vehicles (e.g. in Rampant Arsenal) do have all the weapons for assault tactics.
-    - Support for player armor is to be added later as an option (low priority) and it still doesn't help player before sulphuric acid production setup.
-    - Pods may still be inserted in character's grid and spidertron grid, but they shouldn't work or will work incorrectly.
-      For Bob's vehicle equipment and Krastorio2 players it's fixed ;-)
-      For Rampant Arsenal a patch is required.
-    - Locomotives support is under question (there are a few ways to do it. Medium priority, but should give some fun in result).
-    - VehicleWagon2 mod support is implemented, but requires a patched version of VehicleWagon2 to make TurretPod's interface calls.
+    - Tier-1 limitations will be probably added (to load only early game ammo, and to stop reloading after some bonus damage technologies progress).
+    - Technically any weapon type turret pod can be added (cannons, sniper/anti-material rifles) with small efforts, but...
+      Turret pods are for passive self-defense only to make tanks/cars a preferable choice in endgame vs char armor mk2/mk3.
+      Vehicles (e.g. in Rampant Arsenal or K2) do have all the weapons on-board in player's manual control for assault tactics.
+    - Support for char armor is to be added later as an option (low priority) and it still doesn't help player before sulphuric acid production setup, while in later game it will ruin balance again.
+    - Trains support is under question (Low priority, but may give some fun in result).
+    - Aircraft support is accidental (may not work, Low priority).
+    - VehicleWagon2 mod support is implemented, but requires a patched version of VehicleWagon2 to make Turret Pod mod interface calls.
     - Testing balance now. Help will be highly appreciated.
+    - Medium/High priority to-do: Improving alert icons (Out of ammo for selected ammuntion, Reloading status).
 
 

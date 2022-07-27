@@ -151,7 +151,7 @@ data:extend ({
  {
 	type = "custom-input",
 	name = "zd-ammo-unload",
-	key_sequence = "ALT + M",
+	key_sequence = "ALT + U",
 	action = "spawn-item",
 	item_to_spawn = "zd-ammo-unload",
  },

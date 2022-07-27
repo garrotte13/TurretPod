@@ -2,7 +2,7 @@
 local grid
 local found
 for _, car in pairs(data.raw["car"]) do
-    if car.equipment_grid then
+    if car.equipment_grid and data.raw["equipment-grid"][car.equipment_grid] then
         found = false
         grid = data.raw["equipment-grid"][car.equipment_grid].equipment_categories
         if grid then
