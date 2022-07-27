@@ -2,7 +2,7 @@
 Version: 1.0.2
 Date: 2022-07-27
   Changes:
-      - Improved support for Bob's vehicle equipment. Pods of all tiers now have reduced height. Perhaps should be balanced in next versions.
+      - Improved support for Bob's vehicle equipment. Pods of all tiers now have reduced height.
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.1
 Date: 2022-07-27
