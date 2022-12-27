@@ -25,7 +25,6 @@ data:extend(
 			{ icon = "__TurretPod__/graphics/icons/tiers/2.png", icon_size = 64, scale = 0.5 },
 		},
 		icon_size = 32,
-		tint = { r=0.97, g = 0.77, b = 0.77, a = 1 },
 		placed_as_equipment_result = "turret-pod-gun-t2-empty-equipment",
 		subgroup = "military-equipment",
 		order = "b[active-defense]-b[turret-pod]",

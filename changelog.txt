@@ -1,8 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.3
+Date: 2022-12-28
+  Bugfixes:
+    - Flame turret pod had increased height during reload causing mod crash.
+  Balancing:
+    - Slightly increased range for Gun pod Tier-1.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.2
 Date: 2022-07-28
   Changes:
-      - Improved support for Bob's vehicle equipment. Pods of all tiers now have reduced height.
+    - Improved support for Bob's vehicle equipment. Pods of all tiers now have reduced height.
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.1
 Date: 2022-07-27
@@ -28,5 +35,3 @@ Date: 2022-07-27
     - VehicleWagon2 mod support is implemented, but requires a patched version of VehicleWagon2 to make Turret Pod mod interface calls.
     - Testing balance now. Help will be highly appreciated.
     - Medium/High priority to-do: Improving alert icons (Out of ammo for selected ammuntion, Reloading status).
-
-
