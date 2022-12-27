@@ -1,6 +1,6 @@
 {                                                                            
   "name":             "TurretPod",                                          
-  "version":          "1.0.2",                                      
+  "version":          "1.0.3",                                      
   "title":            "Turret Pod Equipment",                                         
   "author":           "garrotte",
   "description":      "Gun, Flame, Shotgun turret pods in equipment. They consume both ammo and electricity.",

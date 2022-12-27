@@ -5,6 +5,7 @@ Date: 2022-12-28
     - Flame turret pod had increased height during reload causing mod crash.
   Balancing:
     - Slightly increased range for Gun pod Tier-1.
+    - Added 10% damage bonus to Gun pod Tier-2.
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.2
 Date: 2022-07-28

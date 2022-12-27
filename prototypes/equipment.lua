@@ -2,13 +2,13 @@ local energy_coeff = 1
 if ( mods.Krastorio2 ) or ( mods.bobvehicleequipment ) then energy_coeff = 1.5 end
 
 local gunpods = {
-  cap = {360*energy_coeff .. "kJ", 1800*energy_coeff .. "kJ", 9000*energy_coeff .. "kJ"},
+  cap = {360*energy_coeff .. "kJ", 1950*energy_coeff .. "kJ", 9000*energy_coeff .. "kJ"},
   width = {3, 4, 5},
   mag = {1, 2, 5},
   cooldown = {8, 6, 4},
   range = {13, 16, 20},
   min_range = {0, 0 , 2},
-  dmg = {1, 1, 1.25},
+  dmg = {1, 1.1, 1.25},
   grids = { {"zd-turret-pod-equipment-basic-category"}, {"zd-turret-pod-equipment-basic-category"}, {"zd-turret-pod-equipment-advanced-category"} }
 }
 
