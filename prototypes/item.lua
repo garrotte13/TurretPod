@@ -131,7 +131,7 @@ data:extend ({
 	subgroup = "military-equipment",
 	order = "b[active-defense]-u[unload]",
 	stack_size = 1,
-	flags = { "not-stackable", "spawnable", "only-in-cursor" },
+	flags = { "not-stackable", "spawnable", "only-in-cursor", "hidden" },
 	show_in_library = false,
 
 --mouse_cursor = "selection-tool-cursor",
