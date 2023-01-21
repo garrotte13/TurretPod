@@ -35,20 +35,7 @@ function reloadPods.Init()
 
     }
     reloadPods.AddMagazines()
-    --[[
-    reloadPods.AllowChangeAmmo = settings.global["zd-AllowChangeAmmo"].value
-    global.magazines = {}
-    
 
-    global.weapons_equipment = {}
-    global.equipped_weapons_count = 0
-    global.equipped_weapon_id = 1
-    global.equipped_weapon_last = 1
-
-    global.grids = {}
-    global.last_grid = 1
-    global.grids_count = 0
-]]
     weapons_equipment = global.reloadPods.weapons_equipment
     equipped_weapons_count = global.reloadPods.equipped_weapons_count
     equipped_weapon_id = global.reloadPods.equipped_weapon_id
