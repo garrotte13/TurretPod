@@ -1,21 +1,21 @@
-local reloadPods = require("scripts.reloadPods")
+local reloadP = require("scripts.reloadPods")
 
-remote.add_interface("zd-turretpod", reloadPods.remote_interface)
+remote.add_interface("zd-turretpod", reloadP.remote_interface)
 
 local Unlink = function(event)
   if event.entity then
-    if event.entity.grid then reloadPods.GridLosesOwnerEntity(event.entity.grid)
+    if event.entity.grid then reloadP.GridLosesOwnerEntity(event.entity.grid)
     -- else game.print ("Mined vehicle has no equipment grid!")
     end
   end
 end
 
 local Link = function(event)
-  reloadPods.GridGetsOwner(event.created_entity)
+  reloadP.GridGetsOwner(event.created_entity)
 end
 
 local KilledGridOwner = function(event)
-  if event.entity and event.entity.grid then reloadPods.GridIsDead(nil, event.entity.grid) end
+  if event.entity and event.entity.grid then reloadP.GridIsDead(nil, event.entity.grid) end
 end
 
 local function add_hooks()
@@ -37,7 +37,7 @@ local function add_hooks()
   -- ** only driven vehicles support
     script.on_event(defines.events.on_player_driving_changed_state, function (event)
       local player = game.get_player(event.player_index)
-      reloadPods.DrivingState(player)
+      reloadP.DrivingState(player)
     end)
 
   end
@@ -58,45 +58,45 @@ local function add_hooks()
 end
 
 script.on_init(function()
-  reloadPods.Init()
+  reloadP.Init()
   add_hooks()
 end)
 
 script.on_load(function()
-  reloadPods.OnLoad()
+  reloadP.OnLoad()
   add_hooks()
 end)
 
 script.on_configuration_changed(function()
   
-  reloadPods.AddMagazines()
+  reloadP.AddMagazines()
   
 end)
 
 
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(e)
-  if e.setting == "zd-AllowChangeAmmo" then global.reloadPods.AllowChangeAmmo = settings.global["zd-AllowChangeAmmo"].value end
+  if e.setting == "zd-AllowChangeAmmo" then global.reloadP.AllowChangeAmmo = settings.global["zd-AllowChangeAmmo"].value end
   --game.print("Auto ammunition reset setting was changed!")
 end)
 
 script.on_event(defines.events.on_tick, function(event)
-  reloadPods.EveryTick()
+  reloadP.EveryTick()
 
 end)
 
 script.on_event(defines.events.on_player_selected_area, function (event)
   local player = game.get_player(event.player_index)
   if event.item == "zd-ammo-unload" then
-    reloadPods.UnloadPods(event.entities, player, event.area)
+    reloadP.UnloadPods(event.entities, player, event.area)
   end
 end)
 
 
 script.on_event(defines.events.on_player_placed_equipment, function (event)
-  reloadPods.NewEquipment(event.equipment, event.grid)
+  reloadP.NewEquipment(event.equipment, event.grid)
 end)
 script.on_event(defines.events.on_player_removed_equipment, function (event)
   local player = game.get_player(event.player_index)
-  reloadPods.RemoveEquipment(event.equipment, event.grid, event.count, player)
+  reloadP.RemoveEquipment(event.equipment, event.grid, event.count, player)
 end)
