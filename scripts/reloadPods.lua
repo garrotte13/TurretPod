@@ -60,13 +60,13 @@ function reloadPod.OnLoad()
     magazines = global.reloadPods.magazines
 end
 
-function reloadPod.EveryTick()
+function reloadPod.EveryTick(weapon_id, g_tick)
     local this_pod
     local this_grid
     local inv
     local pos
-    if global.reloadPods.weapons_equipment[global.reloadPods.equipped_weapon_id] and global.reloadPods.weapons_equipment[global.reloadPods.equipped_weapon_id].sleepUntil < game.ticks_played then
-        this_pod = global.reloadPods.weapons_equipment[global.reloadPods.equipped_weapon_id]
+    if global.reloadPods.weapons_equipment[weapon_id] and global.reloadPods.weapons_equipment[weapon_id].sleepUntil < g_tick then
+        this_pod = global.reloadPods.weapons_equipment[weapon_id]
         if global.reloadPods.grids[this_pod.grid_id].grid and global.reloadPods.grids[this_pod.grid_id].grid.valid then
             this_grid = global.reloadPods.grids[this_pod.grid_id]
             if this_pod.ammo_count > 0 then                 -- are we in reloading process?
@@ -90,7 +90,7 @@ function reloadPod.EveryTick()
                                 --game.print("Ammo type we try: " .. magazine)
                                 if reloadPod.TryLoadAmmo(magazine, inv, this_grid.grid, this_pod) then break end
                             end
-                            if this_pod.ammo_count == 0 then this_pod.sleepUntil = game.ticks_played + 360 end -- no ammo found of any type in inventory. Pls someone kill this looser.
+                            if this_pod.ammo_count == 0 then this_pod.sleepUntil = g_tick + 360 end -- no ammo found of any type in inventory. Pls someone kill this looser.
                         else
                             if not reloadPod.TryLoadAmmo(this_pod.ammo, inv, this_grid.grid, this_pod) then
                                 if global.reloadPods.AllowChangeAmmo then
@@ -101,19 +101,18 @@ function reloadPod.EveryTick()
                                         name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-" .. this_pod.ammo .. "-equipment",
                                         position = pos
                                     }
-                                else this_pod.sleepUntil = game.ticks_played + 360 end -- no ammo found of wanted type in inventory. Pls someone kill this looser.
+                                else this_pod.sleepUntil = g_tick + 360 end -- no ammo found of wanted type in inventory. Pls someone kill this looser.
                             end
                         end
-                    else this_pod.sleepUntil = game.ticks_played + 720      -- owner has a broken/absent inventory suddenly
+                    else this_pod.sleepUntil = g_tick + 720      -- owner has a broken/absent inventory suddenly
                     end
-                else this_pod.sleepUntil = game.ticks_played + 720       -- nowhere to get ammo from.
+                else this_pod.sleepUntil = g_tick + 720       -- nowhere to get ammo from.
                 end
 
             end         -- we are in excellent state, ready to shoot
-        else this_pod.sleepUntil = game.ticks_played + 720 end -- reloadPods.GridIsDead(this_pod.grid_id, nil) end
+        else this_pod.sleepUntil = g_tick + 720 end -- reloadPod.GridIsDead(this_pod.grid_id, nil) end
     end
-    if global.reloadPods.equipped_weapon_id >= global.reloadPods.equipped_weapon_last then global.reloadPods.equipped_weapon_id = 1
-     else global.reloadPods.equipped_weapon_id = global.reloadPods.equipped_weapon_id + 1 end
+
 end
 
 function reloadPod.TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
@@ -382,7 +381,7 @@ end
 function reloadPod.DrivingState(player)
 end
 
-function reloadPod.UnloadPods(entities, player, box)
+function reloadPod.UnloadPods(entities, player, box, sleep_tick)
     local this_grid
     local this_pod
     local grids_processed = 0
@@ -414,7 +413,7 @@ function reloadPod.UnloadPods(entities, player, box)
                         if global.reloadPods.weapons_equipment[weapon_id] and global.reloadPods.weapons_equipment[weapon_id].weapon
                         then
                             this_pod = global.reloadPods.weapons_equipment[weapon_id]
-                            this_pod.sleepUntil = game.ticks_played + 7200
+                            this_pod.sleepUntil = sleep_tick
                             if this_pod.ammo == "empty" then
                                 -- it's already empty
                             else

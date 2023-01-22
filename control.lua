@@ -81,14 +81,15 @@ script.on_event(defines.events.on_runtime_mod_setting_changed, function(e)
 end)
 
 script.on_event(defines.events.on_tick, function(event)
-  reloadP.EveryTick()
-
+  reloadP.EveryTick(global.reloadPods.equipped_weapon_id, game.ticks_played)
+  if global.reloadPods.equipped_weapon_id >= global.reloadPods.equipped_weapon_last then global.reloadPods.equipped_weapon_id = 1
+   else global.reloadPods.equipped_weapon_id = global.reloadPods.equipped_weapon_id + 1 end
 end)
 
 script.on_event(defines.events.on_player_selected_area, function (event)
   local player = game.get_player(event.player_index)
   if event.item == "zd-ammo-unload" then
-    reloadP.UnloadPods(event.entities, player, event.area)
+    reloadP.UnloadPods(event.entities, player, event.area, game.ticks_played + 7200)
   end
 end)
 
