@@ -1,23 +1,20 @@
+local reloadPod = {}
+
 local PodsTiers = {
     gun = {1, 2, 5},
     flame = {1, 2},
     shotgun = {1, 2, 5},
 }
-local reloadPod = {}
+
 local weapons_equipment
 local equipped_weapons_count
 local equipped_weapon_id
 local equipped_weapon_last
-
 local grids
 local last_grid
 local grids_count
 
 local magazines
-local this_pod
-local this_grid
-local inv
-local pos
 
 function reloadPod.Init()
 
@@ -64,7 +61,10 @@ function reloadPod.OnLoad()
 end
 
 function reloadPod.EveryTick()
-
+    local this_pod
+    local this_grid
+    local inv
+    local pos
     if global.reloadPods.weapons_equipment[global.reloadPods.equipped_weapon_id] and global.reloadPods.weapons_equipment[global.reloadPods.equipped_weapon_id].sleepUntil < game.ticks_played then
         this_pod = global.reloadPods.weapons_equipment[global.reloadPods.equipped_weapon_id]
         if global.reloadPods.grids[this_pod.grid_id].grid and global.reloadPods.grids[this_pod.grid_id].grid.valid then
@@ -117,6 +117,7 @@ function reloadPod.EveryTick()
 end
 
 function reloadPod.TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
+    local pos
     local ammo_stack = inventory.find_item_stack(ammo_wanted)
     local stacks_needed = PodsTiers[PodMember.type][PodMember.tier]
     if ammo_stack and ammo_stack.count > 0 then
@@ -382,6 +383,8 @@ function reloadPod.DrivingState(player)
 end
 
 function reloadPod.UnloadPods(entities, player, box)
+    local this_grid
+    local this_pod
     local grids_processed = 0
     local pods_unloaded = 0
     local grid
@@ -416,6 +419,7 @@ function reloadPod.UnloadPods(entities, player, box)
                                 -- it's already empty
                             else
                                 if this_pod.ammo_count > 0 then             -- were we in reloading process?
+                                    local pos
                                     r = this_pod.ammo_count
                                     this_pod.ammo_count = 0
                                     pos = this_pod.weapon.position
