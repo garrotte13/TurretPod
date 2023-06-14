@@ -459,7 +459,8 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
                             tempStack, r = vehInv.find_item_stack(stack_unloaded.name)
                             if r and r > 0 then
                                 for x=r,#vehInv do
-                                    if vehInv[x].name == stack_unloaded.name and vehInv[x].transfer_stack(stack_unloaded) then break end
+                                    if vehInv[x].valid_for_read and vehInv[x].name == stack_unloaded.name
+                                     and vehInv[x].transfer_stack(stack_unloaded) then break end
                                 end
                             end
                             if stack_unloaded.valid_for_read and stack_unloaded.count > 0 then
