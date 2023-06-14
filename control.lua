@@ -89,7 +89,7 @@ end)
 script.on_event(defines.events.on_player_selected_area, function (event)
   local player = game.get_player(event.player_index)
   if event.item == "zd-ammo-unload" then
-    reloadP.UnloadPods(event.entities, player, event.area, game.ticks_played + 7200)
+    reloadP.UnloadPods(event.entities, player, event.area, event.tick + 1200)
   end
 end)
 
