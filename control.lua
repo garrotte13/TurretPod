@@ -11,7 +11,7 @@ local Unlink = function(event)
 end
 
 local Link = function(event)
-  reloadP.GridGetsOwner(event.created_entity)
+  reloadP.GridGetsOwner(event.created_entity, false)
 end
 
 local KilledGridOwner = function(event)
@@ -70,7 +70,12 @@ end)
 script.on_configuration_changed(function()
   
   reloadP.AddMagazines()
-  
+  for _, surface in pairs(game.surfaces) do
+    local vehicles = surface.find_entities_filtered({ type = {"car"}, force = "player" })
+    for _, entity in pairs(vehicles) do
+      reloadP.GridGetsOwner(entity, true)
+    end
+  end
 end)
 
 

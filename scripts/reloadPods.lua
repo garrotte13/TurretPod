@@ -281,7 +281,7 @@ function reloadPod.AddMagazines()
     magazines = global.reloadPods.magazines
 end
 
-function reloadPod.GridGetsOwner(entity)
+function reloadPod.GridGetsOwner(entity, fast)
     local grid
     if entity and entity.valid and entity.grid and entity.get_inventory(defines.inventory.car_trunk) then grid = entity.grid else return nil end
     local grid_id = 0
@@ -315,6 +315,7 @@ function reloadPod.GridGetsOwner(entity)
 
 -- TO DO -- Find and Insert missing turret pods IF ANY are missing! Why can it happen?? Who inserted them? Expecting grid is to have no turret pods.
 
+    elseif fast then return
     end
     global.reloadPods.grids[grid_id].owner = entity
     global.reloadPods.grids[grid_id].inv_type = defines.inventory.car_trunk
@@ -512,12 +513,12 @@ reloadPod.remote_interface = {
         end
     end,
 
-    reload_vehicle = function (vehicle)                 -- Fulfill gamedata for vehicle and its turret pods with 3-seconds pods pause
-        local grid_id = reloadPod.GridGetsOwner(vehicle)
+    reload_vehicle = function (vehicle)                 -- Fulfill gamedata for vehicle and its turret pods with 2-seconds pods pause
+        local grid_id = reloadPod.GridGetsOwner(vehicle, false)
         if grid_id and grid_id > 0 then
             local equipment_array = vehicle.grid.equipment
             if equipment_array and equipment_array[1] then
-                local untilTick = game.ticks_played + 180
+                local untilTick = game.ticks_played + 120
                 for i = 1, #equipment_array do
                     if equipment_array[i].type == "active-defense-equipment" and equipment_array[i].name:match("turret%-pod%-(.+)%-t%d") then
                         reloadPod.AddWeapon(equipment_array[i], grid_id, untilTick)
