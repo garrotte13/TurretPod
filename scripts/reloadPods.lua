@@ -321,7 +321,7 @@ function reloadPod.GridGetsOwner(entity, fast)
     global.reloadPods.grids[grid_id].inv_type = defines.inventory.car_trunk
     --game.print("A grid got an inventory connected. Grid's index: " .. grid_id)
     r = entity.unit_number -- https://lua-api.factorio.com/latest/LuaEntity.html#LuaEntity.unit_number
-    if r then
+    if r and r > 0 then
         --game.print("Owner has a unit number: " .. r)
         global.reloadPods.grids[grid_id].unit = r
     end
@@ -448,8 +448,8 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
                                 this_pod.ammo = "empty"
                             end
                         else
-                            --game.print("Not existing pod detected index : ".. weapon_id .. " in grid of index: " .. grid_id)
-                            -- global.reloadPods.weapons_equipment[weapon_id] = nil
+                           -- game.print("Not existing pod detected index : ".. weapon_id .. " in grid of index: " .. grid_id)
+                           -- global.reloadPods.weapons_equipment[weapon_id] = nil
                         end
                     end
                     tempInv.sort_and_merge()
@@ -461,14 +461,19 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
                             if r and r > 0 then
                                 for x=r,#vehInv do
                                     if vehInv[x].valid_for_read and vehInv[x].name == stack_unloaded.name
-                                     and vehInv[x].transfer_stack(stack_unloaded) then break end
+                                     and vehInv[x].transfer_stack(stack_unloaded) then
+                                        --game.print("Ammo added to stack!")
+                                        break
+                                    end
                                 end
                             end
                             if stack_unloaded.valid_for_read and stack_unloaded.count > 0 then
                                 r = 0
                                 tempStack, r = vehInv.find_empty_stack()
                                 if r and r > 0 then
-                                    tempStack.transfer_stack(stack_unloaded)
+                                    if tempStack.transfer_stack(stack_unloaded) then
+                                    --game.print("Ammo put as new stack!") else game.print("Vehicle inventory doesn't accept new stack!")
+                                    end
                                 else
                                     vehicle.surface.spill_item_stack(vehicle.position, stack_unloaded)
                                 end
@@ -480,7 +485,7 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
                     tempInv.clear()
                 end
             end
-
+        else --game.print("Vehicle doesn't have grid or inventory or vehicle is dead !")
         end
     end
     tempInv.destroy()
@@ -504,6 +509,28 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
 ]]
 end
 
+function reloadPod.EntityDestruction(event)
+    if event.entity then
+        reloadPod.UnloadPods({event.entity}, nil, nil)
+        reloadPod.GridIsDead(nil, event.entity.grid)
+    end
+end
+
+function reloadPod.EntityBuiltRaised(event)
+    local grid_id = reloadPod.GridGetsOwner(event.entity, false)
+    if grid_id and grid_id > 0 then
+        local equipment_array = event.entity.grid.equipment
+        if equipment_array and equipment_array[1] then
+            local untilTick = game.ticks_played + 120
+            for i = 1, #equipment_array do
+                if equipment_array[i].type == "active-defense-equipment" and equipment_array[i].name:match("turret%-pod%-(.+)%-t%d") then
+                    reloadPod.AddWeapon(equipment_array[i], grid_id, untilTick)
+                end
+            end
+        end
+    end
+end
+--[[
 reloadPod.remote_interface = {
 
     unload_vehicle = function (vehicle, kill_grid)      -- unload all turret pods and optionally remove gamedata if vehicle to be destroyed
@@ -529,5 +556,5 @@ reloadPod.remote_interface = {
     end,
 
 }
-
+--]]
 return reloadPod

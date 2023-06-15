@@ -1,6 +1,6 @@
 local reloadP = require("scripts.reloadPods")
 
-remote.add_interface("zd-turretpod", reloadP.remote_interface)
+--remote.add_interface("zd-turretpod", reloadP.remote_interface)
 
 local Unlink = function(event)
   if event.entity then
@@ -31,6 +31,8 @@ local function add_hooks()
     script.on_event( defines.events.on_entity_died,         KilledGridOwner, {{filter = "vehicle"}} )
     script.on_event( defines.events.on_pre_player_mined_item, Unlink, {{filter = "vehicle"}} )
     script.on_event( defines.events.on_robot_pre_mined,  Unlink, {{filter = "vehicle"}} )
+    script.on_event( defines.events.script_raised_destroy,  reloadP.EntityDestruction, {{filter = "vehicle"}} )
+    script.on_event( defines.events.script_raised_built,  reloadP.EntityBuiltRaised, {{filter = "vehicle"}} )
 
   else
 
