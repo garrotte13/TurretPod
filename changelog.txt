@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.4
+Date: 2023-06-15
+  Bugfixes:
+    - Unloading pod when there are stacks of ammo in inventory, but new stack was still required led to crash.
+    - Mod required redeploying vehicles after adding to existing gamesave.
+  Changes:
+    - Added some weapon info in tooltips (for K2/BobVE energy costs inflation coefficient of 1.5 to be applied).
+    - Replaced external interface methods with script_raised support for VehicleWagon2 and other mods support. VW2 still needs a fix
+---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: 2022-12-28
   Bugfixes:
