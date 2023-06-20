@@ -1,9 +1,9 @@
 {                                                                            
   "name":             "TurretPod",                                          
-  "version":          "1.0.4",                                      
+  "version":          "1.0.5",                                      
   "title":            "Turret Pod Equipment",                                         
   "author":           "garrotte",
   "description":      "Gun, Flame, Shotgun turret pods in equipment. They consume both ammo and electricity.",
   "factorio_version": "1.1",                                  
-  "dependencies":     ["base >= 1.1.0", "? RampantArsenal >= 1.0.3", "? Krastorio2", "? VehicleGrid", "? bobvehicleequipment"] 
+  "dependencies":     ["base >= 1.1.80", "? RampantArsenal >= 1.0.3", "? Krastorio2", "? VehicleGrid", "? bobvehicleequipment"] 
 }                                                                            

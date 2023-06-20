@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.5
+Date: 2023-06-20
+  Changes:
+    - Changed logics for mined/transformed vehicles to keep pods charge. Detection of pods preinstalled. No fix is required for VW2.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.4
 Date: 2023-06-15
   Bugfixes:
