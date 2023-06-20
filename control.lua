@@ -1,17 +1,19 @@
 local reloadP = require("scripts.reloadPods")
 
---remote.add_interface("zd-turretpod", reloadP.remote_interface)
-
 local Unlink = function(event)
   if event.entity then
-    if event.entity.grid then reloadP.GridLosesOwnerEntity(event.entity.grid)
+    if event.entity.grid then
+      --reloadP.UnloadPods({event.entity}, nil, nil)
+      --reloadP.GridLosesOwnerEntity(event.entity.grid) -- if factorio keeps grid and destroys only inventory
+      reloadP.GridIsDead(nil, event.entity.grid) -- if factorio destroys grid too
     -- else game.print ("Mined vehicle has no equipment grid!")
     end
   end
 end
 
 local Link = function(event)
-  reloadP.GridGetsOwner(event.created_entity, false)
+  -- reloadP.GridGetsOwner(event.created_entity, false)
+  reloadP.EntityBuiltRaised(event) -- assuming someone is playing with entities, transferring grid equipment and other things
 end
 
 local KilledGridOwner = function(event)
