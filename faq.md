@@ -2,10 +2,11 @@
 
 Two reasons this mod can be required:
 
-Vanilla Factorio doesn't make vehicles much useful: car is good until armor-MK2 and fusion reactor are made, tank is almost never used. Factorio has a lot of ways of play, but some are not motivated (except driving through creep in tank is much better than by foot+exo).
-This mod gives these vehicles some advantages. And keep game balance (some challenge, not a fan of spidertrons at game start). Building Time mod fan? - I welcome you!
+- Vanilla Factorio doesn't make vehicles much useful: car is good until armor-MK2 and fusion reactor are made, tank is almost never used. Factorio has a lot of ways of play, but some are not motivated (except driving through creep in tank is much better than by foot+exo).
+This mod gives these vehicles some advantages. And keep game balance (some challenge, I'm not a fan of spidertrons at game start).
+Building Time mod fan? - I welcome you!
 
-Love vehicle-based nests clearing, but even in multiplayer one player controls all weapons and can use only one (switching weapons also returns barrel to default position).
+- Love for vehicle-based nests clearing, but even in multiplayer one player controls all weapons and can use only one at a moment (switching weapons also returns weapon barrel to default position loosing precious time).
 
 ## Requirements
 
@@ -15,8 +16,8 @@ Other vehicles and character armor are low priority, but can be added (they are 
 1. _Equipment grid._
 Vanilla car and tank do not have equipment, it must be added by other mod. VehicleGrid or RampantArsenal will do it. Other vehicles usually have grids for equipment.
 
-1. _Electrical energy source and reserve in equipment._
-In vanilla it can be only solar panels and fusion reactor. Other mods add other sources (some are breaking game balance). But personal battery is also a must here, because power consumption is not flat. Not enough power - pods won't reload. Power is consumed when reloading only, not when shooting. Higher tier pods load more ammo at once, do it less often, but consume much more power.
+1. _Electrical energy source and battery in equipment._
+For vanilla it can be only solar panels and fusion reactor. Other mods add other sources (some are breaking game balance). But personal battery is also a must here, because power consumption is not flat. Not enough power - pods won't reload in time. Power is consumed when reloading only, not when shooting. Higher tier pods load more ammo at once, do it less often, but consume much more power. Therefore even powerful fusion reactor(s) will reload too slow without batteries.
 
 ## How it works
 
@@ -24,7 +25,7 @@ In vanilla it can be only solar panels and fusion reactor. Other mods add other 
 
 - Craft turret pods (by hand is allowed).
 
-- Build a vehicle on the ground (if mod was added after vehicle deployed, it requires re-deployment, will be fixed in next mod release).
+- Deploy a vehicle on the ground.
 
 - Insert energy source into vehicle equipment.
 
@@ -36,7 +37,7 @@ In vanilla it can be only solar panels and fusion reactor. Other mods add other 
 
 - Add all ammo reserves to vehicle inventory after turret pods have loaded required ammo subtypes. They won't mix, every turret will keep using the same ammo type till out of stock and only if mod option allows to switch ammo.
 
-- Ready for battle! Keep an eye on vehicle battery level and get out of big fights when energy level is low to replenish batteries level. For vehicles left by driver you need battery level - BatteryVehicleDisplay mod do the trick for you. Maybe will add a feature in this mod to show only when no driver in vehicle.
+- Ready for battle! Keep an eye on vehicle battery level and get out of big fights when energy level is low to replenish batteries level. For vehicles left by driver you need battery level hint - BatteryVehicleDisplay mod can do the trick for you. Maybe I will add a feature in this mod to show charge level when no driver is in vehicle.
 
 - If pods need to be extracted from equipment grid please use Unload Ammo (Alt+U) shortcut selection over your vehicle first to return loaded ammo back into vehicle inventory.
 
@@ -55,13 +56,14 @@ Consumes shotgun shell magazines. In Vanilla it is shotgun shell and piercing sh
 ![Alt text](https://wiki.factorio.com/images/thumb/Shotgun_shells.png/32px-Shotgun_shells.png)
 
 ### Flame turret pod
+
 Consumes flamethrower ammo. In Vanilla it is... flamethrower ammo ! Other mods can add more, e.g. Napalm ammo added by Rampant Arsenal mod.
 
 ![Alt text](https://wiki.factorio.com/images/thumb/Flamethrower_ammo.png/32px-Flamethrower_ammo.png)
 
 ## Additional info from mod changelog notes
 
-- Every reload consumes electrical power. Tier-1 goes ok with solar+battery, Tier-2 needs reactor+batteries mk2, Tier-3 demands nuclear/K2-fusion energy. Like energy shield and nightvision turret pods are a primary-class energy consumer. Acid stickers applied with multiple shields can completely stop reloading if batteries ran out, drive out of big fights back to turrets defense line when low battery level!
+- Every reload consumes electrical power. Tier-1 goes ok with solar+battery, Tier-2 needs reactor+batteries mk2, Tier-3 demands nuclear/K2-fusion energy. Like energy shield and nightvision equipment turret pods are a primary-class energy consumer. Acid stickers applied with multiple shields can completely stop reloading if batteries ran out, drive out of big fights back to turrets defense line when battery level is low!
 
 - Technically any weapon type turret pod can be added (cannons, sniper/anti-material rifles) with small efforts, but...
 Turret pods are for passive self-defense only to make tanks/cars a preferable choice in endgame vs char armor mk2/mk3.
@@ -71,8 +73,8 @@ Vehicles (e.g. in Rampant Arsenal or K2) do have all the high-range weapons on-b
 
 - Trains support is under question (Low priority, but may give some fun in result). There is another mod for it (has some pros and cons).
 
-- Aircraft support is accidental (may not work, Low priority).
+- Aircraft support is accidental (may not work, Low priority). Tested with HelicopterRevival successfully (that mod needs a small fix for it).
 
-- VehicleWagon2 mod support is of course on the way. Highest priority. I love when tank isn't put back into pocket. Do you?
+- VehicleWagon2 mod is supported. I love when tank isn't put back into pocket. Do you?
 
 - Still testing balance now. Feedback will be highly appreciated, especially for endgame.
