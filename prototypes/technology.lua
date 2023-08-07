@@ -152,7 +152,7 @@ data:extend(
   },
 })
 
-if ( mods.RampantArsenal ) then
+if mods.RampantArsenal and settings.startup["rampant-arsenal-enableVehicle"].value then
   data:extend(
   {
 

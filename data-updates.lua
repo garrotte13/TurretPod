@@ -19,7 +19,7 @@ for _, car in pairs(data.raw["car"]) do
     end
 end
 
-if ( mods.RampantArsenal ) then
+if mods.RampantArsenal and settings.startup["rampant-arsenal-enableVehicle"].value then
     table.insert(data.raw["equipment-grid"]["nuclear-car-grid-rampant-arsenal"].equipment_categories, "zd-turret-pod-equipment-advanced-category")
     table.insert(data.raw["equipment-grid"]["nuclear-tank-grid-rampant-arsenal"].equipment_categories, "zd-turret-pod-equipment-advanced-category")
 end
