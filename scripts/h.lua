@@ -20,3 +20,14 @@ if weapon.name:match("turret%-pod%-(.+)%-t%d") then local detected = true end
 -- turret-pod-shotgun-t2-empty-equipment
 
 -- turret-pod-gun-t1-empty-equipment-reload
+
+--[[
+Added LuaEquipmentGrid::unique_id read.
+
+Added LuaEquipmentGrid::find/count methods.
+Added LuaEntityPrototype::tile_width/tile_height reads.
+Added LuaEntity::tile_width/tile_height reads.
+Added range_modifier, cooldown_modifier, consumption_modifier fields to AmmoType concept.
+
+--]]
+

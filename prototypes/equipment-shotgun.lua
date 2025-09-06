@@ -20,18 +20,11 @@ local function generate_turret(tier, magazine)
 
   local layers = {
     {
-      filename = "__TurretPod__/graphics/icons/SPAS-12_M9_160.png",
-      width = 160,
-      height = 120,
-      priority = "medium",
-      scale = 1,
-      hr_version = {
-        filename = "__TurretPod__/graphics/icons/SPAS-12_M9_320.png",
+      filename = "__TurretPod__/graphics/icons/SPAS-12_M9_320.png",
       width = 320,
       height = 240,
       priority = "medium",
       scale = 1,
-      }
     }
   }
 
@@ -43,7 +36,7 @@ local function generate_turret(tier, magazine)
 
 		-- icon of magazine
     if magazine_item.icon then
-      table.insert(layers, {filename = magazine_item.icon, size = magazine_item.icon_size})
+      table.insert(layers, {filename = magazine_item.icon, size = magazine_item.icon_size or 64, scale = 0.5})
     else
       for _, icon_data in ipairs(magazine_item.icons) do
         icon_data = table.deepcopy(icon_data)
@@ -57,7 +50,7 @@ local function generate_turret(tier, magazine)
     -- just copy the whole action. This means it will work with multiple complex effects like rampants incendiary ammo etc
     action = table.deepcopy(magazine_item.ammo_type.action)
   else
-    table.insert(layers, {filename = '__core__/graphics/icons/alerts/ammo-icon-red.png', size = 64}) -- no ammo graphic
+    table.insert(layers, {filename = '__core__/graphics/icons/alerts/ammo-icon-red.png', size = 64, scale = 0.5}) -- no ammo graphic
     magazine_localised_name = "item-name.no-ammo"
   end
   layers[2].scale = 1 * 64 / layers[2].size
@@ -128,7 +121,7 @@ local function generate_turret(tier, magazine)
           {
             category = "shotgun-shell",
             --energy_consumption = ( 1 + magazine_item.reload_time ) .. "J",
-            energy_consumption = "1000000KJ",
+            energy_consumption = "1000000kJ",
             action = action
           },
           range = 1,
@@ -249,13 +242,13 @@ generate_turret(2, "empty")
 if ( mods.RampantArsenal ) then generate_turret(3, "empty") end
 for ammo_name, ammo in pairs(data.raw.ammo) do
   -- log("[" .. ammo_name .. "].ammo_type.category" .. ammo.ammo_type.category)
-  if ammo.ammo_type.category == "shotgun-shell" then
+  if ammo.ammo_category == "shotgun-shell" then
     generate_turret(1, ammo_name)
     generate_turret(2, ammo_name)
     if ( mods.RampantArsenal ) then generate_turret(3, ammo_name) end
-  elseif ammo.ammo_type.category == nil then
+  elseif ammo.ammo_category == nil then
     for _,ammo_type in pairs( ammo.ammo_type ) do
-      if ammo.ammo_type.category == "shotgun-shell" then -- mistake in Zdenek's code here, it won't find anything. Check equipment-flame for correct code.
+      if ammo.ammo_category == "shotgun-shell" then
         generate_turret(1, ammo_name)
         generate_turret(2, ammo_name)
         if ( mods.RampantArsenal ) then generate_turret(3, ammo_name) end
