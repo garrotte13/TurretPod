@@ -1,4 +1,17 @@
 
+if not data.raw["car"]["car"].equipment_grid then -- if default car doesn't has a grid we add 6x4 grid for it
+    data:extend({
+        {
+            type = "equipment-grid",
+            name = "car-equipment-grid",
+            width = 6,
+            height = 4,
+            equipment_categories = {"armor"}
+        }
+    })
+    data.raw["car"]["car"].equipment_grid = "car-equipment-grid"
+end
+
 local grid
 local found
 for _, car in pairs(data.raw["car"]) do

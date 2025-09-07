@@ -4,6 +4,9 @@ Date: 2025-09-07
   Changes:
     - Factorio2.0 support
     - Minigun graphics replaced by new one from snouz
+    - Equipment grid 6x4 automatically added for default car if not added by other mods
+  Bugfixes:
+    - Changing ammo reload option error
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.5
 Date: 2023-06-20

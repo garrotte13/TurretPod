@@ -27,7 +27,7 @@ data:extend({
         name = "zd-AllowChangeAmmo",
         description = "zd-AllowChangeAmmo",
         setting_type = "runtime-global",
-        default_value = false,
+        default_value = true,
         --order = "m[total]-a[ai]",
 
     },

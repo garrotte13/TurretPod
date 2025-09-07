@@ -2,7 +2,7 @@ local energy_coeff = 1
 if ( mods.Krastorio2 ) or ( mods.bobvehicleequipment ) then energy_coeff = 1.5 end
 
 local gunpods = {
-  cap = {3600*energy_coeff .. "kJ", 18000*energy_coeff .. "kJ", 108000*energy_coeff .. "kJ"},
+  cap = {5000*energy_coeff .. "kJ", 28000*energy_coeff .. "kJ", 288000*energy_coeff .. "kJ"},
   width = {3, 4, 5},
   mag = {1, 2, 5},
   cooldown = {70, 60, 60},

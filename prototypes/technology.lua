@@ -75,10 +75,7 @@ data:extend(
     name = "turret-pod-flame1",
     icons =
     {
-      {
-        icon_size = 256, icon_mipmaps = 4,
-        icon = "__base__/graphics/technology/flamethrower.png",
-      },
+      { icon = "__base__/graphics/technology/flamethrower.png", icon_size = 256, scale = 1 },
       { icon = "__TurretPod__/graphics/icons/tiers/1.png", icon_size = 64, scale = 2, shift = {65, -65} },
       {
         icon = "__core__/graphics/icons/technology/constants/constant-equipment.png",
@@ -88,6 +85,7 @@ data:extend(
         --scale = 0.25
       }
     },
+    icon_size = 256,
     prerequisites = { "modular-armor", "flamethrower", "military-3" },
     effects =
     {
@@ -114,10 +112,7 @@ data:extend(
     name = "turret-pod-flame2",
     icons =
     {
-      {
-        icon_size = 256, icon_mipmaps = 4,
-        icon = "__base__/graphics/technology/flamethrower.png",
-      },
+      { icon = "__base__/graphics/technology/flamethrower.png", icon_size = 256, scale = 1 },
       { icon = "__TurretPod__/graphics/icons/tiers/2.png", icon_size = 64, scale = 2, shift = {65, -65} },
       {
         icon = "__core__/graphics/icons/technology/constants/constant-equipment.png",

@@ -2,7 +2,7 @@ local energy_coeff = 1
 if ( mods.Krastorio2 ) or ( mods.bobvehicleequipment ) then energy_coeff = 1.5 end
 
 local flamepods = {
-  cap = {950*energy_coeff .. "kJ", 5500*energy_coeff .. "kJ"},
+  cap = {2500*energy_coeff .. "kJ", 10500*energy_coeff .. "kJ"},
   width = {3, 4},
   mag = {1, 2},
   cooldown = {1.5, 1.2},
@@ -136,7 +136,6 @@ local function generate_turret(tier, magazine)
           ammo_type =
           {
             category = "bullet",
-            --energy_consumption = ( 1 + magazine_item.reload_time ) .. "J",
             energy_consumption = "1000000kJ",
             --action = action
           },
