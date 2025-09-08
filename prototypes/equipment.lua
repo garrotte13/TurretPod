@@ -123,7 +123,7 @@ local function generate_turret(tier, magazine)
         {
           width = gunpods.width[tier],
           --height = gunpods.width[tier],
-          height = tier + 1,
+          height = 2,
           type = "full"
         },
         energy_source =
@@ -192,7 +192,7 @@ local function generate_turret(tier, magazine)
     {
       width = gunpods.width[tier],
       --height = gunpods.width[tier],
-      height = tier + 1,
+      height = 2,
       type = "full"
     },
     energy_source =

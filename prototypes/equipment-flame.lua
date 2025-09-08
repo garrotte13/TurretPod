@@ -102,7 +102,7 @@ local function generate_turret(tier, magazine)
         {
           width = flamepods.width[tier],
           --height = mods.bobvehicleequipment and (tier + 1) or flamepods.width[tier],
-          height = tier + 1,
+          height = 2,
           type = "full"
         },
         energy_source =
@@ -169,7 +169,7 @@ local function generate_turret(tier, magazine)
     shape =
     {
       width = flamepods.width[tier],
-      height = tier + 1,
+      height = 2,
       --height = mods.bobvehicleequipment and (tier + 1) or flamepods.width[tier],
       type = "full"
     },
