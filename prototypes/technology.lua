@@ -75,7 +75,7 @@ data:extend(
     name = "turret-pod-flame1",
     icons =
     {
-      { icon = "__base__/graphics/technology/flamethrower.png", icon_size = 256, scale = 1 },
+      { icon = "__TurretPod__/graphics/technology/personal-flamethrower-equipment.png", icon_size = 256, scale = 1 },
       { icon = "__TurretPod__/graphics/icons/tiers/1.png", icon_size = 64, scale = 2, shift = {65, -65} },
       {
         icon = "__core__/graphics/icons/technology/constants/constant-equipment.png",
@@ -112,7 +112,7 @@ data:extend(
     name = "turret-pod-flame2",
     icons =
     {
-      { icon = "__base__/graphics/technology/flamethrower.png", icon_size = 256, scale = 1 },
+      { icon = "__TurretPod__/graphics/technology/personal-flamethrower-equipment.png", icon_size = 256, scale = 1 },
       { icon = "__TurretPod__/graphics/icons/tiers/2.png", icon_size = 64, scale = 2, shift = {65, -65} },
       {
         icon = "__core__/graphics/icons/technology/constants/constant-equipment.png",

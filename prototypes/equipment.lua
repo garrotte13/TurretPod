@@ -19,7 +19,7 @@ local function generate_turret(tier, magazine)
 
   local layers = {
     {
-      filename = "__TurretPod__/graphics/personal-turret-equipment.png",
+      filename = "__TurretPod__/graphics/equipment/personal-turret-equipment.png",
       width = 128,
       height = 128,
       priority = "medium",

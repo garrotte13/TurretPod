@@ -20,9 +20,9 @@ local function generate_turret(tier, magazine)
 
   local layers = {
     {
-      filename = "__TurretPod__/graphics/icons/SPAS-12_M9_320.png",
-      width = 320,
-      height = 240,
+      filename = "__TurretPod__/graphics/equipment/personal-shotgun-defense-equipment.png",
+      width = 128,
+      height = 128,
       priority = "medium",
       scale = 1,
     }

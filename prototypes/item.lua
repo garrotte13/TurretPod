@@ -37,7 +37,8 @@ data:extend(
 		name = "turret-pod-flame-t1-empty-equipment",
 		localised_name = { "item-name.turret-pod-flame-t1-equipment" },
 		icons = {
-			{ icon = "__TurretPod__/graphics/icons/flamepod1_64.png", icon_size = 64 },
+			--{ icon = "__TurretPod__/graphics/icons/flamepod1_64.png", icon_size = 64 },
+			{ icon = "__TurretPod__/graphics/icons/personal-flamethrower-equipment.png", icon_size = 64 },
 			{ icon = "__TurretPod__/graphics/icons/tiers/1.png", icon_size = 64, scale = 0.5 }
 		},
 		place_as_equipment_result = "turret-pod-flame-t1-empty-equipment",
@@ -50,7 +51,8 @@ data:extend(
 		name = "turret-pod-flame-t2-empty-equipment",
 		localised_name = { "item-name.turret-pod-flame-t2-equipment" },
 		icons = {
-			{ icon = "__TurretPod__/graphics/icons/flamepod2_64.png", icon_size = 64 },
+			--{ icon = "__TurretPod__/graphics/icons/flamepod2_64.png", icon_size = 64 },
+			{ icon = "__TurretPod__/graphics/icons/personal-flamethrower-equipment.png", icon_size = 64 },
 			{ icon = "__TurretPod__/graphics/icons/tiers/2.png", icon_size = 64, scale = 0.5 }
 		},
 		place_as_equipment_result = "turret-pod-flame-t2-empty-equipment",
@@ -64,7 +66,7 @@ data:extend(
 		name = "turret-pod-shotgun-t1-empty-equipment",
 		localised_name = { "item-name.turret-pod-shotgun-t1-equipment" },
 		icons = {
-			{ icon = "__TurretPod__/graphics/icons/shotgun-64.png", icon_size = 64 },
+			{ icon = "__TurretPod__/graphics/icons/personal-shotgun-equipment.png", icon_size = 64 },
 			{ icon = "__TurretPod__/graphics/icons/tiers/1.png", icon_size = 64, scale = 0.5 },
 		},
 		icon_size = 64,
@@ -79,7 +81,7 @@ data:extend(
 		name = "turret-pod-shotgun-t2-empty-equipment",
 		localised_name = { "item-name.turret-pod-shotgun-t2-equipment" },
 		icons = {
-			{ icon = "__TurretPod__/graphics/icons/shotgun-64.png", icon_size = 64 },
+			{ icon = "__TurretPod__/graphics/icons/personal-shotgun-equipment.png", icon_size = 64 },
 			{ icon = "__TurretPod__/graphics/icons/tiers/2.png", icon_size = 64, scale = 0.5 },
 		},
 		icon_size = 64,
