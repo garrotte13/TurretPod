@@ -435,17 +435,23 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
                                     pos = this_pod.weapon.position
                                     this_grid.grid.take{ equipment = this_pod.weapon }
                                     this_pod.weapon = this_grid.grid.put{
-                                        name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-" .. this_pod.ammo .. "-equipment",
+                                        name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-empty-equipment",
                                         position = pos
                                     }
                                 elseif this_pod.weapon.energy > 0 then      -- were we in a ready to shoot state with some ammo left?
                                     r = this_pod.weapon.energy
                                     this_pod.weapon.energy = 0
+                                    pos = this_pod.weapon.position
+                                    this_grid.grid.take{ equipment = this_pod.weapon }
+                                    this_pod.weapon = this_grid.grid.put{
+                                        name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-empty-equipment",
+                                        position = pos
+                                    }
                                 else r = 0
                                 end
-                                pods_unloaded = pods_unloaded + 1
                                 if r > 0 then
                                     --game.print("Unloaded " .. r .. " bullets from pod with index " .. weapon_id)
+                                    pods_unloaded = pods_unloaded + 1
                                     stack_unloaded = tempInv.find_empty_stack()
                                     d = math.fmod(r, magazines[this_pod.type][this_pod.ammo])
                                     if d == 0 then d = magazines[this_pod.type][this_pod.ammo] end
