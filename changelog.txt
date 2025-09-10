@@ -3,7 +3,7 @@ Version: 2.0.2
 Date: 2025-09-10
   Changes:
     - Other vehicles support
-    - Equipment grid for cargo wagon if not added by other mods
+    - Equipment grid for cargo wagon if not added by other mods. Shotgun ammo default attack friendly fire damages train infrastructure. 
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.1
 Date: 2025-09-08

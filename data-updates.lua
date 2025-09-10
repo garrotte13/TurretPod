@@ -3,7 +3,7 @@ if not data.raw["cargo-wagon"]["cargo-wagon"].equipment_grid then -- if default 
         {
             type = "equipment-grid",
             name = "cargo-grid",
-            width = 8,
+            width = 9,
             height = 4,
             equipment_categories = {"armor"}
         }
