@@ -75,7 +75,7 @@ script.on_configuration_changed(function()
   
   reloadP.AddMagazines()
   for _, surface in pairs(game.surfaces) do
-    local vehicles = surface.find_entities_filtered({ type = {"car"}, force = "player" })
+    local vehicles = surface.find_entities_filtered({ type = {"car", "spider-vehicle", "cargo-wagon"}, force = "player" })
     for _, entity in pairs(vehicles) do
       reloadP.GridGetsOwner(entity, true)
     end

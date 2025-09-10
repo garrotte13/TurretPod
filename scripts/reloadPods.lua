@@ -14,6 +14,13 @@ local grids
 local last_grid
 local grids_count
 
+local inv_types = {
+    defines.inventory.car_trunk,
+    defines.inventory.spider_trunk,
+    defines.inventory.cargo_wagon,
+    -- I know you want more, but not today
+}
+
 local magazines
 
 function reloadPod.Init()
@@ -292,9 +299,18 @@ function reloadPod.AddMagazines()
 end
 
 function reloadPod.GridGetsOwner(entity, fast)
-    local grid
+    local in_type
     --game.print("Attempt to register a grid...")
-    if entity and entity.valid and entity.grid and entity.get_inventory(defines.inventory.car_trunk) then grid = entity.grid else return nil end
+    if entity and entity.valid and entity.grid then
+        for i = 1,#inv_types do
+            if entity.get_inventory(inv_types[i]) then
+                in_type = inv_types[i]
+                break
+            end
+        end
+        if not in_type then return nil end -- entity has valid grid, but no valid inventory
+    else return nil end -- entity is invalid or has no grid
+    local grid = entity.grid
     local grid_id = 0
     local r = 0
     for ids = 1 , storage.reloadPods.last_grid do
@@ -317,7 +333,7 @@ function reloadPod.GridGetsOwner(entity, fast)
             weapons = {},
             owner = nil,
             unit = 0,
-            inv_type = defines.inventory.car_trunk,
+            inv_type = in_type,
         }
         if r == storage.reloadPods.last_grid then storage.reloadPods.last_grid = storage.reloadPods.last_grid + 1 end
         storage.reloadPods.grids_count = storage.reloadPods.grids_count + 1
@@ -327,7 +343,7 @@ function reloadPod.GridGetsOwner(entity, fast)
     elseif fast then return
     end
     storage.reloadPods.grids[grid_id].owner = entity
-    storage.reloadPods.grids[grid_id].inv_type = defines.inventory.car_trunk
+    storage.reloadPods.grids[grid_id].inv_type = in_type
     --game.print("A grid got an inventory connected. Grid's index: " .. grid_id)
     r = entity.unit_number -- https://lua-api.factorio.com/latest/LuaEntity.html#LuaEntity.unit_number
     if r and r > 0 then
@@ -404,16 +420,24 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
     local stack_unloaded
     local r = 0
     local d
-    local vehInv
+--    local vehInv
     for _, vehicle in pairs(entities) do
-        if vehicle and vehicle.valid and vehicle.grid and vehicle.get_inventory(defines.inventory.car_trunk) and vehicle.get_inventory(defines.inventory.car_trunk).valid then
-            grid = vehicle.grid
-            vehInv = vehicle.get_inventory(defines.inventory.car_trunk)
-            grid_id = 0
-            for ids = 1 , storage.reloadPods.last_grid do
-                if storage.reloadPods.grids[ids] and storage.reloadPods.grids[ids].grid == grid then
-                    grid_id = ids
+        if vehicle and vehicle.valid and vehicle.grid then
+            local vehInv
+            for i = 1,#inv_types do
+                if vehicle.get_inventory(inv_types[i]) then
+                    grid = vehicle.grid
+                    vehInv = vehicle.get_inventory(inv_types[i])
                     break
+                end
+            end
+            grid_id = 0
+            if vehInv and vehInv.valid then
+                for ids = 1 , storage.reloadPods.last_grid do
+                    if storage.reloadPods.grids[ids] and storage.reloadPods.grids[ids].grid == grid then
+                        grid_id = ids
+                        break
+                    end
                 end
             end
             if grid_id > 0 then
@@ -501,7 +525,7 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
                     tempInv.clear()
                 end
             end
-        else --game.print("Vehicle doesn't have grid or inventory or vehicle is dead !")
+        else --game.print("Vehicle doesn't have grid or inventory, or vehicle is dead !")
         end
     end
     tempInv.destroy()

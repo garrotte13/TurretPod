@@ -1,4 +1,15 @@
-
+if not data.raw["cargo-wagon"]["cargo-wagon"].equipment_grid then -- if default car doesn't has a grid we add 6x4 grid for it
+    data:extend({
+        {
+            type = "equipment-grid",
+            name = "cargo-grid",
+            width = 8,
+            height = 4,
+            equipment_categories = {"armor"}
+        }
+    })
+    data.raw["cargo-wagon"]["cargo-wagon"].equipment_grid = "cargo-grid"
+end
 if not data.raw["car"]["car"].equipment_grid then -- if default car doesn't has a grid we add 6x4 grid for it
     data:extend({
         {
@@ -31,6 +42,41 @@ for _, car in pairs(data.raw["car"]) do
         end
     end
 end
+for _, car in pairs(data.raw["spider-vehicle"]) do
+    if car.equipment_grid and data.raw["equipment-grid"][car.equipment_grid] then
+        found = false
+        grid = data.raw["equipment-grid"][car.equipment_grid].equipment_categories
+        if grid then
+            for i = 1, #grid do
+                if grid[i] == "zd-turret-pod-equipment-basic-category" then
+                    found = true
+                    break
+                end
+            end
+        end
+        if not found then
+            if grid then table.insert(grid, "zd-turret-pod-equipment-basic-category") else grid = {"zd-turret-pod-equipment-basic-category"} end
+        end
+    end
+end
+for _, car in pairs(data.raw["cargo-wagon"]) do
+    if car.equipment_grid and data.raw["equipment-grid"][car.equipment_grid] then
+        found = false
+        grid = data.raw["equipment-grid"][car.equipment_grid].equipment_categories
+        if grid then
+            for i = 1, #grid do
+                if grid[i] == "zd-turret-pod-equipment-basic-category" then
+                    found = true
+                    break
+                end
+            end
+        end
+        if not found then
+            if grid then table.insert(grid, "zd-turret-pod-equipment-basic-category") else grid = {"zd-turret-pod-equipment-basic-category"} end
+        end
+    end
+end
+
 
 if mods.RampantArsenal and settings.startup["rampant-arsenal-enableVehicle"].value then
     table.insert(data.raw["equipment-grid"]["nuclear-car-grid-rampant-arsenal"].equipment_categories, "zd-turret-pod-equipment-advanced-category")
