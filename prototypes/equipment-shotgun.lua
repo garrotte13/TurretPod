@@ -2,14 +2,14 @@ local energy_coeff = 1
 if ( mods.Krastorio2 ) or ( mods.bobvehicleequipment ) then energy_coeff = 1.5 end
 
 local gunpods = {
-  cap = {5000*energy_coeff .. "kJ", 28000*energy_coeff .. "kJ", 288000*energy_coeff .. "kJ"},
+  cap = {5000*energy_coeff .. "kJ", 28000*energy_coeff .. "kJ", 238000*energy_coeff .. "kJ"},
   width = {3, 4, 5},
   mag = {1, 2, 5},
   cooldown = {70, 60, 60},
   range = {11, 14, 16},
   min_range = {0, 0, 2},
   dmg = {1.1, 1.3, 1.5},
-  grids = { {"zd-turret-pod-equipment-basic-category"}, {"zd-turret-pod-equipment-basic-category"}, {"zd-turret-pod-equipment-advanced-category"} }
+  grids = { {"zd-turret-pod-equipment-basic-category"}, {"zd-turret-pod-equipment-basic-category"}, {"zd-turret-pod-equipment-basic-category"},  {"zd-turret-pod-equipment-advanced-category"} }
 }
 
 
@@ -239,19 +239,25 @@ end
 
 generate_turret(1, "empty")
 generate_turret(2, "empty")
-if ( mods.RampantArsenal ) then generate_turret(3, "empty") end
+--if ( mods.RampantArsenal ) then
+  generate_turret(3, "empty")
+--end
 for ammo_name, ammo in pairs(data.raw.ammo) do
   -- log("[" .. ammo_name .. "].ammo_type.category" .. ammo.ammo_type.category)
   if ammo.ammo_category == "shotgun-shell" then
     generate_turret(1, ammo_name)
     generate_turret(2, ammo_name)
-    if ( mods.RampantArsenal ) then generate_turret(3, ammo_name) end
+    --if ( mods.RampantArsenal ) then
+      generate_turret(3, ammo_name)
+    --end
   elseif ammo.ammo_category == nil then
     for _,ammo_type in pairs( ammo.ammo_type ) do
       if ammo.ammo_category == "shotgun-shell" then
         generate_turret(1, ammo_name)
         generate_turret(2, ammo_name)
-        if ( mods.RampantArsenal ) then generate_turret(3, ammo_name) end
+        --if ( mods.RampantArsenal ) then
+          generate_turret(3, ammo_name)
+        --end
       end
     end
   end

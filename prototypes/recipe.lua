@@ -90,7 +90,7 @@ data:extend ({
 
 })
 
-if ( mods.RampantArsenal ) then
+--if ( mods.RampantArsenal ) then
   data:extend ({
 
     {
@@ -100,11 +100,11 @@ if ( mods.RampantArsenal ) then
       energy_required = 40,
       ingredients =
       {
-        {type="item", name="electric-engine-unit", amount=2},
-        {type="item", name="low-density-structure", amount=5},
+        {type="item", name="electric-engine-unit", amount=5},
+        {type="item", name="low-density-structure", amount=7},
         {type="item", name="turret-pod-gun-t2-empty-equipment", amount=1},
-        {type="item", name="gun-item-rampant-arsenal", amount=1},
-        {type="item", name="efficiency-module-2", amount=12}
+        {type="item", name="steel-plate", amount=20},
+        {type="item", name="efficiency-module-2", amount=16}
       },
       results = {{type="item", name="turret-pod-gun-t3-empty-equipment", amount=1}}
     },
@@ -116,13 +116,13 @@ if ( mods.RampantArsenal ) then
       energy_required = 40,
       ingredients =
       {
-        {type="item", name="electric-engine-unit", amount=2},
-        {type="item", name="low-density-structure", amount=5},
+        {type="item", name="electric-engine-unit", amount=5},
+        {type="item", name="low-density-structure", amount=7},
         {type="item", name="turret-pod-shotgun-t2-empty-equipment", amount=1},
-        {type="item", name="shotgun-item-rampant-arsenal", amount=2},
-        {type="item", name="efficiency-module-2", amount=12}
+        {type="item", name="steel-plate", amount=20},
+        {type="item", name="efficiency-module-2", amount=16}
       },
       results = {{type="item", name="turret-pod-shotgun-t3-empty-equipment", amount=1}}
     },
   })
-end
+--end

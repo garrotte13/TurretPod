@@ -55,7 +55,7 @@ data:extend(
       }
     },
     unit = {
-      count = 250,
+      count = 350,
       ingredients =
       {
         {"automation-science-pack", 1},
@@ -131,7 +131,7 @@ data:extend(
       }
     },
     unit = {
-      count = 700,
+      count = 600,
       ingredients =
       {
         {"automation-science-pack", 1},
@@ -147,7 +147,7 @@ data:extend(
   },
 })
 
-if mods.RampantArsenal and settings.startup["rampant-arsenal-enableVehicle"].value then
+--if mods.RampantArsenal and settings.startup["rampant-arsenal-enableVehicle"].value then
   data:extend(
   {
 
@@ -155,11 +155,11 @@ if mods.RampantArsenal and settings.startup["rampant-arsenal-enableVehicle"].val
       type = "technology",
       name = "turret-pod-gun3",
       icons = {
-        { icon = "__TurretPod__/graphics/technology/personal-turret-equipment.png", icon_size = 128 },
+        { icon = "__TurretPod__/graphics/technology/personal-turret-equipment.png", icon_size = 256 },
         { icon = "__TurretPod__/graphics/icons/tiers/3.png", icon_size = 64, scale = 1, shift = {30, -40} },
       },
       icon_size = 128,
-      prerequisites = { "rocket-silo", "turret-pod-gun2", "rampant-arsenal-technology-nuclear-tanks" },
+      prerequisites = { "rocket-silo", "turret-pod-gun2", "spidertron" },
       effects =
       {
         {
@@ -172,7 +172,7 @@ if mods.RampantArsenal and settings.startup["rampant-arsenal-enableVehicle"].val
         }
       },
       unit = {
-        count = 500,
+        count = 1000,
         ingredients =
         {
           {"automation-science-pack", 1},
@@ -189,4 +189,4 @@ if mods.RampantArsenal and settings.startup["rampant-arsenal-enableVehicle"].val
 
 
   })
-end
+--end

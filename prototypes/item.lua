@@ -94,14 +94,14 @@ data:extend(
 
 })
 
-if ( mods.RampantArsenal ) then
+--if ( mods.RampantArsenal ) then
 	data:extend ({
 		{
 			type = "item",
 			name = "turret-pod-gun-t3-empty-equipment",
 			localised_name = { "item-name.turret-pod-gun-t3-equipment" },
 			icons = {
-				{ icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png", icon_size = 32 },
+				{ icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png", icon_size = 64 },
 				{ icon = "__TurretPod__/graphics/icons/tiers/3.png", icon_size = 64, scale = 0.5 },
 			},
 			icon_size = 32,
@@ -115,7 +115,7 @@ if ( mods.RampantArsenal ) then
 			name = "turret-pod-shotgun-t3-empty-equipment",
 			localised_name = { "item-name.turret-pod-shotgun-t3-equipment" },
 			icons = {
-				{ icon = "__TurretPod__/graphics/icons/shotgun-64.png", icon_size = 64 },
+				{ icon = "__TurretPod__/graphics/icons/personal-shotgun-equipment.png", icon_size = 64 },
 				{ icon = "__TurretPod__/graphics/icons/tiers/3.png", icon_size = 64, scale = 0.5 },
 			},
 			icon_size = 64,
@@ -125,7 +125,7 @@ if ( mods.RampantArsenal ) then
 			stack_size = 10
 		},
 	})
-end
+--end
 
 data:extend ({
  {
