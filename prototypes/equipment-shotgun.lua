@@ -46,7 +46,7 @@ local function generate_turret(tier, magazine)
       end
     end
 
-    magazine_size = magazine_item.magazine_size
+    magazine_size = magazine_item.magazine_size or magazine_size
     -- just copy the whole action. This means it will work with multiple complex effects like rampants incendiary ammo etc
     action = table.deepcopy(magazine_item.ammo_type.action)
   else

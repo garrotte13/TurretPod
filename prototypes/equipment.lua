@@ -70,7 +70,7 @@ local function generate_turret(tier, magazine)
       end
     end
 
-    magazine_size = magazine_item.magazine_size
+    magazine_size = magazine_item.magazine_size or magazine_size
     -- just copy the whole action. This means it will work with multiple complex effects like rampants incendiary ammo etc
     action = table.deepcopy(magazine_item.ammo_type.action)
   else
@@ -88,10 +88,10 @@ local function generate_turret(tier, magazine)
     -- layers[i].shift = mul(layers[i].shift or {0, 0}, layers[i].scale)
     -- If they are shifted we might need to adjust those values too by scaling them.
   end
-  if magazine_item -- no-magazine check
+  if magazine_item then -- no-magazine check
       --and magazine_item.reload_time
       --and magazine_item.reload_time > 0
-    then
+    
     local load_layers = util.table.deepcopy(layers)
     table.insert(load_layers,{
       filename = '__core__/graphics/icons/alerts/no-building-material-icon.png',
