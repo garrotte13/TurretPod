@@ -21,12 +21,21 @@ local function generate_turret(tier, magazine)
   local layers = {
     {
       filename = "__base__/graphics/entity/flamethrower-turret/flamethrower-turret-gun-extension.png",
+      width = 80,
+      height = 64,
+      priority = "medium",
+      scale = 1,
+      x = 2 * (80),
+      y = 10 * (64),
+      hr_version = {
+        filename = "__base__/graphics/entity/flamethrower-turret/hr-flamethrower-turret-gun-extension.png",
       width = 152,
       height = 128,
       priority = "medium",
       scale = 1,
       x = 2 * (152),
       y = 10 * (128),
+      }
     }
   }
   
@@ -38,7 +47,7 @@ local function generate_turret(tier, magazine)
 
 		-- icon of magazine
     if magazine_item.icon then
-      table.insert(layers, {filename = magazine_item.icon, size = magazine_item.icon_size or 64, scale = 0.5})
+      table.insert(layers, {filename = magazine_item.icon, size = magazine_item.icon_size})
     else
       for _, icon_data in ipairs(magazine_item.icons) do
         icon_data = table.deepcopy(icon_data)
@@ -52,7 +61,7 @@ local function generate_turret(tier, magazine)
     -- just copy the whole action. This means it will work with multiple complex effects like rampants incendiary ammo etc
     action = table.deepcopy(magazine_item.ammo_type.action)
   else
-    table.insert(layers, {filename = '__core__/graphics/icons/alerts/ammo-icon-red.png', size = 64, scale = 0.5}) -- no ammo graphic
+    table.insert(layers, {filename = '__core__/graphics/icons/alerts/ammo-icon-red.png', size = 64}) -- no ammo graphic
     magazine_localised_name = "item-name.no-ammo"
   end
   layers[2].scale = 0.5 * 64 / layers[2].size
@@ -112,7 +121,7 @@ local function generate_turret(tier, magazine)
           --buffer_capacity = magazine_item.reload_time .. "J",
           -- buffer_capacity = tier == 1 and gunpod_t1_cap or tier == 2 and gunpod_t2_cap,
           buffer_capacity = flamepods.cap[tier]
-          --input_flow_limit = "900000kW",
+          --input_flow_limit = "900000KW",
         },
         attack_parameters =
         {
@@ -136,7 +145,8 @@ local function generate_turret(tier, magazine)
           ammo_type =
           {
             category = "bullet",
-            energy_consumption = "1000000kJ",
+            --energy_consumption = ( 1 + magazine_item.reload_time ) .. "J",
+            energy_consumption = "1000000KJ",
             --action = action
           },
           range = 2,
@@ -246,14 +256,12 @@ generate_turret(2, "empty")
 
 for ammo_name, ammo in pairs(data.raw.ammo) do
   -- log("[" .. ammo_name .. "].ammo_type.category" .. ammo.ammo_type.category)
-  --if ammo.ammo_type.category == "flamethrower" then
-  if ammo.ammo_category == "flamethrower" then
+  if ammo.ammo_type.category == "flamethrower" then
     generate_turret(1, ammo_name)
     generate_turret(2, ammo_name)
-  elseif ammo.ammo_category == nil then
+  elseif ammo.ammo_type.category == nil then
     -- we don't need all attack type variations, we need only ammo of required category, and we hope that ammo keeps category for all attack subtypes.
-      --if ammo.ammo_type[1].category == "flamethrower" then
-      if ammo.ammo_category == "flamethrower" then
+      if ammo.ammo_type[1].category == "flamethrower" then
         generate_turret(1, ammo_name)
         generate_turret(2, ammo_name)
       end

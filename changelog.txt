@@ -1,37 +1,6 @@
 ---------------------------------------------------------------------------------------------------
-Version: 2.0.4
-Date: 2025-10-05
-  Bugfixes:
-    - Single-bullet magazines support
----------------------------------------------------------------------------------------------------
-Version: 2.0.3
-Date: 2025-10-03
-  Changes:
-    - Unlocked pods tier-3 without RA mod. Changed its recipes and dependencies to be vanilla compatible.
-    - Technologies cost update.
----------------------------------------------------------------------------------------------------
-Version: 2.0.2
-Date: 2025-09-10
-  Changes:
-    - Other vehicles support.
-    - Equipment grid for cargo wagon if not added by other mods. Shotgun ammo default attack friendly fire damages train infrastructure - use combat mods to avoid it. 
----------------------------------------------------------------------------------------------------
-Version: 2.0.1
-Date: 2025-09-08
-  Changes:
-    - Tier2 and Tier3 turret pod equipment height set to 2
-    - Shotgun and Flamethrower graphics replaced by new from snouz
-    - Reset preferred ammo type after unload
----------------------------------------------------------------------------------------------------
-Version: 2.0.0
-Date: 2025-09-07
-  Changes:
-    - Factorio2.0 support
-    - Minigun graphics replaced by new one from snouz
-    - Equipment grid 6x4 automatically added for default car if not added by other mods
-  Bugfixes:
-    - Changing ammo reload option error
----------------------------------------------------------------------------------------------------
+=======
+>>>>>>> parent of 336d500 (Factorio-2 support is almost finished)
 Version: 1.0.5
 Date: 2023-06-20
   Changes:

@@ -17,21 +17,6 @@ local function generate_turret(tier, magazine)
   local action
   local magazine_size = 1
 
-  local layers = {
-    {
-      filename = "__TurretPod__/graphics/equipment/personal-turret-equipment.png",
-      width = 128,
-      height = 128,
-      priority = "medium",
-      scale = 0.5,
-      x = 0,
-      y = 0,
-    }
-  }
-
-
- --[[
-
   local gun_turret = data.raw['ammo-turret']['gun-turret']
   local prep_layer_1 = gun_turret.preparing_animation.layers[1]
 
@@ -45,12 +30,12 @@ local function generate_turret(tier, magazine)
       x = 0 * (layer.width),
       y = 3 * (layer.height),
     }
-  end 
+  end
+
   local layers = {
     use_layer(prep_layer_1)
   }
-  ]]
-  --layers[1].hr_version = use_layer(prep_layer_1.hr_version)
+  layers[1].hr_version = use_layer(prep_layer_1.hr_version)
 
   local magazine_localised_name
   local magazine_item = data.raw.ammo[magazine]
@@ -58,14 +43,14 @@ local function generate_turret(tier, magazine)
     magazine_localised_name = magazine_item.localised_name
     -- log(serpent.block(magazine_item))
 
-		-- Adding icon of magazine
+		-- icon of magazine
     if magazine_item.icon then
-      table.insert(layers, {filename = magazine_item.icon, size = magazine_item.icon_size or 64, scale = 0.5})
+      table.insert(layers, {filename = magazine_item.icon, size = magazine_item.icon_size})
     else
       for _, icon_data in ipairs(magazine_item.icons) do
         icon_data = table.deepcopy(icon_data)
         icon_data.filename = icon_data.icon
-        icon_data.size = icon_data.icon_size or 64
+        icon_data.size = icon_data.icon_size
         table.insert(layers, icon_data)
       end
     end
@@ -74,10 +59,10 @@ local function generate_turret(tier, magazine)
     -- just copy the whole action. This means it will work with multiple complex effects like rampants incendiary ammo etc
     action = table.deepcopy(magazine_item.ammo_type.action)
   else
-    table.insert(layers, {filename = '__core__/graphics/icons/alerts/ammo-icon-red.png', size = 64, scale = 0.5}) -- no ammo graphics
+    table.insert(layers, {filename = '__core__/graphics/icons/alerts/ammo-icon-red.png', size = 64}) -- no ammo graphic
     magazine_localised_name = "item-name.no-ammo"
   end
-  --layers[2].scale = 0.5 * 64 / layers[2].size
+  layers[2].scale = 0.5 * 64 / layers[2].size
 
   for i = 3, #layers do
     layers[i].scale = (layers[i].scale or 1) * 0.5 * 64 / layers[2].size -- YES, it's supposed to be layer[2].size and not layer[i].size
@@ -103,6 +88,7 @@ local function generate_turret(tier, magazine)
       --animation_speed = 30,
       --repeat_count = magazine_item.reload_time / 30
       animation_speed = 0.5,
+      --repeat_count = magazine_item.reload_time / 30
     })
     
     local function load_turret()
@@ -158,14 +144,14 @@ local function generate_turret(tier, magazine)
           {
             category = "bullet",
             --energy_consumption = ( 1 + magazine_item.reload_time ) .. "J",
-            energy_consumption = "1000000kJ",
+            energy_consumption = "1000000KJ",
             action = action
           },
           range = 2,
           sound = gunshoot
         },
     
-        automatic = true,
+        automatic = false,
         categories = gunpods.grids[tier]
       }
     end
@@ -271,7 +257,7 @@ generate_turret(2, "empty")
 --end
 for ammo_name, ammo in pairs(data.raw.ammo) do
   -- log("[" .. ammo_name .. "].ammo_type.category" .. ammo.ammo_type.category)
-  if ammo.ammo_category == "bullet" then
+  if ammo.ammo_type.category == "bullet" then
     generate_turret(1, ammo_name)
     generate_turret(2, ammo_name)
     --if ( mods.RampantArsenal ) then 
@@ -279,7 +265,7 @@ for ammo_name, ammo in pairs(data.raw.ammo) do
     --end
   elseif ammo.ammo_category == nil then
     for _,ammo_type in pairs( ammo.ammo_type ) do
-      if ammo.ammo_category == "bullet" then
+      if ammo.ammo_type.category == "bullet" then -- mistake in Zdenek's code here
         generate_turret(1, ammo_name)
         generate_turret(2, ammo_name)
         --if ( mods.RampantArsenal ) then

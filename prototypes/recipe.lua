@@ -6,12 +6,12 @@ data:extend ({
     energy_required = 10,
     ingredients =
     {
-      {type="item", name="engine-unit", amount=1},
-      {type="item", name="gun-turret", amount=1},
-      {type="item", name="electronic-circuit", amount=3},
-      {type="item", name="advanced-circuit", amount=2}
+      {"engine-unit", 1},
+      {"gun-turret", 1},
+      {"electronic-circuit", 3},
+      {"advanced-circuit", 2}
     },
-    results = {{type="item", name="turret-pod-gun-t1-empty-equipment", amount=1}}
+    result = "turret-pod-gun-t1-empty-equipment"
   },
 
   {
@@ -21,11 +21,11 @@ data:extend ({
     energy_required = 20,
     ingredients =
     {
-      {type="item", name="electric-engine-unit", amount=3},
-      {type="item", name="turret-pod-gun-t1-empty-equipment", amount=1},
-      {type="item", name="efficiency-module-2", amount=3}
+      {"electric-engine-unit", 3},
+      {"turret-pod-gun-t1-empty-equipment", 1},
+      {"effectivity-module-2", 3}
     },
-    results = {{type="item", name="turret-pod-gun-t2-empty-equipment", amount=1}}
+    result = "turret-pod-gun-t2-empty-equipment"
   },
 
   {
@@ -35,12 +35,12 @@ data:extend ({
     energy_required = 10,
     ingredients =
     {
-      {type="item", name="iron-gear-wheel", amount=2},
-      {type="item", name="flamethrower-turret", amount=1},
-      {type="item", name="electronic-circuit", amount=5},
-      {type="item", name="advanced-circuit", amount=3}
+      {"iron-gear-wheel", 2},
+      {"flamethrower-turret", 1},
+      {"electronic-circuit", 5},
+      {"advanced-circuit", 3}
     },
-    results = {{type="item", name="turret-pod-flame-t1-empty-equipment", amount=1}}
+    result = "turret-pod-flame-t1-empty-equipment"
   },
   {
     type = "recipe",
@@ -49,12 +49,12 @@ data:extend ({
     energy_required = 10,
     ingredients =
     {
-      {type="item", name="electric-engine-unit", amount=2},
-      {type="item", name="turret-pod-flame-t1-empty-equipment", amount=1},
-      {type="item", name="low-density-structure", amount=5},
-      {type="item", name="efficiency-module-2", amount=3}
+      {"electric-engine-unit", 2},
+      {"turret-pod-flame-t1-empty-equipment", 1},
+      {"low-density-structure", 5},
+      {"effectivity-module-2", 3}
     },
-    results = {{type="item", name="turret-pod-flame-t2-empty-equipment", amount=1}}
+    result = "turret-pod-flame-t2-empty-equipment"
   },
 
 
@@ -65,12 +65,12 @@ data:extend ({
     energy_required = 10,
     ingredients =
     {
-      {type="item", name="engine-unit", amount=1},
-      {type="item", name="gun-turret", amount=1},
-      {type="item", name="electronic-circuit", amount=3},
-      {type="item", name="advanced-circuit", amount=2}
+      {"engine-unit", 1},
+      {"gun-turret", 1},
+      {"electronic-circuit", 3},
+      {"advanced-circuit", 2}
     },
-    results = {{type="item", name="turret-pod-shotgun-t1-empty-equipment", amount=1}}
+    result = "turret-pod-shotgun-t1-empty-equipment"
   },
 
   {
@@ -80,11 +80,11 @@ data:extend ({
     energy_required = 20,
     ingredients =
     {
-      {type="item", name="electric-engine-unit", amount=3},
-      {type="item", name="turret-pod-shotgun-t1-empty-equipment", amount=1},
-      {type="item", name="efficiency-module-2", amount=3}
+      {"electric-engine-unit", 3},
+      {"turret-pod-shotgun-t1-empty-equipment", 1},
+      {"effectivity-module-2", 3}
     },
-    results = {{type="item", name="turret-pod-shotgun-t2-empty-equipment", amount=1}}
+    result = "turret-pod-shotgun-t2-empty-equipment"
   },
 
 
@@ -106,7 +106,7 @@ data:extend ({
         {type="item", name="steel-plate", amount=20},
         {type="item", name="efficiency-module-2", amount=16}
       },
-      results = {{type="item", name="turret-pod-gun-t3-empty-equipment", amount=1}}
+      result = "turret-pod-gun-t3-empty-equipment"
     },
 
     {
@@ -122,7 +122,7 @@ data:extend ({
         {type="item", name="steel-plate", amount=20},
         {type="item", name="efficiency-module-2", amount=16}
       },
-      results = {{type="item", name="turret-pod-shotgun-t3-empty-equipment", amount=1}}
+      result = "turret-pod-shotgun-t3-empty-equipment"
     },
   })
 --end

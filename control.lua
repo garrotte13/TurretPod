@@ -85,14 +85,14 @@ end)
 
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(e)
-  if e.setting == "zd-AllowChangeAmmo" then storage.reloadPods.AllowChangeAmmo = settings.global["zd-AllowChangeAmmo"].value end
+  if e.setting == "zd-AllowChangeAmmo" then global.reloadP.AllowChangeAmmo = settings.global["zd-AllowChangeAmmo"].value end
   --game.print("Auto ammunition reset setting was changed!")
 end)
 
 script.on_event(defines.events.on_tick, function(event)
-  reloadP.EveryTick(storage.reloadPods.equipped_weapon_id, event.tick)
-  if storage.reloadPods.equipped_weapon_id >= storage.reloadPods.equipped_weapon_last then storage.reloadPods.equipped_weapon_id = 1
-   else storage.reloadPods.equipped_weapon_id = storage.reloadPods.equipped_weapon_id + 1 end
+  reloadP.EveryTick(global.reloadPods.equipped_weapon_id, game.ticks_played)
+  if global.reloadPods.equipped_weapon_id >= global.reloadPods.equipped_weapon_last then global.reloadPods.equipped_weapon_id = 1
+   else global.reloadPods.equipped_weapon_id = global.reloadPods.equipped_weapon_id + 1 end
 end)
 
 script.on_event(defines.events.on_player_selected_area, function (event)

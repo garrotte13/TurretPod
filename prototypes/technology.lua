@@ -4,10 +4,10 @@ data:extend(
     type = "technology",
     name = "turret-pod-gun1",
     icons = {
-			{ icon = "__TurretPod__/graphics/technology/personal-turret-equipment.png", icon_size = 256 },
+			{ icon = "__TurretPod__/graphics/technology/personal-turret-equipment.png", icon_size = 128 },
 			{ icon = "__TurretPod__/graphics/icons/tiers/1.png", icon_size = 64, scale = 1, shift = {30, -40} },
 		},
-    icon_size = 256,
+    icon_size = 128,
     prerequisites = { "modular-armor", "gun-turret", "tank" },
     effects =
     {
@@ -38,10 +38,10 @@ data:extend(
     type = "technology",
     name = "turret-pod-gun2",
     icons = {
-			{ icon = "__TurretPod__/graphics/technology/personal-turret-equipment.png", icon_size = 256 },
+			{ icon = "__TurretPod__/graphics/technology/personal-turret-equipment.png", icon_size = 128 },
 			{ icon = "__TurretPod__/graphics/icons/tiers/2.png", icon_size = 64, scale = 1, shift = {30, -40} },
 		},
-    icon_size = 256,
+    icon_size = 128,
     prerequisites = { "power-armor", "turret-pod-gun1", "military-4" },
     effects =
     {
