@@ -259,7 +259,7 @@ for ammo_name, ammo in pairs(data.raw.ammo) do
     --end
   elseif ammo.ammo_category == nil then
     for _,ammo_type in pairs( ammo.ammo_type ) do
-      if ammo.ammo_type.category == "shotgun-shell" then -- mistake in Zdenek's code here, it won't find anything. Check equipment-flame for correct code.
+      if ammo.ammo_type.category == "shotgun-shell" then
         generate_turret(1, ammo_name)
         generate_turret(2, ammo_name)
         --if ( mods.RampantArsenal ) then

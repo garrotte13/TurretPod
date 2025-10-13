@@ -1,6 +1,19 @@
 ---------------------------------------------------------------------------------------------------
-=======
->>>>>>> parent of 336d500 (Factorio-2 support is almost finished)
+Version: 1.0.6
+Date: 2025-10-13
+  Changes:
+    - Experimental mod branch for Factorio 1.1 support
+    - Equipment grid 6x4 automatically added for default car if not added by other mods
+    - Tier2 and Tier3 turret pod equipment height set to 2
+    - Reset preferred ammo type after unload
+    - Other vehicles support.
+    - Equipment grid for cargo wagon if not added by other mods. Shotgun ammo default attack friendly fire damages train infrastructure - use combat mods to avoid it. 
+    - Unlocked pods tier-3 without RA mod. Changed its recipes and dependencies to be vanilla compatible.
+    - Technologies cost update.
+  Bugfixes:
+    - Single-bullet magazines support
+    - Changing ammo reload option error
+---------------------------------------------------------------------------------------------------
 Version: 1.0.5
 Date: 2023-06-20
   Changes:

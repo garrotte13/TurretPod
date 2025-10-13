@@ -6,16 +6,16 @@ Entities architecture was taken from a Gun Equipment mod by Zdenek (DeznekCZ) an
 Everything else was implemented from scratch. UPS-hungry reload issue was fixed and turned into a mod's balancing feature - consume electrical power to reload expendable ammo.
 
 - A mix of ammo and electricity consumption,
-- Minigun turret pod - 3 tiers (Graphics by snouz),
+- Minigun turret pod - 3 tiers,
 - Shotgun turret pod - 3 tiers,
 - Flamethrower turret pod (tank attack type) - 2 tiers.
-- Third tier is available for Rampant Arsenal mod users only (one does need them only to counter Rampant New Enemies top tiers) and require nuclear-powered vehicles.
+- Third tier requires a lot of energy - nuclear-powered vehicles of Rampant Arsenal / similar balanced mods or something cheating.
 - Unload ammo action available via tool shortcut (Alt+U by default),
 - Predictable ammo selection. With mod setting to lock preferred ammo-consuming reload for each pod.
 - Vehicle Wagon 2 mod is supported.
 - Should be compatible with other mods (bob's warfare, krastorio2) and multiplayer.
 
-If no equipment grid was added by other mods default car receives a small grid.
+If no equipment grid was added by other mods default car and car wagon receive small grids. Grid for tank must be added by other mod.
 
 If using hundreds turret pods in many vehicles reload will be distributed in more ticks, but without considerable UPS impact.
 

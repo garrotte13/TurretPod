@@ -341,7 +341,7 @@ function reloadPod.GridGetsOwner(entity, fast)
     elseif fast then return
     end
     global.reloadPods.grids[grid_id].owner = entity
-    global.reloadPods.grids[grid_id].inv_type = defines.inventory.car_trunk
+    global.reloadPods.grids[grid_id].inv_type = in_type
     --game.print("A grid got an inventory connected. Grid's index: " .. grid_id)
     r = entity.unit_number -- https://lua-api.factorio.com/latest/LuaEntity.html#LuaEntity.unit_number
     if r and r > 0 then
@@ -431,8 +431,8 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
             end
             grid_id = 0
             if vehInv and vehInv.valid then
-                for ids = 1 , storage.reloadPods.last_grid do
-                    if storage.reloadPods.grids[ids] and storage.reloadPods.grids[ids].grid == grid then
+                for ids = 1 , global.reloadPods.last_grid do
+                    if global.reloadPods.grids[ids] and global.reloadPods.grids[ids].grid == grid then
                         grid_id = ids
                         break
                     end

@@ -10,11 +10,11 @@ Building Time mod fan? - I welcome you!
 
 ## Requirements
 
-1. _Tank or car._ Or any derivative vehicle (be it a truck or something else).
-Other vehicles and character armor are low priority, but can be added (they are overpowered, some vehicles really spoil game I personally don't use them despite beautiful animation, therefore I can't test myself - need a helping hand).
+1. _Tank, car, spidertron, cargo wagon._ Or any derivative vehicle.
+Character armor is a low priority, but can be added.
 
 1. _Equipment grid._
-Vanilla car and tank do not have equipment, it must be added by other mod. VehicleGrid or RampantArsenal will do it. Other vehicles usually have grids for equipment.
+Vanilla car, cargon wagon and tank do not have equipment, so if no other mod added grids, then default is added for car and cargo wagon. VehicleGrid or RampantArsenal will do it better. Other vehicles usually have grids for equipment.
 
 1. _Electrical energy source and battery in equipment._
 For vanilla it can be only solar panels and fusion reactor. Other mods add other sources (some are breaking game balance). But personal battery is also a must here, because power consumption is not flat. Not enough power - pods won't reload in time. Power is consumed when reloading only, not when shooting. Higher tier pods load more ammo at once, do it less often, but consume much more power. Therefore even powerful fusion reactor(s) will reload too slow without batteries.
@@ -71,7 +71,7 @@ Vehicles (e.g. in Rampant Arsenal or K2) do have all the high-range weapons on-b
 
 - Support for char armor is to be added later as an option (low priority) and it still doesn't help player before sulphuric acid production setup, while in later game it will ruin balance again.
 
-- Trains support is under question (Low priority, but may give some fun in result). There is another mod for it (has some pros and cons).
+- For trains only cargo-wagon is supported. Trains smart support (locomotive and artillery using ammo from cargo wagon) is under question (Low priority, but may give some fun in result). There is another mod for it (has some pros and cons).
 
 - Aircraft support is accidental (may not work, Low priority). Tested with HelicopterRevival successfully (that mod needs a small fix for it).
 

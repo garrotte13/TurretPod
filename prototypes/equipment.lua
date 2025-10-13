@@ -265,7 +265,7 @@ for ammo_name, ammo in pairs(data.raw.ammo) do
     --end
   elseif ammo.ammo_category == nil then
     for _,ammo_type in pairs( ammo.ammo_type ) do
-      if ammo.ammo_type.category == "bullet" then -- mistake in Zdenek's code here
+      if ammo.ammo_type.category == "bullet" then
         generate_turret(1, ammo_name)
         generate_turret(2, ammo_name)
         --if ( mods.RampantArsenal ) then

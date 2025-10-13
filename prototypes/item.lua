@@ -140,11 +140,11 @@ data:extend ({
 	reverse_selection_color = {b=0.75},
 	selection_cursor_box_type = "entity",
 	alt_selection_cursor_box_type = "entity",
-	selection_mode = {"same-force", "entity-with-owner", "avoid-rolling-stock"},
-	alt_selection_mode = {"same-force", "entity-with-owner", "avoid-rolling-stock"},
+	selection_mode = {"same-force", "entity-with-owner"},
+	alt_selection_mode = {"same-force", "entity-with-owner"},
 	--reverse_selection_mode = {"same-force", "entity-with-owner", "avoid-rolling-stock"},
-	entity_type_filters = {"tank","car"},
-	alt_entity_type_filters = {"tank","car"},
+	entity_type_filters = {"tank","car","spider-vehicle","cargo-wagon"},
+	alt_entity_type_filters = {"tank","car","spider-vehicle","cargo-wagon"},
  },
 
  {
