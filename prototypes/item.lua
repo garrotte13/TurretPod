@@ -60,11 +60,10 @@ data:extend(
 		name = "turret-pod-shotgun-t1-empty-equipment",
 		localised_name = { "item-name.turret-pod-shotgun-t1-equipment" },
 		icons = {
-			{ icon = "__TurretPod__/graphics/icons/personal-shotgun-equipment.png", icon_size = 64 },
+			{ icon = "__TurretPod__/graphics/icons/shotgun-64.png", icon_size = 64 },
 			{ icon = "__TurretPod__/graphics/icons/tiers/1.png", icon_size = 64, scale = 0.5 },
 		},
-		icon_size = 64,
-		placed_as_equipment_result = "turret-pod-shotgun-t1-empty-equipment",
+		icon_size = 64,		placed_as_equipment_result = "turret-pod-shotgun-t1-empty-equipment",
 		subgroup = "military-equipment",
 		order = "b[active-defense]-b[turret-pod]",
 		stack_size = 10
@@ -75,7 +74,7 @@ data:extend(
 		name = "turret-pod-shotgun-t2-empty-equipment",
 		localised_name = { "item-name.turret-pod-shotgun-t2-equipment" },
 		icons = {
-			{ icon = "__TurretPod__/graphics/icons/personal-shotgun-equipment.png", icon_size = 64 },
+			{ icon = "__TurretPod__/graphics/icons/shotgun-64.png", icon_size = 64 },
 			{ icon = "__TurretPod__/graphics/icons/tiers/2.png", icon_size = 64, scale = 0.5 },
 		},
 		icon_size = 64,
@@ -95,7 +94,7 @@ data:extend(
 			name = "turret-pod-gun-t3-empty-equipment",
 			localised_name = { "item-name.turret-pod-gun-t3-equipment" },
 			icons = {
-				{ icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png", icon_size = 64 },
+				{ icon = "__TurretPod__/graphics/icons/personal-turret-equipment.png", icon_size = 32 },
 				{ icon = "__TurretPod__/graphics/icons/tiers/3.png", icon_size = 64, scale = 0.5 },
 			},
 			icon_size = 32,
@@ -109,7 +108,7 @@ data:extend(
 			name = "turret-pod-shotgun-t3-empty-equipment",
 			localised_name = { "item-name.turret-pod-shotgun-t3-equipment" },
 			icons = {
-				{ icon = "__TurretPod__/graphics/icons/personal-shotgun-equipment.png", icon_size = 64 },
+				{ icon = "__TurretPod__/graphics/icons/shotgun-64.png", icon_size = 64 },
 				{ icon = "__TurretPod__/graphics/icons/tiers/3.png", icon_size = 64, scale = 0.5 },
 			},
 			icon_size = 64,

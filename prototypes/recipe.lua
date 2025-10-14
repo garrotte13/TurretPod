@@ -104,7 +104,7 @@ data:extend ({
         {type="item", name="low-density-structure", amount=7},
         {type="item", name="turret-pod-gun-t2-empty-equipment", amount=1},
         {type="item", name="steel-plate", amount=20},
-        {type="item", name="efficiency-module-2", amount=16}
+        {type="item", name="effectivity-module-2", amount=16}
       },
       result = "turret-pod-gun-t3-empty-equipment"
     },
@@ -120,7 +120,7 @@ data:extend ({
         {type="item", name="low-density-structure", amount=7},
         {type="item", name="turret-pod-shotgun-t2-empty-equipment", amount=1},
         {type="item", name="steel-plate", amount=20},
-        {type="item", name="efficiency-module-2", amount=16}
+        {type="item", name="effectivity-module-2", amount=16}
       },
       result = "turret-pod-shotgun-t3-empty-equipment"
     },
