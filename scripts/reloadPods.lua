@@ -13,6 +13,7 @@ local equipped_weapon_last
 local grids
 local last_grid
 local grids_count
+--local show_battery
 
 local inv_types = {
     defines.inventory.car_trunk,
@@ -28,6 +29,7 @@ function reloadPod.Init()
     storage.reloadPods =
     {
         AllowChangeAmmo = settings.global["zd-AllowChangeAmmo"].value,
+        --ShowBattery = settings.global["zd-ShowBattery"].value,
         magazines = {},
         weapons_equipment = {},
         equipped_weapons_count = 0,
@@ -64,7 +66,48 @@ function reloadPod.OnLoad()
     last_grid = storage.reloadPods.last_grid
     grids_count = storage.reloadPods.grids_count
 
+    --storage.reloadPods.ShowBattery = settings.global["zd-ShowBattery"].value
+    --show_battery = storage.reloadPods.ShowBattery
+
     magazines = storage.reloadPods.magazines
+end
+
+
+function reloadPod.selectedEntity(e)
+    local player = game.players[e.player_index]
+    local entity = player.selected
+    if entity and entity.valid and (entity.type == "car" or entity.type == "spider-vehicle" or entity.type == "cargo-wagon") and (not entity.get_driver()) and entity.force == player.force then
+        local grid = entity.grid
+		if grid then
+			local aib = grid.available_in_batteries
+			local bc = grid.battery_capacity
+			local value = 0
+			if bc > 0 then
+                value = aib/bc
+                --player.create_local_flying_text{text = "Battery charge/capacity: " .. value*100, position = entity.position, time_to_live = 100}
+				local red = math.min(2-value*2, 1)
+				local green = math.min(value*2, 1)
+                rendering.draw_rectangle{color = {0,0,0}, 
+                left_top = {entity = entity, offset = {-1-0.03, 1-0.03}},
+                right_bottom = {entity = entity, offset = { 1+0.03,	1.2+0.03}},
+                surface = entity.surface,
+                time_to_live = 120,
+                }
+                rendering.draw_rectangle{color = {0,0,0}, 
+                left_top = {entity = entity, offset = {1+2/32, 1.05}},
+                right_bottom = {entity = entity, offset = {1+3/32, 1.15}},
+                surface = entity.surface,
+                time_to_live = 120,
+                }
+                rendering.draw_rectangle{color = {red,green, 0}, filled = true,
+                left_top = {entity = entity, offset = {-1, 1.0}},
+                right_bottom = {entity = entity, offset = {-1 + 2*1*value, 1.2}},
+                surface = entity.surface,
+                time_to_live = 120,
+                }
+            end
+        end
+    end
 end
 
 function reloadPod.EveryTick(weapon_id, g_tick)

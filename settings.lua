@@ -31,5 +31,14 @@ data:extend({
         --order = "m[total]-a[ai]",
 
     },
+--[[
+    {
+        type = "bool-setting",
+        name = "zd-ShowBattery",
+        description = "zd-ShowBattery",
+        setting_type = "runtime-global",
+        default_value = true,
+        --order = "m[total]-a[ai]",
 
+    },]]
 })

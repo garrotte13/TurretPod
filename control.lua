@@ -82,7 +82,9 @@ script.on_configuration_changed(function()
   end
 end)
 
-
+script.on_event(defines.events.on_selected_entity_changed, function(e)
+  reloadP.selectedEntity(e)
+end)
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(e)
   if e.setting == "zd-AllowChangeAmmo" then storage.reloadPods.AllowChangeAmmo = settings.global["zd-AllowChangeAmmo"].value end
