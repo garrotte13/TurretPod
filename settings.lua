@@ -17,7 +17,7 @@ data:extend({
         description = "zd-PlayerArmorSupport",
         setting_type = "startup",
         default_value = false,
-        hidden = true,
+        hidden = false,
         --order = "m[total]-a[ai]",
 
     },

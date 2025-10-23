@@ -36,18 +36,19 @@ local function add_hooks()
     script.on_event( defines.events.script_raised_destroy,  reloadP.EntityDestruction, {{filter = "vehicle"}} )
     script.on_event( defines.events.script_raised_built,  reloadP.EntityBuiltRaised, {{filter = "vehicle"}} )
 
-  else
+  end
 
-  -- ** only driven vehicles support
+  if settings.startup["zd-PlayerArmorSupport"].value then
+
     script.on_event(defines.events.on_player_driving_changed_state, function (event)
       local player = game.get_player(event.player_index)
       reloadP.DrivingState(player)
     end)
 
-  end
-
-  if settings.startup["zd-PlayerArmorSupport"].value then
-
+    script.on_event(defines.events.on_player_armor_inventory_changed, function(event)
+      reloadP.CheckArmor(game.get_player(event.player_index))
+    end)
+    
     -- ** human armor support option
 --  on_player_armor_inventory_changed
 -- ?? on_player_died

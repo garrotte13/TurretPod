@@ -23,9 +23,10 @@ if not data.raw["car"]["car"].equipment_grid then -- if default car doesn't has 
     data.raw["car"]["car"].equipment_grid = "car-equipment-grid"
 end
 
-local grid
-local found
+
 for _, car in pairs(data.raw["car"]) do
+    local grid
+    local found
     if car.equipment_grid and data.raw["equipment-grid"][car.equipment_grid] then
         found = false
         grid = data.raw["equipment-grid"][car.equipment_grid].equipment_categories
@@ -43,6 +44,8 @@ for _, car in pairs(data.raw["car"]) do
     end
 end
 for _, car in pairs(data.raw["spider-vehicle"]) do
+    local grid
+    local found
     if car.equipment_grid and data.raw["equipment-grid"][car.equipment_grid] then
         found = false
         grid = data.raw["equipment-grid"][car.equipment_grid].equipment_categories
@@ -60,6 +63,8 @@ for _, car in pairs(data.raw["spider-vehicle"]) do
     end
 end
 for _, car in pairs(data.raw["cargo-wagon"]) do
+    local grid
+    local found
     if car.equipment_grid and data.raw["equipment-grid"][car.equipment_grid] then
         found = false
         grid = data.raw["equipment-grid"][car.equipment_grid].equipment_categories
@@ -83,6 +88,27 @@ if mods.RampantArsenal and settings.startup["rampant-arsenal-enableVehicle"].val
     table.insert(data.raw["equipment-grid"]["nuclear-tank-grid-rampant-arsenal"].equipment_categories, "zd-turret-pod-equipment-advanced-category")
 end
 
+if settings.startup["zd-PlayerArmorSupport"].value then
+    for _, car in pairs(data.raw["armor"]) do
+        local grid
+        local found
+        if car.equipment_grid and data.raw["equipment-grid"][car.equipment_grid] then
+            found = false
+            grid = data.raw["equipment-grid"][car.equipment_grid].equipment_categories
+            if grid then
+                for i = 1, #grid do
+                    if grid[i] == "zd-turret-pod-equipment-basic-category" then
+                        found = true
+                        break
+                    end
+                end
+            end
+            if not found then
+                if grid then table.insert(grid, "zd-turret-pod-equipment-basic-category") else grid = {"zd-turret-pod-equipment-basic-category"} end
+            end
+        end
+    end
+end
 
 require ("prototypes.equipment")
 require ("prototypes.equipment-flame")

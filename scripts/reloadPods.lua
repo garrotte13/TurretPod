@@ -19,6 +19,7 @@ local inv_types = {
     defines.inventory.car_trunk,
     defines.inventory.spider_trunk,
     defines.inventory.cargo_wagon,
+    defines.inventory.character_main
     -- I know you want more, but not today
 }
 
@@ -73,10 +74,21 @@ function reloadPod.OnLoad()
 end
 
 
+function reloadPod.CheckArmor(player)
+    game.print("Player changed armor!")
+    if player.character.unit_number then
+        game.print("Player has a unit number: " .. player.character.unit_number)
+    end
+    if player.character and player.character.grid then
+        reloadPod.GridGetsOwner(player.character, nil)
+    end
+end
+
 function reloadPod.selectedEntity(e)
     local player = game.players[e.player_index]
     local entity = player.selected
-    if entity and entity.valid and (entity.type == "car" or entity.type == "spider-vehicle" or entity.type == "cargo-wagon") and (not entity.get_driver()) and entity.force == player.force then
+    if entity and entity.valid and (entity.type == "car" or entity.type == "spider-vehicle" or entity.type == "cargo-wagon")
+     and (not entity.get_driver()) and entity.force == player.force then
         local grid = entity.grid
 		if grid then
 			local aib = grid.available_in_batteries
@@ -90,18 +102,21 @@ function reloadPod.selectedEntity(e)
                 rendering.draw_rectangle{color = {0,0,0}, 
                 left_top = {entity = entity, offset = {-1-0.03, 1-0.03}},
                 right_bottom = {entity = entity, offset = { 1+0.03,	1.2+0.03}},
+                players = {player},
                 surface = entity.surface,
                 time_to_live = 120,
                 }
                 rendering.draw_rectangle{color = {0,0,0}, 
                 left_top = {entity = entity, offset = {1+2/32, 1.05}},
                 right_bottom = {entity = entity, offset = {1+3/32, 1.15}},
+                players = {player},
                 surface = entity.surface,
                 time_to_live = 120,
                 }
                 rendering.draw_rectangle{color = {red,green, 0}, filled = true,
                 left_top = {entity = entity, offset = {-1, 1.0}},
                 right_bottom = {entity = entity, offset = {-1 + 2*1*value, 1.2}},
+                players = {player},
                 surface = entity.surface,
                 time_to_live = 120,
                 }
@@ -119,7 +134,7 @@ function reloadPod.EveryTick(weapon_id, g_tick)
         this_pod = storage.reloadPods.weapons_equipment[weapon_id]
         if storage.reloadPods.grids[this_pod.grid_id].grid and storage.reloadPods.grids[this_pod.grid_id].grid.valid then
           this_grid = storage.reloadPods.grids[this_pod.grid_id]
-          if this_pod.weapon then -- equipment entity is ok
+          if this_pod.weapon and this_pod.weapon.valid then -- equipment entity is ok
             if this_pod.ammo_count > 0 then                 -- are we in reloading process?
                 if this_pod.weapon and this_pod.weapon.valid and this_pod.capacity <= this_pod.weapon.energy then
                     --game.print("Energy amount required was reached: ".. this_pod.weapon.energy )
@@ -344,7 +359,7 @@ end
 function reloadPod.GridGetsOwner(entity, fast)
     local in_type
     --game.print("Attempt to register a grid...")
-    if entity and entity.valid and entity.grid then
+    if entity and entity.valid and entity.grid and entity.grid.valid then
         for i = 1,#inv_types do
             if entity.get_inventory(inv_types[i]) then
                 in_type = inv_types[i]
@@ -364,7 +379,7 @@ function reloadPod.GridGetsOwner(entity, fast)
             break
         end
     end
-    if grid_id == 0 then
+    if grid_id == 0 then -- new grid
         if r == 0 then
             --game.print ("Last member of grids was removed incorrectly! Total grids count: " .. storage.reloadPods.grids_count .. ". First free (but it's not free!) grid order number: " .. storage.reloadPods.last_grid)
             storage.reloadPods.last_grid = storage.reloadPods.last_grid + 1
@@ -383,7 +398,7 @@ function reloadPod.GridGetsOwner(entity, fast)
        -- game.print("A new grid added. Its index: " .. grid_id)
        -- game.print("Total amount of active grids: " .. storage.reloadPods.grids_count .. ". Last index in array: " .. storage.reloadPods.last_grid)
 
-    elseif fast then return
+    elseif fast then return -- we are sure about no weapons inserted in that grid or weapons are registered
     end
     storage.reloadPods.grids[grid_id].owner = entity
     storage.reloadPods.grids[grid_id].inv_type = in_type
@@ -408,8 +423,11 @@ function reloadPod.GridIsDead(grid_id, grid) -- one of two parameters is always 
 
             --game.print("A grid was removed due to death of its owner. It's index: ".. grid_id)
         end
-    else --game.print("A grid with index " .. grid_id .. " was removed, because it was destroyed with/without its owner some time ago.")
+    else 
+        --game.print("A grid with index " .. grid_id .. " was removed, because it was destroyed with/without its owner some time ago.")
+        if not storage.reloadPods.grids[grid_id] then return end
     end
+    
     if storage.reloadPods.grids[grid_id].weapons then
         for _, weapon_id in pairs(storage.reloadPods.grids[grid_id].weapons) do
             if storage.reloadPods.weapons_equipment[weapon_id] then
@@ -593,7 +611,7 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
 end
 
 function reloadPod.EntityDestruction(event)
-    if event.entity then
+    if event.entity and event.entity.valid then
        -- reloadPod.UnloadPods({event.entity}, nil, nil)
         reloadPod.GridIsDead(nil, event.entity.grid)
     end
