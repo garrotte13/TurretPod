@@ -19,9 +19,8 @@ local inv_types = {
     defines.inventory.car_trunk,
     defines.inventory.spider_trunk,
     defines.inventory.cargo_wagon,
-    defines.inventory.character_main
-    -- I know you want more, but not today
 }
+if settings.startup["zd-PlayerArmorSupport"].value then table.insert(inv_types, defines.inventory.character_main) end
 
 local magazines
 
@@ -75,9 +74,9 @@ end
 
 
 function reloadPod.CheckArmor(player)
-    game.print("Player changed armor!")
+    --game.print("Player changed armor!")
     if player.character.unit_number then
-        game.print("Player has a unit number: " .. player.character.unit_number)
+        --game.print("Player has a unit number: " .. player.character.unit_number)
     end
     if player.character and player.character.grid then
         reloadPod.GridGetsOwner(player.character, nil)
@@ -125,70 +124,8 @@ function reloadPod.selectedEntity(e)
     end
 end
 
-function reloadPod.EveryTick(weapon_id, g_tick)
-    local this_pod
-    local this_grid
-    local inv
-    local pos
-    if storage.reloadPods.weapons_equipment[weapon_id] and storage.reloadPods.weapons_equipment[weapon_id].sleepUntil < g_tick then
-        this_pod = storage.reloadPods.weapons_equipment[weapon_id]
-        if storage.reloadPods.grids[this_pod.grid_id].grid and storage.reloadPods.grids[this_pod.grid_id].grid.valid then
-          this_grid = storage.reloadPods.grids[this_pod.grid_id]
-          if this_pod.weapon and this_pod.weapon.valid then -- equipment entity is ok
-            if this_pod.ammo_count > 0 then                 -- are we in reloading process?
-                if this_pod.weapon and this_pod.weapon.valid and this_pod.capacity <= this_pod.weapon.energy then
-                    --game.print("Energy amount required was reached: ".. this_pod.weapon.energy )
-                    pos = this_pod.weapon.position
-                    this_grid.grid.take{ equipment = this_pod.weapon }
-                    this_pod.weapon = this_grid.grid.put{
-                        name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-" .. this_pod.ammo .. "-equipment",
-                        position = pos
-                    }
-                    this_pod.weapon.energy = this_pod.ammo_count
-                    this_pod.ammo_count = 0
-                end
-            elseif this_pod.weapon.energy == 0 then     -- are we in out of ammo state?
-                if this_grid.owner and this_grid.owner.valid then       -- is ammo source available?
-                    inv = this_grid.owner.get_inventory(this_grid.inv_type)
-                    if inv and inv.valid then
-                        if this_pod.ammo == "empty" then
-                            for magazine, size in pairs(magazines[this_pod.type]) do
-                                --game.print("Ammo type we try: " .. magazine)
-                                if reloadPod.TryLoadAmmo(magazine, inv, this_grid.grid, this_pod) then break end
-                            end
-                            if this_pod.ammo_count == 0 then this_pod.sleepUntil = g_tick + 360 end -- no ammo found of any type in inventory. Pls someone kill this looser.
-                        else
-                            if not reloadPod.TryLoadAmmo(this_pod.ammo, inv, this_grid.grid, this_pod) then
-                                if storage.reloadPods.AllowChangeAmmo then
-                                    this_pod.ammo = "empty"
-                                    pos = this_pod.weapon.position
-                                    this_grid.grid.take{ equipment = this_pod.weapon }
-                                    this_pod.weapon = this_grid.grid.put{
-                                        name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-" .. this_pod.ammo .. "-equipment",
-                                        position = pos
-                                    }
-                                else this_pod.sleepUntil = g_tick + 360 end -- no ammo found of wanted type in inventory. Pls someone kill this looser.
-                            end
-                        end
-                    else this_pod.sleepUntil = g_tick + 720      -- owner has a broken/absent inventory suddenly
-                    end
-                else this_pod.sleepUntil = g_tick + 720       -- nowhere to get ammo from.
-                end
 
-            end         -- we are in excellent state, ready to shoot
-          else -- weapon is dead
-            storage.reloadPods.weapons_equipment[weapon_id] = nil
-            storage.reloadPods.equipped_weapons_count = storage.reloadPods.equipped_weapons_count - 1
-            game.print("Weapon is lost!")
-          end
-        else -- grid is dead now!
-            this_pod.sleepUntil = g_tick + 720  -- reloadPod.GridIsDead(this_pod.grid_id, nil) end
-        end
-    end
-
-end
-
-function reloadPod.TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
+local function TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
     local pos
     local ammo_stack = inventory.find_item_stack(ammo_wanted)
     local stacks_needed = PodsTiers[PodMember.type][PodMember.tier]
@@ -228,6 +165,71 @@ function reloadPod.TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
     else return false end
     return true
 end
+
+function reloadPod.EveryTick(weapon_id, g_tick)
+    local this_pod
+    local this_grid
+    local inv
+    local pos
+    if storage.reloadPods.weapons_equipment[weapon_id] and storage.reloadPods.weapons_equipment[weapon_id].sleepUntil < g_tick then
+        this_pod = storage.reloadPods.weapons_equipment[weapon_id]
+        if storage.reloadPods.grids[this_pod.grid_id].grid and storage.reloadPods.grids[this_pod.grid_id].grid.valid then
+            this_grid = storage.reloadPods.grids[this_pod.grid_id]
+            if this_pod.weapon and this_pod.weapon.valid then -- equipment entity is ok
+                if this_pod.ammo_count > 0 then                 -- are we in reloading process?
+                    if this_pod.weapon and this_pod.weapon.valid and this_pod.capacity <= this_pod.weapon.energy then
+                        --game.print("Energy amount required was reached: ".. this_pod.weapon.energy )
+                        pos = this_pod.weapon.position
+                        this_grid.grid.take{ equipment = this_pod.weapon }
+                        this_pod.weapon = this_grid.grid.put{
+                            name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-" .. this_pod.ammo .. "-equipment",
+                            position = pos
+                        }
+                        this_pod.weapon.energy = this_pod.ammo_count
+                        this_pod.ammo_count = 0
+                    end
+                elseif this_pod.weapon.energy == 0 then     -- are we in out of ammo state?
+                    if this_grid.owner and this_grid.owner.valid then       -- is ammo source available?
+                        inv = this_grid.owner.get_inventory(this_grid.inv_type)
+                        if inv and inv.valid then
+                            if this_pod.ammo == "empty" then
+                                for magazine, size in pairs(magazines[this_pod.type]) do
+                                    --game.print("Ammo type we try: " .. magazine)
+                                    if TryLoadAmmo(magazine, inv, this_grid.grid, this_pod) then break end
+                                end
+                                if this_pod.ammo_count == 0 then this_pod.sleepUntil = g_tick + 360 end -- no ammo found of any type in inventory. Pls someone kill this looser.
+                            else
+                                if not TryLoadAmmo(this_pod.ammo, inv, this_grid.grid, this_pod) then
+                                    if storage.reloadPods.AllowChangeAmmo then
+                                        this_pod.ammo = "empty"
+                                        pos = this_pod.weapon.position
+                                        this_grid.grid.take{ equipment = this_pod.weapon }
+                                        this_pod.weapon = this_grid.grid.put{
+                                            name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-" .. this_pod.ammo .. "-equipment",
+                                            position = pos
+                                        }
+                                    else this_pod.sleepUntil = g_tick + 360 -- no ammo found of wanted type in inventory. Pls someone kill this looser.
+                                    end
+                                end
+                            end
+                        else this_pod.sleepUntil = g_tick + 720      -- owner has a broken/absent inventory suddenly
+                        end
+                    else this_pod.sleepUntil = g_tick + 720       -- nowhere to get ammo from.
+                    end
+
+                end         -- we are in excellent state, ready to shoot
+            else -- weapon is dead
+                storage.reloadPods.weapons_equipment[weapon_id] = nil
+                storage.reloadPods.equipped_weapons_count = storage.reloadPods.equipped_weapons_count - 1
+                game.print("Weapon is lost!")
+            end
+        else -- grid is dead now!
+            this_pod.sleepUntil = g_tick + 720  -- reloadPod.GridIsDead(this_pod.grid_id, nil) end
+        end
+    end
+
+end
+
 
 function reloadPod.AddWeapon(weapon, grid_id, untilTick)
     local weapon_type
@@ -440,6 +442,9 @@ function reloadPod.GridIsDead(grid_id, grid) -- one of two parameters is always 
     end
     storage.reloadPods.grids[grid_id] = nil
     storage.reloadPods.grids_count = storage.reloadPods.grids_count - 1
+    if grid_id + 1 == storage.reloadPods.last_grid then
+        storage.reloadPods.last_grid = grid_id
+    end
     --game.print("Grid index was: " .. grid_id .. " Grids remaining amount is: " .. storage.reloadPods.grids_count)
     return grid_id
 
@@ -510,9 +515,7 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
                         then
                             this_pod = storage.reloadPods.weapons_equipment[weapon_id]
                             this_pod.sleepUntil = sleep_tick
-                            if this_pod.ammo == "empty" then
-                                -- it's already empty
-                            else
+                            if this_pod.weapon.valid and this_pod.ammo ~= "empty" then
                                 if this_pod.ammo_count > 0 then             -- were we in reloading process?
                                     local pos
                                     r = this_pod.ammo_count

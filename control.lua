@@ -81,6 +81,18 @@ script.on_configuration_changed(function()
       reloadP.GridGetsOwner(entity, true)
     end
   end
+  if settings.startup["zd-PlayerArmorSupport"].value then
+    for _, p in pairs(game.players) do
+      if p and p.valid and p.character and p.character.valid then reloadP.CheckArmor(p) end
+    end
+  else
+    -- Check and unregister all char armors here...
+    for i = (storage.reloadPods.last_grid - 1), 1, -1 do
+      if storage.reloadPods.grids[i] and storage.reloadPods.grids[i].inv_type == defines.inventory.character_main then
+        reloadP.GridIsDead(i, nil)
+      end
+    end
+  end
 end)
 
 script.on_event(defines.events.on_selected_entity_changed, function(e)

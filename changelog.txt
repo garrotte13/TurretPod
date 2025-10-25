@@ -3,6 +3,7 @@ Version: 2.0.6
 Date: 2025-10-?
   Changes:
     - Added battery charge percentage indicator for unoccupied vehicle on hovering over vehicle.
+    - Added some checks for unpredicted situations other mods scripting can generate.
     - Character armor support.
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.5

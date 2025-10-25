@@ -127,6 +127,9 @@ data:extend(
 	})
 --end
 
+local entities_filter = {"tank","car","spider-vehicle","cargo-wagon"}
+if settings.startup["zd-PlayerArmorSupport"].value then table.insert(entities_filter, "character") end
+
 data:extend ({
  {
 	type = "selection-tool",
@@ -145,19 +148,19 @@ data:extend ({
 		border_color = {r=0.75, g=0.75},
 		cursor_box_type = "entity",
 		mode = {"same-force", "entity-with-owner"},
-		entity_type_filters = {"tank","car","spider-vehicle","cargo-wagon"},
+		entity_type_filters = entities_filter,
 	},
 	alt_select = {
 		border_color = {g=1},
 		cursor_box_type = "entity",
 		mode = {"same-force", "entity-with-owner"},
-		entity_type_filters = {"tank","car","spider-vehicle","cargo-wagon"},
+		entity_type_filters = entities_filter,
 	},
 	reverse_select = {
 		border_color = {b=0.75},
 		cursor_box_type = "entity",
 		mode = {"same-force", "entity-with-owner"},
-		entity_type_filters = {"tank","car","spider-vehicle","cargo-wagon"},
+		entity_type_filters = entities_filter,
 	}
 --mouse_cursor = "selection-tool-cursor",
  },
