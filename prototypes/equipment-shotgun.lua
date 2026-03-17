@@ -41,7 +41,7 @@ local function generate_turret(tier, magazine)
       for _, icon_data in ipairs(magazine_item.icons) do
         icon_data = table.deepcopy(icon_data)
         icon_data.filename = icon_data.icon
-        icon_data.size = icon_data.icon_size
+        icon_data.size = icon_data.icon_size or 64
         table.insert(layers, icon_data)
       end
     end
