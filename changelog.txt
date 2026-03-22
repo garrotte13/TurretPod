@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.7
+Date: 2026-03-22
+  Changes:
+    - Fixed an issue with shotgun and flamethrower ammo icons.
+    - Added K2SO mod dependency to fix that mod equipment grid categories issue.
+---------------------------------------------------------------------------------------------------
 Version: 2.0.6
 Date: 2025-10-?
   Changes:
