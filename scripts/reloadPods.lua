@@ -74,10 +74,10 @@ end
 
 
 function reloadPod.CheckArmor(player)
-    --game.print("Player changed armor!")
+    --[[game.print("Player changed armor!")
     if player.character.unit_number then
-        --game.print("Player has a unit number: " .. player.character.unit_number)
-    end
+        game.print("Player has a unit number: " .. player.character.unit_number)
+    end]]
     if player.character and player.character.grid then
         reloadPod.GridGetsOwner(player.character, nil)
     end
