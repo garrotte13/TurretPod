@@ -4,6 +4,7 @@ local PodsTiers = {
     gun = {1, 2, 5},
     flame = {1, 2},
     shotgun = {1, 2, 5},
+    bobplasma = {1, 1, 1, 1}
 }
 
 local weapons_equipment
@@ -129,6 +130,7 @@ local function TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
     local pos
     local ammo_stack = inventory.find_item_stack(ammo_wanted)
     local stacks_needed = PodsTiers[PodMember.type][PodMember.tier]
+    local ammo_max = stacks_needed * magazines[PodMember.type][ammo_wanted]
     if ammo_stack and ammo_stack.count > 0 then
         pos = PodMember.weapon.position
         GridEntity.take{ equipment = PodMember.weapon }
@@ -151,16 +153,18 @@ local function TryLoadAmmo(ammo_wanted, inventory, GridEntity, PodMember)
             if stacks_needed > 0 then   -- if we still can take more ammo in one reload of high-tier turret pod
                 local ammo_stack2 = inventory.find_item_stack(ammo_wanted)  -- and inventory has another stack of that ammo
                 if ammo_stack2 and ammo_stack2.count > 0 then
+                    PodMember.ammo_count = PodMember.ammo_count + ammo_stack2.ammo
                     if ammo_stack2.count > stacks_needed then
-                        PodMember.ammo_count = PodMember.ammo_count + stacks_needed * magazines[PodMember.type][ammo_wanted]
+                        PodMember.ammo_count = PodMember.ammo_count + (stacks_needed - 1) * magazines[PodMember.type][ammo_wanted]
                         ammo_stack2.count = ammo_stack2.count - stacks_needed
                     else
-                        PodMember.ammo_count = PodMember.ammo_count + ammo_stack2.count * magazines[PodMember.type][ammo_wanted]
+                        PodMember.ammo_count = PodMember.ammo_count + (ammo_stack2.count - 1) * magazines[PodMember.type][ammo_wanted]
                         inventory.remove(ammo_stack2)
                     end -- we don't look for third stack. If player put 3 stacks with 1 count, then we can't help a looser.
                 end
             end
         end
+        PodMember.capacity = PodMember.capacity * (PodMember.ammo_count / ammo_max) -- we try to reduce energy consumption for partial reloads
         --game.print("Loading bullets count: " .. PodMember.ammo_count .. "  While capacity buffer is: " .. PodMember.capacity .. "Pod index: ".. storage.reloadPods.equipped_weapon_id)
     else return false end
     return true
@@ -181,11 +185,19 @@ function reloadPod.EveryTick(weapon_id, g_tick)
                         --game.print("Energy amount required was reached: ".. this_pod.weapon.energy )
                         pos = this_pod.weapon.position
                         this_grid.grid.take{ equipment = this_pod.weapon }
-                        this_pod.weapon = this_grid.grid.put{
-                            name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-" .. this_pod.ammo .. "-equipment",
-                            position = pos
-                        }
-                        this_pod.weapon.energy = this_pod.ammo_count
+                        --[[if this_pod.type == "bobplasma" then
+                            this_pod.weapon = this_grid.grid.put{
+                                name = "bob-vehicle-big-turret-equipment-" .. this_pod.tier,
+                                position = pos
+                            }
+                            this_pod.weapon.energy = this_pod.capacity
+                        else]]
+                            this_pod.weapon = this_grid.grid.put{
+                                name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-" .. this_pod.ammo .. "-equipment",
+                                position = pos
+                            }
+                            this_pod.weapon.energy = this_pod.ammo_count
+                        --end                        
                         this_pod.ammo_count = 0
                     end
                 elseif this_pod.weapon.energy == 0 then     -- are we in out of ammo state?
@@ -200,6 +212,7 @@ function reloadPod.EveryTick(weapon_id, g_tick)
                                 if this_pod.ammo_count == 0 then this_pod.sleepUntil = g_tick + 360 end -- no ammo found of any type in inventory. Pls someone kill this looser.
                             else
                                 if not TryLoadAmmo(this_pod.ammo, inv, this_grid.grid, this_pod) then
+                                    --if storage.reloadPods.AllowChangeAmmo and this_pod.type ~= "bobplasma" then
                                     if storage.reloadPods.AllowChangeAmmo then
                                         this_pod.ammo = "empty"
                                         pos = this_pod.weapon.position
@@ -235,8 +248,13 @@ function reloadPod.AddWeapon(weapon, grid_id, untilTick)
     local weapon_type
     local weapon_tier
     local weapon_ammo
-    weapon_type, weapon_tier, weapon_ammo = string.match(weapon.name, "turret%-pod%-(.+)%-t(%d)%-(.+)%-equipment")
-
+    --if bobcannon then
+    --    weapon_type = "bobplasma"
+    --    weapon_tier = string.match(weapon.name, "bob%-vehicle%-big%-turret%-equipment%-(%d)")
+    --    weapon_ammo = "bob-plasma-mn"
+    --else
+        weapon_type, weapon_tier, weapon_ammo = string.match(weapon.name, "turret%-pod%-(.+)%-t(%d)%-(.+)%-equipment")
+    --end
     local r = 0
     for ids_num = 1, storage.reloadPods.equipped_weapon_last do
         if not storage.reloadPods.weapons_equipment[ids_num] then r = ids_num break end
@@ -260,14 +278,22 @@ function reloadPod.AddWeapon(weapon, grid_id, untilTick)
     table.insert(storage.reloadPods.grids[grid_id].weapons, r)
     if r == storage.reloadPods.equipped_weapon_last then storage.reloadPods.equipped_weapon_last = storage.reloadPods.equipped_weapon_last + 1 end
     storage.reloadPods.equipped_weapons_count = storage.reloadPods.equipped_weapons_count + 1
-    --game.print("Installed pod: " .. weapon.name .. " Pod's index: " .. r .. " Grid index: " .. grid_id)
+    --game.print("Installed pod: " .. weapon.name .. " Tier: " .. weapon_tier .. " Pod's index: " .. r .. " Grid index: " .. grid_id)
     --game.print("First free index is ".. storage.reloadPods.equipped_weapon_last)
     --game.print("Total amount of installed turret pods in all active grids: " .. storage.reloadPods.equipped_weapons_count)
 
 end
 
 function reloadPod.NewEquipment(weapon, grid)
+    --local bobcannon
     if weapon.type == "active-defense-equipment" and weapon.name:match("turret%-pod%-(.+)%-t%d") then
+        --[[if weapon.name:find("bob-vehicle-big-turret-equipment", 1, true) then
+            bobcannon = true
+        elseif weapon.name:match("turret%-pod%-(.+)%-t%d") then
+
+        else
+            return
+        end]]
         local grid_id = 0
         local r = 0
         for ids = 1 , storage.reloadPods.last_grid do
@@ -297,12 +323,14 @@ function reloadPod.NewEquipment(weapon, grid)
             --game.print("A new grid added. Its index: " .. grid_id)
             --game.print("Total amount of active grids: " .. storage.reloadPods.grids_count .. ". Last index in array: " .. storage.reloadPods.last_grid)
         end
+        --game.print("let's add a weapon pod for ".. weapon.name)
+        --reloadPod.AddWeapon(weapon, grid_id, bobcannon, 0)
         reloadPod.AddWeapon(weapon, grid_id, 0)
     end
 end
 
 function reloadPod.RemoveEquipment(weapon_name, grid, removed_count, player) -- several single-type weapons can be removed in one Ctrl+click
-    if weapon_name:match("turret%-pod%-(.+)%-t%d") then
+    if weapon_name:match("bob-vehicle-big-turret-equipment-%d") or weapon_name:match("turret%-pod%-(.+)%-t%d") then
         local grid_id = 0
         for ids = 1 , storage.reloadPods.last_grid do
             if storage.reloadPods.grids[ids] and storage.reloadPods.grids[ids].grid == grid then grid_id = ids break end
@@ -343,18 +371,20 @@ function reloadPod.AddMagazines()
     storage.reloadPods.magazines = {
         gun = {},
         flame = {},
-        shotgun = {}
+        shotgun = {},
+        --bobplasma = {}
     }
     local typesOfPods = {"gun", "flame", "shotgun"}
     for _, podType in pairs(typesOfPods) do
-        --for item_name, item_prototype in pairs(game.get_filtered_item_prototypes{{filter = 'type', type = 'ammo'}}) do
         for item_name, item_prototype in pairs(prototypes.get_item_filtered{{filter = 'type', type = 'ammo'}}) do
-            --if game.equipment_prototypes["turret-pod-".. podType .. "-t2-" .. item_name .. "-equipment"] then
             if prototypes.equipment["turret-pod-".. podType .. "-t2-" .. item_name .. "-equipment"] then
                 storage.reloadPods.magazines[podType][item_name] = item_prototype.magazine_size
             end
         end
     end
+    --if prototypes.item["bob-plasma-mn"] then
+        --storage.reloadPods.magazines["bobplasma"]["bob-plasma-mn"] = prototypes.item["bob-plasma-mn"].magazine_size        
+    --end
     magazines = storage.reloadPods.magazines
 end
 
@@ -522,19 +552,30 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
                                     this_pod.ammo_count = 0
                                     pos = this_pod.weapon.position
                                     this_grid.grid.take{ equipment = this_pod.weapon }
-                                    this_pod.weapon = this_grid.grid.put{
-                                        name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-empty-equipment",
-                                        position = pos
-                                    }
+                                    if this_pod.type == "bobplasma" then
+                                        this_pod.weapon = this_grid.grid.put{
+                                            name = "bob-vehicle-big-turret-equipment-" .. this_pod.tier,
+                                            position = pos
+                                        }
+                                    else
+                                        this_pod.weapon = this_grid.grid.put{
+                                            name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-empty-equipment",
+                                            position = pos
+                                        }
+                                    end
                                 elseif this_pod.weapon.energy > 0 then      -- were we in a ready to shoot state with some ammo left?
                                     r = this_pod.weapon.energy
                                     this_pod.weapon.energy = 0
-                                    pos = this_pod.weapon.position
-                                    this_grid.grid.take{ equipment = this_pod.weapon }
-                                    this_pod.weapon = this_grid.grid.put{
-                                        name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-empty-equipment",
-                                        position = pos
-                                    }
+                                    if this_pod.type == "bobplasma" then
+                                        r = r / tonumber(this_pod.weapon.prototype.attack_parameters.ammo_type.energy_consumption)
+                                    else
+                                        pos = this_pod.weapon.position
+                                        this_grid.grid.take{ equipment = this_pod.weapon }
+                                        this_pod.weapon = this_grid.grid.put{
+                                            name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-empty-equipment",
+                                            position = pos
+                                        }
+                                    end
                                 else r = 0
                                 end
                                 if r > 0 then
@@ -628,8 +669,12 @@ function reloadPod.EntityBuiltRaised(event)
         if equipment_array and equipment_array[1] then
             local untilTick = game.ticks_played + 12
             for i = 1, #equipment_array do
-                if equipment_array[i].type == "active-defense-equipment" and equipment_array[i].name:match("turret%-pod%-(.+)%-t%d") then
-                    reloadPod.AddWeapon(equipment_array[i], grid_id, untilTick)
+                if equipment_array[i].type == "active-defense-equipment" then
+                     if equipment_array[i].name:match("turret%-pod%-(.+)%-t%d") then
+                        reloadPod.AddWeapon(equipment_array[i], grid_id, untilTick)
+                     --elseif equipment_array[i].name:match("bob-vehicle-big-turret-equipment-%d") then
+                        --reloadPod.AddWeapon(equipment_array[i], grid_id, untilTick)
+                     end
                 end
             end
         end

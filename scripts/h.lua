@@ -21,6 +21,9 @@ if weapon.name:match("turret%-pod%-(.+)%-t%d") then local detected = true end
 
 -- turret-pod-gun-t1-empty-equipment-reload
 
+-- bob-vehicle-big-turret-equipment-2
+-- turret-pod-bobplasma-t2-empty-equipment
+
 --[[
 Added LuaEquipmentGrid::unique_id read.
 

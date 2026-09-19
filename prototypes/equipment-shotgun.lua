@@ -146,7 +146,7 @@ local function generate_turret(tier, magazine)
       magazine_localised_name or { "item-name." .. magazine }
     },
     localised_description = {"item-description.turret-pod-shotgun-t" .. tier .. "-equipment"},
-    take_result = "turret-pod-shotgun-t" .. tier .."-empty-equipment",  --HERE IS THE POINT TO INSERT MULTIPLE magazine items
+    take_result = "turret-pod-shotgun-t" .. tier .."-empty-equipment",
     sprite =
     {
       layers = layers

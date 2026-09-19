@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.0.8
+Date: 2026-09-16
+  Changes:
+    - Improved validation check for player char when char armor turret pods are turned on.
+    - Factorio2.0 allows multiple not full magazines in a vehicle inventory.
+    - Reduced reload energy consumption for not full magazines taken.
+---------------------------------------------------------------------------------------------------
 Version: 2.0.7
 Date: 2026-03-22
   Changes:

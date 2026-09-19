@@ -113,3 +113,7 @@ end
 require ("prototypes.equipment")
 require ("prototypes.equipment-flame")
 require ("prototypes.equipment-shotgun")
+--if mods["bobwarfare"] and mods["bobvehicleequipment"] and mods["militarynerfing"] then
+if mods["bobwarfare"] and mods["bobvehicleequipment"] then
+    --require ("prototypes.bob-p-cannon")
+end
