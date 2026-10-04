@@ -17,7 +17,9 @@ Everything else was implemented from scratch. UPS-hungry reload issue was fixed 
 
 If no equipment grid was added by other mods default car receives a small grid.
 
-If using hundreds turret pods in many vehicles reload will be distributed in more ticks, but without considerable UPS impact.
+If using hundreds turret pods in many vehicles reload will be distributed in more ticks (slower reload), but without considerable UPS impact.
+
+Added support for bob vehicle plasma cannon equipment to stop its tank-as-a-turret abuse, but then decided to remove the feature.
 
 ## How it works
 
@@ -28,4 +30,4 @@ If using hundreds turret pods in many vehicles reload will be distributed in mor
 Recommended mods combo: Rampant (with New Enemies tier7+), Rampant Arsenal, Warmonger.
 Idea is to replace overpowered Rampant Arsenal mod's Personal Cannon, Shotgun and Bullet defense equipments, keeping only electrical and slowing down ones, while adding not only physical damage defenses, but all ammo types.
 
-Another hardcore recommendation is Building Time mod.
+Most important hardcore game recommendation is [Building Time](https://mods.factorio.com/mod/Building_Time2) mod.

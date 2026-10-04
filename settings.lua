@@ -31,7 +31,6 @@ data:extend({
         --order = "m[total]-a[ai]",
 
     },
---[[
     {
         type = "bool-setting",
         name = "zd-ShowBattery",
@@ -40,5 +39,5 @@ data:extend({
         default_value = true,
         --order = "m[total]-a[ai]",
 
-    },]]
+    },
 })

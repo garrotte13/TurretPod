@@ -552,30 +552,30 @@ function reloadPod.UnloadPods(entities, player, box, sleep_tick)
                                     this_pod.ammo_count = 0
                                     pos = this_pod.weapon.position
                                     this_grid.grid.take{ equipment = this_pod.weapon }
-                                    if this_pod.type == "bobplasma" then
+                                    --[[if this_pod.type == "bobplasma" then
                                         this_pod.weapon = this_grid.grid.put{
                                             name = "bob-vehicle-big-turret-equipment-" .. this_pod.tier,
                                             position = pos
                                         }
-                                    else
+                                    else]]
                                         this_pod.weapon = this_grid.grid.put{
                                             name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-empty-equipment",
                                             position = pos
                                         }
-                                    end
+                                    --end
                                 elseif this_pod.weapon.energy > 0 then      -- were we in a ready to shoot state with some ammo left?
                                     r = this_pod.weapon.energy
                                     this_pod.weapon.energy = 0
-                                    if this_pod.type == "bobplasma" then
+                                    --[[if this_pod.type == "bobplasma" then
                                         r = r / tonumber(this_pod.weapon.prototype.attack_parameters.ammo_type.energy_consumption)
-                                    else
+                                    else]]
                                         pos = this_pod.weapon.position
                                         this_grid.grid.take{ equipment = this_pod.weapon }
                                         this_pod.weapon = this_grid.grid.put{
                                             name = "turret-pod-" .. this_pod.type .. "-t" .. this_pod.tier .. "-empty-equipment",
                                             position = pos
                                         }
-                                    end
+                                    --end
                                 else r = 0
                                 end
                                 if r > 0 then

@@ -1,5 +1,5 @@
 local reloadP = require("scripts.reloadPods")
-
+local check_battery
 local Unlink = function(event)
   if event.entity then
     if event.entity.grid then
@@ -70,6 +70,7 @@ end)
 script.on_load(function()
   reloadP.OnLoad()
   add_hooks()
+  check_battery = settings.global["zd-ShowBattery"].value
 end)
 
 script.on_configuration_changed(function()
@@ -96,12 +97,13 @@ script.on_configuration_changed(function()
 end)
 
 script.on_event(defines.events.on_selected_entity_changed, function(e)
-  reloadP.selectedEntity(e)
+  if check_battery then reloadP.selectedEntity(e) end
 end)
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(e)
   if e.setting == "zd-AllowChangeAmmo" then storage.reloadPods.AllowChangeAmmo = settings.global["zd-AllowChangeAmmo"].value end
   --game.print("Auto ammunition reset setting was changed!")
+  if e.setting == "zd-ShowBattery" then check_battery = settings.global["zd-ShowBattery"].value end
 end)
 
 script.on_event(defines.events.on_tick, function(event)
