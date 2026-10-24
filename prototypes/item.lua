@@ -161,7 +161,8 @@ data:extend ({
 		cursor_box_type = "entity",
 		mode = {"same-force", "entity-with-owner"},
 		entity_type_filters = entities_filter,
-	}
+	},
+    skip_fog_of_war = true
 --mouse_cursor = "selection-tool-cursor",
  },
 
