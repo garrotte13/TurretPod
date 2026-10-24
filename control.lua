@@ -65,6 +65,7 @@ end
 script.on_init(function()
   reloadP.Init()
   add_hooks()
+  check_battery = settings.global["zd-ShowBattery"].value
 end)
 
 script.on_load(function()
